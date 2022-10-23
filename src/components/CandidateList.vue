@@ -20,7 +20,8 @@
 <template>
  <div id="candidates">
   <div v-for="(candidate, index) in candidates" :key="candidate.id">
-   <p>{{candidate.first_name}}</p>
+
+   <p><fa icon="fa-regular fa-user"></fa><span class="ml-2">{{candidate.first_name}} {{candidate.last_name}}</span></p>
   </div>
  </div>
 </template>

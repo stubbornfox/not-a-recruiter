@@ -10,7 +10,15 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-const app = createApp(App);
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faUser, faFolder } from '@fortawesome/free-regular-svg-icons'
+import { faGear, faShareNodes } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faUser,faFolder, faGear, faShareNodes)
+
+const app = createApp(App).component('fa', FontAwesomeIcon);
 
 app.use(router);
 

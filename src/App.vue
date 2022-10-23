@@ -1,8 +1,11 @@
 <script setup>
-import CandidateList from "./components/CandidateList.vue";
+  import CandidateList from "./components/CandidateList.vue";
+  import JobBoard from "./components/JobBoard.vue";
+
 </script>
 
 <template>
+  <JobBoard />
   <CandidateList />
 </template>
 
