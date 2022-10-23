@@ -20,7 +20,7 @@
 
 <template>
   <div id="jobsidebar">
-    <a v-for="item in jobStages" :key="item.code">
+    <a v-for="item in jobStages" :key="item.code" @click="$emit('changeStage', item.code, item.text)">
        <div>
         <fa :icon="['far', item.icon]" />
         <span class="ml-2">{{item.text}}</span>
@@ -65,6 +65,7 @@
     padding-right: 10px;
     margin-bottom: 2px;
     flex-shrink: 0;
+    cursor: pointer;
   }
   #jobsidebar a span {
     margin-right: 4px;
