@@ -6,7 +6,7 @@
   let error = ref([])
 
   onMounted(() => {
-    axios.get('http://localhost:3000/candidates')
+    axios.get('/candidates')
     .then((response) => {
       candidates.value = response.data;
     })
