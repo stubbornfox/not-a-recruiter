@@ -1,10 +1,16 @@
 <script setup>
-  import JobBoard from "./components/JobBoard.vue";
-
+  import { RouterLink, RouterView } from "vue-router";
 </script>
 
 <template>
-  <JobBoard />
+  <header>
+    <nav>
+      <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/jobs/1">Job</RouterLink>
+      <RouterLink to="/candidates/new">Candidates</RouterLink>
+    </nav>
+  </header>
+  <RouterView />
 </template>
 
 <style scoped>

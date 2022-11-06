@@ -42,6 +42,7 @@
       <JobSidebar class="mr-2" @change-stage="changeStage"/>
       <CandidateList :job-stage="jobStage" />
     </div>
+    <router-link to="/about">About</router-link>
   </div>
 </template>
 
