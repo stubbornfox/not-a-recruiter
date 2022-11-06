@@ -5,26 +5,32 @@
   const schema = [
     {
       $formkit: 'text',
-      name: 'first_name',
-      label: 'First name',
+      name: 'title',
+      label: 'Job Title',
       validation: 'required',
     },
     {
       $formkit: 'text',
-      name: 'last_name',
-      label: 'Last name',
+      name: 'location',
+      label: 'Location',
       validation: 'required',
     },
     {
       $formkit: 'text',
-      name: 'headline',
-      label: 'Headline',
+      name: 'category',
+      label: 'Category',
+      validation: 'required',
+    },
+    {
+      $formkit: 'textarea',
+      name: 'description',
+      label: 'Description',
       validation: 'required',
     }
   ]
 
-  async function addCandidate (candidate) {
-    const res = await axios.post('/candidates', candidate)
+  async function addJob (job) {
+    const res = await axios.post('/jobs', job)
     .then((response) => {
       console.log(response)
       alert('Created!')
@@ -37,9 +43,9 @@
 
 <template>
   <div>
-    <h1 class="text-3xl">New Candidate</h1>
+    <h1 class="text-3xl">New Job post</h1>
     <div class="mt-5">
-      <FormKit type="form" @submit="addCandidate" submit-label="Add">
+      <FormKit type="form" @submit="addJob" submit-label="Post">
         <FormKitSchema :schema="schema"/>
       </FormKit>
     </div>

@@ -15,9 +15,14 @@ const router = createRouter({
       component: () => import("../views/NewCandidateView.vue"),
     },
     {
+      path: "/jobs/new",
+      name: "NewJob",
+      component: () => import("../views/NewJobView.vue"),
+    },
+    {
       path: "/jobs/1",
       name: "Job",
-      component: () => import("../views/JobView.vue"),
+      component: () => import("../views/JobBoardView.vue"),
     },
     {
       path: "/about",
