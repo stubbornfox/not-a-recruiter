@@ -1,11 +1,27 @@
 <script setup>
   import { FormKitSchema } from '@formkit/vue'
   import axios from 'axios'
+  const employmentType = [
+    { label: "Full time", value: "full_time"},
+    { label: "Part time", value: "part_time"},
+    { label: "Contractor", value: "contractor"},
+    { label: "Temporary", value: "temporary"},
+    { label: "Intern", value: "intern"},
+    { label: "Volunteer", value: "volunteer"},
+    { label: "Per diem", value: "per_diem"},
+    { label: "Other", value: "other"},
+  ]
   const schema = [
       {
           $formkit: 'text',
           name: 'title',
           label: 'Position',
+          validation: 'required',
+        },
+        {
+          $formkit: 'text',
+          name: 'category',
+          label: 'Category',
           validation: 'required',
         },
         {
@@ -16,9 +32,26 @@
         },
         {
           $formkit: 'text',
-          name: 'category',
-          label: 'Category',
-          validation: 'required',
+          name: 'applicant_requirement_location',
+          label: 'Applicant Requirement Location',
+        },
+        {
+          $formkit: 'text',
+          name: 'base_salary',
+          label: 'Salary',
+          validation: '',
+        },
+        {
+          $formkit: 'select',
+          name: 'employment_type',
+          label: 'Contract',
+          validation: '',
+          options: employmentType
+        },
+        {
+          $formkit: 'datetime-local',
+          name: 'valid_through',
+          label: 'Valid Until',
         },
         {
           $formkit: 'textarea',
@@ -27,7 +60,6 @@
           validation: 'required',
           help: 'Write a few sentences to describe your job and your criteria.'
         }
-
   ]
 
   async function addJob (job) {
