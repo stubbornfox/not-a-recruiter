@@ -27,7 +27,7 @@
                   Closing on
                   {{ ' ' }}
                   <time :datetime="job.valid_through" format="YYYY MM DD">
-                    {{ job.valid_through }}
+                    {{ formatDate(job.valid_through) }}
                   </time>
                 </p>
               </div>
@@ -43,12 +43,12 @@
   import { CalendarIcon, MapPinIcon, UsersIcon } from '@heroicons/vue/20/solid'
   import * as dayjs from 'dayjs'
 
-  function formatDate(date) {
-    return dayjs(date).format('MMMM d, YYYY')
-  }
-
   defineProps({
     jobs: [],
   })
+
+  function formatDate(date) {
+    return dayjs(date).format('MMMM d, YYYY')
+  }
 </script>
 
