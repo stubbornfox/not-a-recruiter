@@ -27,7 +27,7 @@
                   Closing on
                   {{ ' ' }}
                   <time :datetime="job.valid_through" format="YYYY MM DD">
-                    {{ formatDate(job.valid_through) }}
+                    {{ job.valid_through }}
                   </time>
                 </p>
               </div>
