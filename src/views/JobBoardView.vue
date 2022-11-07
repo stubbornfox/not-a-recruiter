@@ -1,96 +1,113 @@
-<script setup>
-  import {ref} from 'vue'
-  import axios from 'axios'
-
-  import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-
-  import JobList from "../components/JobList.vue";
-  import { PlusIcon as PlusIconOutline } from '@heroicons/vue/24/outline'
-  import {
-    BarsArrowUpIcon,
-    CheckBadgeIcon,
-    ChevronDownIcon,
-    ChevronRightIcon,
-    MagnifyingGlassIcon,
-    RectangleStackIcon,
-    StarIcon,
-  } from '@heroicons/vue/20/solid'
-
-  let jobs = ref([])
-  async function searchJob (searchText) {
-    const res = await axios.get('/jobs', searchText)
-    .then((response) => {
-      jobs.value =  [{
-          id: 1,
-          title: 'Back End Developer',
-          type: 'Full-time',
-          location: 'Remote',
-          department: 'Engineering',
-          closeDate: '2020-01-07',
-          closeDateFull: 'January 7, 2020',
-        },
-        {
-          id: 2,
-          title: 'Front End Developer',
-          type: 'Full-time',
-          location: 'Remote',
-          department: 'Engineering',
-          closeDate: '2020-01-07',
-          closeDateFull: 'January 7, 2020',
-        },
-        {
-          id: 3,
-          title: 'User Interface Designer',
-          type: 'Full-time',
-          location: 'Remote',
-          department: 'Design',
-          closeDate: '2020-01-14',
-          closeDateFull: 'January 14, 2020',
-        },
-      ]
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-  }
-</script>
-
 <template>
-  <div class="relative flex min-h-full flex-col">
-    <!-- Navbar -->
-    <Disclosure as="nav" class="flex-shrink-0" v-slot="{ open }">
-      <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-        <div class="relative flex h-16 items-center justify-between">
-          <div class="flex flex-1 justify-center lg:justify-end">
-            <div class="w-full px-2 lg:px-6">
-              <div class="relative text-indigo-200 focus-within:text-gray-400">
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                  <MagnifyingGlassIcon class="h-5 w-5" aria-hidden="true" />
-                </div>
-                 <FormKit
-                  type="search"
-                  name="search"
-                  @input="searchJob"
-                  placeholder="Search..."
-                  value="Butler"
-                  inner-class= "$reset w-full"
-                  outer-class= "$reset w-full"
-                  wrapper-class= "$reset w-full"
-                  input-class= "$reset block w-full rounded-md border border-transparent bg-indigo-400 bg-opacity-25 py-2 pl-10 pr-3 leading-5 text-indigo-100 placeholder-indigo-200   focus:text-gray-900 focus:placeholder-gray-400 focus:outline-none focus:ring-0 sm:text-sm"
-                />
+  <div class="bg-white">
+    <div class="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+      <div class="py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200">
+        <div class="min-w-0 flex-1">
+          <!-- Profile -->
+          <div class="flex items-center">
+            <img class="hidden h-16 w-16 rounded-full sm:block" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
+            <div>
+              <div class="flex items-center">
+                <img class="h-16 w-16 rounded-full sm:hidden" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
+                <h1 class="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">Good morning, Emilia Birch</h1>
               </div>
+              <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
+                <dt class="sr-only">Company</dt>
+                <dd class="flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6">
+                  <BuildingOfficeIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
+                  Duke street studio
+                </dd>
+                <dt class="sr-only">Account status</dt>
+                <dd class="mt-3 flex items-center text-sm font-medium capitalize text-gray-500 sm:mr-6 sm:mt-0">
+                  <CheckCircleIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400" aria-hidden="true" />
+                  Verified account
+                </dd>
+              </dl>
             </div>
           </div>
-          <div>
-          </div>
         </div>
-         <div class="w-full flex justify-end lg:px-6 mt-3">
-          <RouterLink to="/jobs/new" tag="button" class="inline-flex items-center rounded-full border border-transparent bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <PlusIconOutline class="h-6 w-6" aria-hidden="true" />
-        </RouterLink>
+        <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
+          <!-- <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2">Add money</button> -->
+          <RouterLink type="button" to="/jobs/new" class="inline-flex items-center rounded-md border border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2">Add job</RouterLink>
         </div>
       </div>
-    </Disclosure>
-    <JobList class="mt-5" :jobs="jobs"/>
+      <div class="min-h-full">
+        <JobBoard class="min-h-full"/>
+      </div>
+    </div>
   </div>
 </template>
+
+<script setup>
+import JobBoard from "../components/JobBoard.vue";
+import { ref } from 'vue'
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
+
+import {
+  Bars3CenterLeftIcon,
+  BellIcon,
+  ClockIcon,
+  CogIcon,
+  CreditCardIcon,
+  DocumentChartBarIcon,
+  HomeIcon,
+  QuestionMarkCircleIcon,
+  ScaleIcon,
+  ShieldCheckIcon,
+  UserGroupIcon,
+  XMarkIcon,
+} from '@heroicons/vue/24/outline'
+import {
+  BanknotesIcon,
+  BuildingOfficeIcon,
+  CheckCircleIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/vue/20/solid'
+
+const navigation = [
+  { name: 'Home', href: '#', icon: HomeIcon, current: true },
+  { name: 'History', href: '#', icon: ClockIcon, current: false },
+  { name: 'Balances', href: '#', icon: ScaleIcon, current: false },
+  { name: 'Cards', href: '#', icon: CreditCardIcon, current: false },
+  { name: 'Recipients', href: '#', icon: UserGroupIcon, current: false },
+  { name: 'Reports', href: '#', icon: DocumentChartBarIcon, current: false },
+]
+const secondaryNavigation = [
+  { name: 'Settings', href: '#', icon: CogIcon },
+  { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
+  { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
+]
+const cards = [
+  { name: 'Account balance', href: '#', icon: ScaleIcon, amount: '$30,659.45' },
+  // More items...
+]
+const transactions = [
+  {
+    id: 1,
+    name: 'Payment to Molly Sanders',
+    href: '#',
+    amount: '$20,000',
+    currency: 'USD',
+    status: 'success',
+    date: 'July 11, 2020',
+    datetime: '2020-07-11',
+  },
+  // More transactions...
+]
+const statusStyles = {
+  success: 'bg-green-100 text-green-800',
+  processing: 'bg-yellow-100 text-yellow-800',
+  failed: 'bg-gray-100 text-gray-800',
+}
+</script>
