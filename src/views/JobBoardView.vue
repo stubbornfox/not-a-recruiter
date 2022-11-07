@@ -47,10 +47,8 @@
   let error = ref([])
 
   onMounted(() => {
-    debugger
     axios.get('/jobs')
     .then((response) => {
-      console.log(response)
       jobs.value = response.data;
     })
    .catch((e) => {
