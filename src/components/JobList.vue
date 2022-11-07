@@ -41,7 +41,7 @@
 
 <script setup>
   import { CalendarIcon, MapPinIcon, UsersIcon } from '@heroicons/vue/20/solid'
-  import * as dayjs from 'dayjs'
+  import dayjs from 'dayjs';
 
   defineProps({
     jobs: [],
