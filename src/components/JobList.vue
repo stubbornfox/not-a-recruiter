@@ -47,8 +47,8 @@
     jobs: [],
   })
 
-  function formatDate(date) {
-    return dayjs(date).format('MMMM d, YYYY')
+  function formatDate(dateData) {
+    return dayjs(dateData).format('MMMM d, YYYY')
   }
 </script>
 
