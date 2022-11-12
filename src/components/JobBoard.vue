@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col flex-grow">
     <div :key="job.id" class='job-header'>
-      <div class="flex items-center text-gray-900">
+      <div class="flex items-center ">
         <a @click="$router.back()">
           <fa :icon="['fas', 'fa-arrow-left']"></fa>
         </a>
-        <h2 class="font-semibold text-xl pl-2 text-gray-900">{{job.title}}</h2>
+        <h2 class="font-semibold text-xl pl-2 ">{{job.title}}</h2>
       </div>
       <a>
         <fa :icon="['fas', 'fa-ellipsis-vertical']"></fa>

@@ -1,6 +1,6 @@
 <template>
   <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8 h-full flex flex-col flex-grow h-full">
-    <div class="h-full flex flex-col flex-grow text-gray-900">
+    <div class="h-full flex flex-col flex-grow ">
       JobStageApplicant
     </div>
   </div>

@@ -30,7 +30,7 @@
 <template>
  <div id="candidates" class="pt-4">
   <div class="flex justify-between items-center">
-    <h5 class="font-semibold text-gray-900 pl-3">{{jobStage}}</h5>
+    <h5 class="font-semibold  pl-3">{{jobStage}}</h5>
   </div>
   <div v-for="(candidate, index) in candidates" :key="candidate.id">
     <a class="flex">
