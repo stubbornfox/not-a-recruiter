@@ -1,33 +1,3 @@
-<script setup>
-  import {ref, onMounted} from 'vue'
-  import axios from 'axios'
-  import JobSidebar from "./JobSidebar.vue";
-  import CandidateList from "./CandidateList.vue";
-  import JobSetup from "./JobSetup.vue";
-  import { RouterLink, RouterView } from "vue-router";
-  import { useRoute }  from "vue-router"
-
-  let currentStage = ref('Inbox');
-  let error = ref([])
-
-  function changeStage(code, text) {
-    currentStage.value = text
-  }
-
-
-  // onMounted(() => {
-  //   axios.get('/job_boards/1')
-  //   .then((response) => {
-  //     job.value = response.data;
-  //   })
-  //  .catch((e) => {
-  //     error.value.push(e);
-  //   })
-  // })
-  defineProps({
-    job: Object,
-  })
-</script>
 <template>
   <div class="flex flex-col flex-grow">
     <div :key="job.id" class='job-header'>
@@ -52,7 +22,26 @@
     </div>
   </div>
 </template>
+<script setup>
+  import {ref, onMounted} from 'vue'
+  import axios from 'axios'
+  import JobSidebar from "./JobSidebar.vue";
+  import CandidateList from "./CandidateList.vue";
+  import JobSetup from "./JobSetup.vue";
+  import { RouterLink, RouterView } from "vue-router";
+  import { useRoute }  from "vue-router"
 
+  let currentStage = ref('Inbox');
+  let error = ref([])
+
+  function changeStage(code, text) {
+    currentStage.value = text
+  }
+
+  defineProps({
+    job: Object,
+  })
+</script>
 <style scoped>
   .job-header {
     display: flex;
