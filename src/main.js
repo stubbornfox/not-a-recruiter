@@ -35,6 +35,24 @@ app.use(plugin, defaultConfig({
             messages: 'list-none p-0 mt-1 mb-0',
             message: 'text-red-500 mb-1 text-xs'
           },
+          email: {
+            outer: '$reset sm:col-span-4',
+            label: '$reset block text-sm font-medium',
+            inner: '$reset mt-1 flex rounded-md shadow-sm',
+            input: '$reset block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+            help: '$reset mt-2 text-sm text-gray-500',
+            messages: 'list-none p-0 mt-1 mb-0',
+            message: 'text-red-500 mb-1 text-xs'
+          },
+          password: {
+            outer: '$reset sm:col-span-4',
+            label: '$reset block text-sm font-medium',
+            inner: '$reset mt-1 flex rounded-md shadow-sm',
+            input: '$reset block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+            help: '$reset mt-2 text-sm text-gray-500',
+            messages: 'list-none p-0 mt-1 mb-0',
+            message: 'text-red-500 mb-1 text-xs'
+          },
           select: {
             outer: '$reset sm:col-span-4',
             label: '$reset block text-sm font-medium',
