@@ -22,7 +22,7 @@ const router = createRouter({
         {
           path: 'setup/details',
           name: 'JobSetupDetails',
-          component: () => import("../views/JobSetUpDetail.vue"),
+          component: () => import("../views/JobSetupDetail.vue"),
         },
         {
           path: 'stages/:stage/applicants',
