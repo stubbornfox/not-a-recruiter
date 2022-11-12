@@ -5,5 +5,7 @@
 </template>
 
 <script setup>
-  console.log("Add some script")
+  import { useRoute } from 'vue-router'
+  const route = useRoute()
+  console.log(route.meta)
 </script>
