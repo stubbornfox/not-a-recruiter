@@ -16,6 +16,12 @@ const router = createRouter({
       meta: { layout: 'PlainLayout' }
     },
     {
+      path: "/register",
+      name: "Register",
+      component: () => import("../views/RegisterView.vue"),
+      meta: { layout: 'PlainLayout' }
+    },
+    {
       path: "/candidates/new",
       name: "NewCandidate",
       component: () => import("../views/NewCandidateView.vue"),

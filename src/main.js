@@ -3,9 +3,9 @@ import App from "./App.vue";
 import router from "./router";
 import axios from 'axios'
 
-import "./assets/main.css";
 import "./assets/tailwind.css";
 import '@formkit/themes/genesis'
+import "./assets/main.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
