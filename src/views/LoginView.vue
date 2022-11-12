@@ -16,6 +16,10 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
 
 const schema = [{
     $formkit: 'email',
@@ -37,7 +41,12 @@ import axios from 'axios'
 async function login(credential) {
   const res = await axios.post('auth/login', credential)
     .then((response) => {
-      alert('Login!')
+      if (response.data.token) {
+        localStorage.setItem('user', JSON.stringify(response.data));
+        router.push({
+          name: 'home',
+        })
+      }
     })
     .catch((e) => {
       console.log(e)
