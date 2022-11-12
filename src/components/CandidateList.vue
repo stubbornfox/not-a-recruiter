@@ -1,6 +1,9 @@
 <script setup>
   import {ref, onMounted} from 'vue'
   import axios from 'axios'
+  import {
+    UserIcon,
+  } from '@heroicons/vue/24/outline'
 
   const candidates = ref([])
   let error = ref([])
@@ -25,15 +28,14 @@
 
 
 <template>
- <div id="candidates" class="px-3">
+ <div id="candidates" class="pt-4">
   <div class="flex justify-between items-center">
-    <h5 class="font-semibold">{{jobStage}}</h5>
-    <fa :icon="['fas', 'fa-ellipsis-vertical']"></fa>
+    <h5 class="font-semibold text-gray-900 pl-3">{{jobStage}}</h5>
   </div>
   <div v-for="(candidate, index) in candidates" :key="candidate.id">
-    <a>
-      <fa icon="fa-regular fa-user"></fa>
-      <span class="ml-2">
+    <a class="flex">
+      <UserIcon class="flex-shrink h-5 w-5" aria-hidden="true"></UserIcon>
+      <span class="ml-2 text-md">
         {{candidate.first_name}} {{candidate.last_name}}
       </span>
     </a>
@@ -53,9 +55,9 @@
     display: flex;
     align-items: center;
     border-radius: 5px;
-    margin-left: 0.375rem;
-    margin-right: 0.375rem;
-    padding-left: 0.625rem;
+    margin-left: 0.125rem;
+    margin-right: 0.125rem;
+    padding-left: 0.375rem;
     padding-right: 10px;
     margin-bottom: 2px;
     flex-shrink: 0;

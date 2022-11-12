@@ -3,44 +3,52 @@
   import axios from 'axios'
   import JobSidebar from "./JobSidebar.vue";
   import CandidateList from "./CandidateList.vue";
+  import JobSetup from "./JobSetup.vue";
+  import { RouterLink, RouterView } from "vue-router";
+  import { useRoute }  from "vue-router"
 
-  let jobStage = ref('Inbox');
-
-  function changeStage(code, text) {
-    jobStage.value = text
-  }
-
-  const job = ref([])
+  let currentStage = ref('Inbox');
   let error = ref([])
 
-  onMounted(() => {
-    axios.get('/job_boards/1')
-    .then((response) => {
-      job.value = response.data;
-    })
-   .catch((e) => {
-      error.value.push(e);
-    })
+  function changeStage(code, text) {
+    currentStage.value = text
+  }
+
+
+  // onMounted(() => {
+  //   axios.get('/job_boards/1')
+  //   .then((response) => {
+  //     job.value = response.data;
+  //   })
+  //  .catch((e) => {
+  //     error.value.push(e);
+  //   })
+  // })
+  defineProps({
+    job: Object,
   })
 </script>
-
-
 <template>
-  <div>
+  <div class="flex flex-col flex-grow">
     <div :key="job.id" class='job-header'>
-      <div class="flex items-center">
-        <a>
+      <div class="flex items-center text-gray-900">
+        <a @click="$router.back()">
           <fa :icon="['fas', 'fa-arrow-left']"></fa>
         </a>
-        <h2 class="font-semibold text-xl pl-2">{{job.title}}</h2>
+        <h2 class="font-semibold text-xl pl-2 text-gray-900">{{job.title}}</h2>
       </div>
       <a>
         <fa :icon="['fas', 'fa-ellipsis-vertical']"></fa>
       </a>
     </div>
     <div id="jobboard">
-      <JobSidebar class="mr-2" @change-stage="changeStage"/>
-      <CandidateList :job-stage="jobStage" />
+      <JobSidebar class="lg:w-1/5 md:w-1/3"
+                  :currentStage="currentStage"
+                  @change-stage="changeStage"
+                  @setup-job="currentStage='Job setup'"/>
+      <JobSetup class="lg:w-1/4 md:w-1/3" v-show="currentStage == 'Job setup'"/>
+      <CandidateList :job-stage="currentStage" class="mr-2 lg:w-1/4 md:w-1/3" v-show="currentStage!='Job setup'"/>
+      <RouterView />
     </div>
   </div>
 </template>
@@ -51,6 +59,7 @@
     justify-content: space-between;
     align-items: center;
     height: 48px;
+    border-bottom: 1px solid;
   }
 
   .job-header a {
@@ -76,5 +85,6 @@
     display: flex;
     overflow-y: hidden;
     position: relative;
+    width: 100%;
   }
 </style>

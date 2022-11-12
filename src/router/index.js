@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import JobBoard from "../views/JobBoardView.vue";
+import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,12 +7,29 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: JobBoard,
+      component: HomeView,
     },
     {
       path: "/candidates/new",
       name: "NewCandidate",
       component: () => import("../views/NewCandidateView.vue"),
+    },
+    {
+      path: "/jobs/:slug",
+      name: "JobBoard",
+      component: () => import("../views/JobBoardView.vue"),
+      children: [
+        {
+          path: 'setup/details',
+          name: 'JobSetupDetails',
+          component: () => import("../views/JobSetUpDetail.vue"),
+        },
+        {
+          path: 'stages/:stage/applicants',
+          name: 'JobStageApplicant',
+          component: () => import("../views/JobStageApplicant.vue"),
+        },
+      ],
     },
     {
       path: "/jobs/new",

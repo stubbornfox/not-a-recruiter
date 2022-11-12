@@ -49,7 +49,7 @@
 </script>
 
 <template>
-  <div class="min-h-full">
+  <div class="h-full">
     <TransitionRoot as="template" :show="sidebarOpen">
     <Dialog as="div" class="relative z-40 lg:hidden" @close="sidebarOpen = false">
       <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
@@ -120,7 +120,7 @@
       </nav>
     </div>
   </div>
-    <div class="flex flex-1 flex-col lg:pl-64">
+  <div class="flex flex-1 flex-col lg:pl-64 lg:min-h-screen">
       <div class="flex h-16 flex-shrink-0 border-b border-gray-200 bg-white lg:border-none">
         <button type="button" class="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-500 lg:hidden" @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
@@ -171,7 +171,7 @@
     </div>
   </div>
       </div>
-      <main class="flex-1 pb-8">
+      <main class="flex-1 pb-8 h-full flex flex-col">
         <RouterView />
       </main>
     </div>

@@ -1,12 +1,23 @@
 <script setup>
+  import {
+    CogIcon,
+    ShareIcon,
+    InboxIcon,
+    FolderIcon,
+    DocumentCheckIcon,
+    ArchiveBoxIcon,
+  } from '@heroicons/vue/24/outline'
+
+  import { RouterLink } from "vue-router";
+
   const jobStages = [
-            {text: 'Inbox', code: 'inbox', icon: 'fa-folder'},
-            {text: 'Screen', code: 'screen', icon: 'fa-folder'},
-            {text: 'Interview', code: 'interview', icon: 'fa-folder'},
-            {text: 'Decide', code: 'decide', icon: 'fa-folder'},
-            {text: 'Hired', code: 'hired', icon: 'fa-folder'},
-            {text: 'Offer', code: 'offer', icon: 'fa-folder'},
-            {text: 'Archived', code: 'archived', icon: 'fa-folder'},
+            {text: 'Inbox', code: 'inbox', icon: InboxIcon},
+            {text: 'Screen', code: 'screen', icon: FolderIcon},
+            {text: 'Interview', code: 'interview', icon: FolderIcon},
+            {text: 'Decide', code: 'decide', icon: FolderIcon},
+            {text: 'Offer', code: 'offer', icon: FolderIcon},
+            {text: 'Hired', code: 'hired', icon: DocumentCheckIcon},
+            {text: 'Archived', code: 'archived', icon: ArchiveBoxIcon},
           ]
   defineProps({
     job: {
@@ -15,31 +26,40 @@
         return { inbox: 0, screen: 0, interview: 0, decide: 0, offer: 0, archived: 0, hired: '0' }
       }
     },
+    currentStage: {
+      type: String,
+      default: 'inbox',
+    }
 })
 </script>
 
 <template>
-  <div id="jobsidebar">
-    <a v-for="item in jobStages" :key="item.code" @click="$emit('changeStage', item.code, item.text)">
-       <div>
-        <fa :icon="['far', item.icon]" />
+  <div id="jobsidebar" class="pt-4">
+    <RouterLink v-for="item in jobStages"
+      :key="item.code"
+      :to="{ name: 'JobStageApplicant', params: {stage: item.code}}"
+      @click="$emit('changeStage', item.code, item.text)"
+      :class="[item.text == currentStage ? 'bg-gray-100 text-gray-900' :'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'stage-stat justify-between']">
+       <div class="flex">
+        <component :is="item.icon" class="flex-shrink h-6 w-6" aria-hidden="true" />
         <span class="ml-2">{{item.text}}</span>
       </div>
       <span>{{job[item.code]}}</span>
-    </a>
-
+    </RouterLink>
+    <hr class="my-6 border-0">
     <div class="mt-3">
-      <a>
-        <div>
-          <fa :icon="['fas', 'fa-gear']" />
-          <span class="ml-2">Job setup</span>
-        </div>
-      </a>
-      <a>
-        <div>
-          <fa :icon="['fas', 'fa-share-nodes']" />
-          <span class="ml-2">Distribution</span>
-        </div>
+      <RouterLink
+        :to="{ name: 'JobSetupDetails'}"
+        :class="[currentStage == 'Job setup' ? 'bg-gray-100 text-gray-900' :'text-gray-600 hover:bg-gray-50 hover:text-gray-900','flex']"
+        @click="$emit('setupJob')">
+        <i>
+          <CogIcon class="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+        </i>
+        <span class="ml-2 flex-grow-1">Job setup</span>
+      </RouterLink>
+      <a :class="[currentStage == 'Distribution' ? 'bg-gray-100 text-gray-900' :'text-gray-600 hover:bg-gray-50 hover:text-gray-900', 'flex']">
+        <ShareIcon class="h-6 w-6  flex-shrink-0" aria-hidden="true" />
+        <span class="ml-2 flex-grow-1">Distribution</span>
       </a>
     </div>
 
@@ -56,7 +76,6 @@
   #jobsidebar a {
     height: 32px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border-radius: 5px;
     margin-left: 0.375rem;
@@ -67,6 +86,7 @@
     flex-shrink: 0;
     cursor: pointer;
   }
+
   #jobsidebar a span {
     margin-right: 4px;
     white-space: nowrap;
@@ -74,3 +94,4 @@
     text-overflow: ellipsis;
    }
 </style>
+
