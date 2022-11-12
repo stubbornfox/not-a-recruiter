@@ -39,7 +39,7 @@
       :key="item.code"
       :to="{ name: 'JobStageApplicant', params: {stage: item.code}}"
       @click="$emit('changeStage', item.code, item.text)"
-      :class="[item.text == currentStage ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:', 'stage-stat justify-between']">
+      :class="[$route.params.stage == item.code ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:', 'stage-stat justify-between']">
        <div class="flex">
         <component :is="item.icon" class="flex-shrink h-6 w-6" aria-hidden="true" />
         <span class="ml-2">{{item.text}}</span>
@@ -50,7 +50,7 @@
     <div class="mt-3">
       <RouterLink
         :to="{ name: 'JobSetupDetails'}"
-        :class="[currentStage == 'Job setup' ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:','flex']"
+        :class="[$route.matched.some(route => route.path.includes('/setup/')) ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:','flex']"
         @click="$emit('setupJob')">
         <i>
           <CogIcon class="h-6 w-6 flex-shrink-0" aria-hidden="true" />
@@ -69,7 +69,7 @@
 <style scoped>
   #jobsidebar {
     color: rgb(82, 82, 82);
-    border-right: 1px solid rgb(229, 229, 229);
+    border-right: 1px solid var(--color-border);
     overflow-y: auto;
   }
 

@@ -46,7 +46,7 @@
 <style scoped>
   #candidates {
     color: rgb(82, 82, 82);
-    border-right: 1px solid rgb(229, 229, 229);
+    border-right: 1px solid var(--color-border);
     overflow-y: auto;
   }
 

@@ -167,7 +167,7 @@
           </div>
         </div>
       </div>
-      <main class="flex-1 pb-8 h-full flex flex-col">
+      <main class="flex-1 h-full flex flex-col">
         <RouterView />
       </main>
     </div>
