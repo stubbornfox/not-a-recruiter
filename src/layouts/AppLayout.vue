@@ -11,7 +11,7 @@
     () => route.meta?.layout as string | undefined,
     async (metaLayout) => {
       try {
-        if metaLayout
+        if (metaLayout)
           layout.value = markRaw(PlainLayout)
         else
           layout.value = markRaw(DefaultLayout)

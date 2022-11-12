@@ -4,6 +4,6 @@
   </div>
 </template>
 
-<script setup>
-  console.log('test')
+<script>
+  export default {}
 </script>
