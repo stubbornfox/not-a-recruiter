@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import DefaultLayout from './DefaultLayout.vue'
+  import PlainLayout from './PlainLayout.vue'
   import { markRaw, ref, watch } from 'vue'
   import { useRoute } from 'vue-router'
 
