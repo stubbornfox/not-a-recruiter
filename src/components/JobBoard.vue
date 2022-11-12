@@ -2,9 +2,9 @@
   <div class="flex flex-col flex-grow">
     <div :key="job.id" class='job-header'>
       <div class="flex items-center ">
-        <a @click="$router.back()">
+        <RouterLink :to="{name: 'home'}">
           <fa :icon="['fas', 'fa-arrow-left']"></fa>
-        </a>
+        </RouterLink>
         <h2 class="font-semibold text-xl pl-2 ">{{job.title}}</h2>
       </div>
       <a>

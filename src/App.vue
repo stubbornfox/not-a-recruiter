@@ -126,15 +126,6 @@
         <!-- Search bar -->
         <div class="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
           <div class="flex flex-1">
-            <form class="flex w-full md:ml-0" action="#" method="GET">
-              <label for="search-field" class="sr-only">Search</label>
-              <div class="relative w-full text-gray-400 focus-within:text-gray-600">
-                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center" aria-hidden="true">
-                  <MagnifyingGlassIcon class="h-5 w-5" aria-hidden="true" />
-                </div>
-                <input id="search-field" name="search-field" class="bg-transparent block h-full w-full border-transparent py-2 pl-8 pr-3 placeholder-gray-500 focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm" placeholder="Search jobs" type="search" />
-              </div>
-            </form>
           </div>
           <div class="ml-4 flex items-center md:ml-6">
             <button type="button" class="rounded-full  p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">

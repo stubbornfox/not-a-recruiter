@@ -39,7 +39,7 @@
       :key="item.code"
       :to="{ name: 'JobStageApplicant', params: {stage: item.code}}"
       @click="$emit('changeStage', item.code, item.text)"
-      :class="[$route.params.stage == item.code ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:', 'stage-stat justify-between']">
+      :class="[$route.params.stage == item.code ? 'bg-gray-100 ' :' hover:bg-gray-50 hover:', 'stage-stat justify-between']">
        <div class="flex">
         <component :is="item.icon" class="flex-shrink h-6 w-6" aria-hidden="true" />
         <span class="ml-2">{{item.text}}</span>
@@ -50,14 +50,14 @@
     <div class="mt-3">
       <RouterLink
         :to="{ name: 'JobSetupDetails'}"
-        :class="[$route.matched.some(route => route.path.includes('/setup/')) ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:','flex']"
+        :class="[$route.matched.some(route => route.path.includes('/setup/')) ? 'bg-gray-100 ' :' hover:bg-gray-50 hover:','flex']"
         @click="$emit('setupJob')">
         <i>
           <CogIcon class="h-6 w-6 flex-shrink-0" aria-hidden="true" />
         </i>
         <span class="ml-2 flex-grow-1">Job setup</span>
       </RouterLink>
-      <a :class="[currentStage == 'Distribution' ? 'bg-gray-100 ' :'text-gray-600 hover:bg-gray-50 hover:', 'flex']">
+      <a :class="[currentStage == 'Distribution' ? 'bg-gray-100 ' :' hover:bg-gray-50 hover:', 'flex']">
         <ShareIcon class="h-6 w-6  flex-shrink-0" aria-hidden="true" />
         <span class="ml-2 flex-grow-1">Distribution</span>
       </a>
