@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import DefaultLayout from './DefaultLayout.vue'
+  import PlainLayout from './PlainLayout.vue'
   import { markRaw, ref, watch } from 'vue'
   import { useRoute } from 'vue-router'
 
@@ -10,8 +11,10 @@
     () => route.meta?.layout as string | undefined,
     async (metaLayout) => {
       try {
-        const component = metaLayout && await import(/* @vite-ignore */ `./${metaLayout}.vue`)
-        layout.value = markRaw(component || DefaultLayout)
+        if metaLayout
+          layout.value = markRaw(PlainLayout)
+        else
+          layout.value = markRaw(DefaultLayout)
       } catch (e) {
         layout.value = markRaw(DefaultLayout)
       }
