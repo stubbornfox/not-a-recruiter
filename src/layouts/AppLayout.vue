@@ -11,7 +11,7 @@
     async (metaLayout) => {
       try {
         const component = metaLayout && await import(/* @vite-ignore */ `./${metaLayout}.vue`)
-        layout.value = markRaw(component?.default || DefaultLayout)
+        layout.value = markRaw(component || DefaultLayout)
       } catch (e) {
         layout.value = markRaw(DefaultLayout)
       }

@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-  export default {}
+  console.log('test')
 </script>
