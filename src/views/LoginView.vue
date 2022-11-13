@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" id="loginForm" @submit="login" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false>
+  <FormKit type="form" id="loginForm" @submit="login" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false novalidate>
     <div class="space-y-8">
       <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
         <FormKitSchema :schema="schema" />
@@ -29,7 +29,7 @@ const schema = [{
     $formkit: 'email',
     name: 'email',
     label: 'Email',
-    validation: 'required',
+    validation: 'required|email',
   },
   {
     $formkit: 'password',
@@ -39,7 +39,9 @@ const schema = [{
   },
 ]
 
-async function login(credential) {
+async function login(credential, node) {
+  node.clearErrors()
+
   const res = await axios.post('auth/login', credential)
     .then((response) => {
       if (response.data.token) {
@@ -50,7 +52,10 @@ async function login(credential) {
       }
     })
     .catch((e) => {
-      console.log(e)
+      if (e.response && e.response.status == 401)
+        node.setErrors(["The username or password you entered is incorrect"], {})
+      else
+        node.setErrors([e.message],{})
     })
 }
 </script>

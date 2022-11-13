@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" id="registerForm" @submit="register" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false>
+  <FormKit type="form" id="registerForm" @submit="register" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false novalidate>
     <div class="space-y-8">
       <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
         <FormKitSchema :schema="schema" />
@@ -25,7 +25,7 @@ const schema = [{
     $formkit: 'email',
     name: 'email',
     label: 'Email',
-    validation: 'required',
+    validation: 'required|email',
   },
   {
     $formkit: 'text',
@@ -37,29 +37,32 @@ const schema = [{
     $formkit: 'password',
     name: 'password',
     label: 'Password',
-    validation: 'required',
+    validation: 'required|length:6',
   },
   {
     $formkit: 'password',
     name: 'password_confirmation',
     label: 'Password Confirmation',
-    validation: "required"
+    validation: "required|confirm:password"
   },
 ]
 import axios from 'axios'
 
-async function register(user) {
-  debugger
+async function register(user, node) {
+  node.clearErrors()
+
   const res = await axios.post('/users', { user })
-  .then((response) => {
-    console.log(response)
-    alert('Created')
-    router.push({
-      name: 'Login',
+    .then((response) => {
+      alert('Created')
+      router.push({
+        name: 'Login',
+      })
     })
-  })
-  .catch((e) => {
-    console.log(e)
-  })
+    .catch((e) => {
+      if (e.response && e.response.data)
+        node.setErrors([],e.response.data)
+      else
+        node.setErrors([e.message],{})
+    })
 }
 </script>
