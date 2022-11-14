@@ -1,4 +1,5 @@
 import { createApp } from "vue";
+import { createPinia } from 'pinia';
 import App from "./App.vue";
 import router from "./router";
 import axios from 'axios'
@@ -8,7 +9,6 @@ import '@formkit/themes/genesis'
 import "./assets/main.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 import { plugin, defaultConfig } from '@formkit/vue'
@@ -19,10 +19,11 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
 library.add(far, fas)
-
+const pinia = createPinia();
 const app = createApp(App).component('fa', FontAwesomeIcon);
 
 app.use(router);
+app.use(pinia)
 app.use(plugin, defaultConfig({
       config: {
         classes: generateClasses({

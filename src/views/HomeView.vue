@@ -9,7 +9,7 @@
             <div>
               <div class="flex items-center">
                 <img class="h-16 w-16 rounded-full sm:hidden" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
-                <h1 class="ml-3 text-2xl font-bold leading-7  sm:truncate sm:leading-9">Good morning, Emilia Birch</h1>
+                <h1 class="ml-3 text-2xl font-bold leading-7  sm:truncate sm:leading-9">Good morning, {{user?.name}}</h1>
               </div>
               <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
                 <dt class="sr-only">Company</dt>
@@ -45,6 +45,13 @@
 
   const jobs = ref([])
   let error = ref([])
+
+  import { storeToRefs } from 'pinia';
+
+  import { useAuthStore } from '@/stores/auth';
+
+  const authStore = useAuthStore();
+  const { user } = storeToRefs(authStore);
 
   onMounted(() => {
     axios.get('/jobs')

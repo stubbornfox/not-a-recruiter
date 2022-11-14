@@ -35,6 +35,13 @@
     MagnifyingGlassIcon,
   } from '@heroicons/vue/20/solid'
 
+  import { storeToRefs } from 'pinia';
+
+  import { useAuthStore } from '@/stores/auth';
+
+  const authStore = useAuthStore();
+  const { user } = storeToRefs(authStore);
+
   const navigation = [
     { name: 'Home', href: '/', icon: HomeIcon, current: true },
     { name: 'Add job', href: '/jobs/new', icon: DocumentChartBarIcon, current: false },
@@ -46,10 +53,6 @@
     { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
   ]
   const sidebarOpen = ref(false)
-
-  function logout() {
-    localStorage.removeItem('user');
-  }
 </script>
 <template>
   <div class="h-full">
@@ -141,20 +144,17 @@
               <div>
                 <MenuButton class="flex max-w-xs items-center rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
                   <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                  <span class="ml-3 hidden text-sm font-medium text-gray-700 lg:block"><span class="sr-only">Open user menu for </span>Emilia Birch</span>
+                  <span class="ml-3 hidden text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>{{user?.name}}</span>
                   <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md  py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your Profile</a>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Settings</a>
-                  </MenuItem>
-                  <MenuItem v-slot="{ active }">
-                  <a href="#" @click="logout" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Logout</a>
+                <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none bg-mute">
+                  <MenuItem v-slot="{ active }" class="hover:bg-soft">
+                    <RouterLink :to="{name: 'AccountProfile'}" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']"> Account Settings</RouterLink>
+                    </MenuItem>
+                  <MenuItem v-slot="{ active }" class="hover:bg-soft">
+                    <button @click="authStore.logout()" class="block text-left px-4 py-2 text-sm w-full">Logout</button>
                   </MenuItem>
                 </MenuItems>
               </transition>

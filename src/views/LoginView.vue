@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" id="loginForm" @submit="login" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false novalidate>
+  <FormKit type="form" id="loginForm" @submit="authStore.login" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false novalidate>
     <div class="space-y-8">
       <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
         <FormKitSchema :schema="schema" />
@@ -19,12 +19,10 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute, RouterLink } from 'vue-router'
-import axios from 'axios'
+import { RouterLink } from 'vue-router'
+import { useAuthStore } from '@/stores/auth';
 
-const router = useRouter()
-const route = useRoute()
-
+const authStore = useAuthStore();
 const schema = [{
     $formkit: 'email',
     name: 'email',
@@ -38,24 +36,4 @@ const schema = [{
     validation: 'required',
   },
 ]
-
-async function login(credential, node) {
-  node.clearErrors()
-
-  const res = await axios.post('auth/login', credential)
-    .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem('user', JSON.stringify(response.data));
-        router.push({
-          name: 'home',
-        })
-      }
-    })
-    .catch((e) => {
-      if (e.response && e.response.status == 401)
-        node.setErrors(["The username or password you entered is incorrect"], {})
-      else
-        node.setErrors([e.message],{})
-    })
-}
 </script>
