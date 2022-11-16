@@ -54,6 +54,43 @@ const router = createRouter({
       ],
     },
     {
+      path: "/settings",
+      name: "Settings",
+      children: [{
+        path: 'jobboard',
+        name: 'SettingJobBoard',
+        component: () => import("../views/SettingJobBoardView.vue"),
+        children: [
+        {
+          path: 'branding',
+          name: 'SettingJobBoardBranding',
+          component: () => import("../views/SettingJobBoardBrandingView.vue"),
+        },
+        {
+          path: 'content',
+          name: 'SettingJobBoardContent',
+          component: () => import("../views/SettingJobBoardContentView.vue"),
+        },
+        {
+          path: 'seo',
+          name: 'SettingJobBoardSeo',
+          component: () => import("../views/SettingJobBoardSeoView.vue"),
+        },
+        {
+          path: 'navigation',
+          name: 'SettingJobBoardNavigation',
+          component: () => import("../views/SettingJobBoardNagigationView.vue"),
+        },
+        {
+          path: 'custom-domain',
+          name: 'SettingJobBoardCustomDomain',
+          component: () => import("../views/SettingJobBoardCustomDomainView.vue"),
+        },
+
+        ]
+      }],
+    },
+    {
       path: "/jobs/new",
       name: "NewJob",
       component: () => import("../views/NewJobView.vue"),
@@ -75,11 +112,10 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user');
   const authStore = useAuthStore();
 
-  if (authRequired && !loggedIn)
-    {
-      next({ name: 'Login' })
-      authStore.returnUrl = to.fullPath;
-    }
-  else next()
-})
+  if (authRequired && !loggedIn) {
+    next({ name: 'Login' })
+    authStore.returnUrl = to.fullPath;
+  } else next()
+});
+
 export default router;

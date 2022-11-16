@@ -48,7 +48,7 @@
     { name: 'Add Candidates', href: '/candidates/new', icon: UserGroupIcon, current: false },
   ]
   const secondaryNavigation = [
-    { name: 'Settings', href: '#', icon: CogIcon },
+    { name: 'App Settings', href: '/settings/jobboard/branding', icon: CogIcon },
     { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
     { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
   ]
