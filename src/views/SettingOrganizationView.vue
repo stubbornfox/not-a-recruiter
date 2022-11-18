@@ -28,7 +28,8 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import axios from 'axios'
-import authHeader from '../auth-header';
+
+import api from '../services/api';
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth';
 
@@ -72,20 +73,19 @@ const schema = [{
 const organization = ref([])
 
 onMounted(() => {
-  debugger
   if (user.organization_ids && user.organization_ids.length > 0)
-    axios.get(`/organizations/${user.organization_ids[0]}`, { headers: authHeader() })
+    api.get(`/organizations/${user.organization_ids[0]}`)
     .then((response) => {
       organization.value = response.data;
     })
     .catch((e) => {
-      error.value.push(e);
+      console.log(e)
     })
 })
 
 async function saveOrganization(modifiedOrganization) {
   if (modifiedOrganization.id)
-    await axios.put(`/organizations/${modifiedOrganization.id}`, { organization: modifiedOrganization }, { headers: authHeader() })
+    await api.put(`/organizations/${modifiedOrganization.id}`, { organization: modifiedOrganization })
     .then((response) => {
       alert('Updated!')
     })
@@ -93,7 +93,7 @@ async function saveOrganization(modifiedOrganization) {
       console.log(e)
     })
   else
-    await axios.post('/organizations', { organization: modifiedOrganization }, { headers: authHeader() })
+    await api.post('/organizations', { organization: modifiedOrganization })
     .then((response) => {
       alert('Created!')
     })
