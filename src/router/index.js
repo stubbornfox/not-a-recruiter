@@ -56,6 +56,7 @@ const router = createRouter({
     {
       path: "/settings",
       name: "Settings",
+      component: () => import("../views/SettingView.vue"),
       children: [{
         path: 'jobboard',
         name: 'SettingJobBoard',
@@ -88,7 +89,11 @@ const router = createRouter({
         },
 
         ]
-      }],
+      },
+        {path: 'organization',
+        name: 'SettingOrganization',
+        component: () => import("../views/SettingOrganizationView.vue")}
+      ],
     },
     {
       path: "/jobs/new",
