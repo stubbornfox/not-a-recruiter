@@ -32,9 +32,9 @@ import axios from 'axios'
 import api from '../services/api';
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth';
-
 const authStore = useAuthStore();
-const user = authStore.user
+const user  = authStore.user;
+
 const schema = [{
     $formkit: 'text',
     name: 'name',
@@ -73,7 +73,7 @@ const schema = [{
 const organization = ref([])
 
 onMounted(() => {
-  if (user.organization_ids && user.organization_ids.length > 0)
+  if (user && user.organization_ids && user.organization_ids.length > 0)
     api.get(`/organizations/${user.organization_ids[0]}`)
     .then((response) => {
       organization.value = response.data;
@@ -95,7 +95,9 @@ async function saveOrganization(modifiedOrganization) {
   else
     await api.post('/organizations', { organization: modifiedOrganization })
     .then((response) => {
-      alert('Created!')
+        alert('Created!')
+        user.organization_ids.push(response.data.id)
+        localStorage.setItem('user', JSON.stringify(user));
     })
     .catch((e) => {
       console.log(e)
