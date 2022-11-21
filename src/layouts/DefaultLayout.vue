@@ -1,59 +1,3 @@
-<script setup>
-  import { RouterLink, RouterView } from "vue-router";
-  import { ref } from 'vue'
-  import {
-    Dialog,
-    DialogPanel,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuItems,
-    TransitionChild,
-    TransitionRoot,
-  } from '@headlessui/vue'
-
-  import {
-    Bars3CenterLeftIcon,
-    BellIcon,
-    ClockIcon,
-    CogIcon,
-    CreditCardIcon,
-    DocumentChartBarIcon,
-    HomeIcon,
-    QuestionMarkCircleIcon,
-    ScaleIcon,
-    ShieldCheckIcon,
-    UserGroupIcon,
-    XMarkIcon,
-  } from '@heroicons/vue/24/outline'
-  import {
-    BanknotesIcon,
-    BuildingOfficeIcon,
-    CheckCircleIcon,
-    ChevronDownIcon,
-    ChevronRightIcon,
-    MagnifyingGlassIcon,
-  } from '@heroicons/vue/20/solid'
-
-  import { storeToRefs } from 'pinia';
-
-  import { useAuthStore } from '@/stores/auth';
-
-  const authStore = useAuthStore();
-  const { user } = storeToRefs(authStore);
-
-  const navigation = [
-    { name: 'Home', href: '/', icon: HomeIcon, current: true },
-    { name: 'Add job', href: '/jobs/new', icon: DocumentChartBarIcon, current: false },
-    { name: 'Add Candidates', href: '/candidates/new', icon: UserGroupIcon, current: false },
-  ]
-  const secondaryNavigation = [
-    { name: 'App Settings', href: '/settings/organization', icon: CogIcon },
-    { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
-    { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
-  ]
-  const sidebarOpen = ref(false)
-</script>
 <template>
   <div class="h-full">
     <TransitionRoot as="template" :show="sidebarOpen">
@@ -73,7 +17,10 @@
                 </div>
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
-                <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300" alt="Easywire logo" />
+                <RouterLink :to="{name: 'Organizations'}" class="inline-block h-8 w-8 rounded-md bg-mute flex items-center justify-center">
+                  <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
+                </RouterLink>
+                <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
               </div>
               <nav class="mt-5 h-full flex-shrink-0 divide-y divide-blue-800 overflow-y-auto" aria-label="Sidebar">
                 <div class="space-y-1 px-2">
@@ -104,7 +51,10 @@
       <!-- Sidebar component, swap this element with another sidebar if you like -->
       <div class="flex flex-grow flex-col overflow-y-auto bg-blue-700 pt-5 pb-4">
         <div class="flex flex-shrink-0 items-center px-4">
-          <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=cyan&shade=300" alt="Easywire logo" />
+          <RouterLink :to="{name: 'Organizations'}" class="inline-block h-8 w-8 rounded-md bg-mute flex items-center justify-center">
+            <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
+          </RouterLink>
+          <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
         </div>
         <nav class="mt-5 flex flex-1 flex-col divide-y divide-blue-800 overflow-y-auto" aria-label="Sidebar">
           <div class="space-y-1 px-2">
@@ -151,10 +101,10 @@
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none bg-mute">
                   <MenuItem v-slot="{ active }" class="hover:bg-soft">
-                    <RouterLink :to="{name: 'AccountProfile'}" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']"> Account Settings</RouterLink>
-                    </MenuItem>
+                  <RouterLink :to="{name: 'AccountProfile'}" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']"> Account Settings</RouterLink>
+                  </MenuItem>
                   <MenuItem v-slot="{ active }" class="hover:bg-soft">
-                    <button @click="authStore.logout()" class="block text-left px-4 py-2 text-sm w-full">Logout</button>
+                  <button @click="authStore.logout()" class="block text-left px-4 py-2 text-sm w-full">Logout</button>
                   </MenuItem>
                 </MenuItems>
               </transition>
@@ -168,3 +118,60 @@
     </div>
   </div>
 </template>
+<script setup>
+import { RouterLink, RouterView } from "vue-router";
+import { ref } from 'vue'
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
+
+import {
+  Bars3CenterLeftIcon,
+  BellIcon,
+  ClockIcon,
+  CogIcon,
+  CreditCardIcon,
+  DocumentChartBarIcon,
+  HomeIcon,
+  QuestionMarkCircleIcon,
+  ScaleIcon,
+  ShieldCheckIcon,
+  UserGroupIcon,
+  XMarkIcon,
+} from '@heroicons/vue/24/outline'
+import {
+  BanknotesIcon,
+  BuildingOfficeIcon,
+  CheckCircleIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  MagnifyingGlassIcon,
+} from '@heroicons/vue/20/solid'
+
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '@/stores/auth';
+import { useOrganizationStore } from '../stores/organization'
+
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
+const { organization } = storeToRefs(useOrganizationStore())
+
+const navigation = [
+  { name: 'Home', href: '/', icon: HomeIcon, current: true },
+  { name: 'Add job', href: '/jobs/new', icon: DocumentChartBarIcon, current: false },
+  { name: 'Add Candidates', href: '/candidates/new', icon: UserGroupIcon, current: false },
+]
+const secondaryNavigation = [
+  { name: 'App Settings', href: '/settings/organization', icon: CogIcon },
+  { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
+  { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
+]
+const sidebarOpen = ref(false)
+</script>

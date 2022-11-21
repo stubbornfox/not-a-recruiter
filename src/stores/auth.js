@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from "../router";
-
+import { useOrganizationStore } from '../stores/organization'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -19,6 +19,7 @@ export const useAuthStore = defineStore('auth', {
           if (response.data.token) {
             const user = response.data
             this.user = user
+            useOrganizationStore().organization = user.organization
             localStorage.setItem('user', JSON.stringify(user));
             router.push(this.returnUrl || '/');
           }

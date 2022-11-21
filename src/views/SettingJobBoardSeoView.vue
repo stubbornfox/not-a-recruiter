@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" id="jobSeoForm" @submit="saveJobboard" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false :value="editJob">
+  <FormKit type="form" id="jobSeoForm" @submit="$emit('save-setting')" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false :value="editJob">
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div>
@@ -40,14 +40,4 @@ const schema = [{
     validation: 'required',
   }
 ]
-
-async function saveJobboard(modifiedJobboard) {
-  const res = await axios.put(`/jobs/${slug}`, modifiedJob)
-    .then((response) => {
-      alert('Updated!')
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-}
 </script>

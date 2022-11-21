@@ -7,7 +7,7 @@ const router = createRouter({
     import.meta.env.BASE_URL),
   routes: [{
       path: "/",
-      name: "home",
+      name: "Home",
       component: HomeView,
     },
     {
@@ -20,6 +20,18 @@ const router = createRouter({
       path: "/register",
       name: "Register",
       component: () => import("../views/RegisterView.vue"),
+      meta: { layout: 'PlainLayout' }
+    },
+    {
+      path: "/organizations",
+      name: "Organizations",
+      component: () => import("../views/OrganizationsView.vue"),
+      meta: { layout: 'PlainLayout' }
+    },
+    {
+      path: "/organizations/new",
+      name: "NewOrganization",
+      component: () => import("../views/NewOrganizationView.vue"),
       meta: { layout: 'PlainLayout' }
     },
     {

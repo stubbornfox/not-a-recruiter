@@ -3,13 +3,13 @@ import authHeader from '../auth-header';
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth';
 
-const authStore = useAuthStore();
-
-const instance = axios.create({});
+const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
 
 instance.interceptors.request.use(
   (config) => {
-    const user = authStore.user;
+    const user = useAuthStore().user;
     if (user && user.token) {
       config.headers["Authorization"] = 'Bearer ' + user.token;
     }
@@ -32,7 +32,7 @@ instance.interceptors.response.use(
       if (err.response.status === 401 && !originalConfig._retry) {
         originalConfig._retry = true;
 
-        authStore.logout()
+        useAuthStore().logout()
       }
     }
 

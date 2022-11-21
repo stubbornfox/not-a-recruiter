@@ -2,7 +2,7 @@
   <div class="flex flex-col flex-grow">
     <div :key="job.id" class='job-header'>
       <div class="flex items-center ">
-        <RouterLink :to="{name: 'home'}">
+        <RouterLink :to="{name: 'Home'}">
           <fa :icon="['fas', 'fa-arrow-left']"></fa>
         </RouterLink>
         <h2 class="font-semibold text-xl pl-2 ">{{job.title}}</h2>
