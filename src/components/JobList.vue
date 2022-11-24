@@ -2,7 +2,7 @@
   <div class="overflow-hidden  shadow sm:rounded-md">
     <ul role="list" class="divide-y divide-gray-200">
       <li v-for="job in jobs" :key="job.id">
-        <a href="#" class="block hover:bg-gray-50">
+        <a href="#" class="block hover:bg-soft">
           <div class="px-4 py-4 sm:px-6">
             <div class="flex items-center justify-between">
               <RouterLink :to="{ name: 'JobBoard', params: { slug: job.slug } }"

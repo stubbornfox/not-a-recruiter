@@ -20,7 +20,11 @@ export const useAuthStore = defineStore('auth', {
             const user = response.data
             this.user = user
             localStorage.setItem('user', JSON.stringify(user));
-            router.push(this.returnUrl || '/');
+            if (user.organization === undefined) {
+              router.push({name: "NewOrganization"})
+            } else {
+              router.push(this.returnUrl || '/');
+            }
           }
         })
         .catch((e) => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full">
+  <div class="h-full text-mute">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog as="div" class="relative z-40 lg:hidden" @close="sidebarOpen = false">
         <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
@@ -7,7 +7,7 @@
         </TransitionChild>
         <div class="fixed inset-0 z-40 flex">
           <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
-            <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col bg-blue-700 pt-5 pb-4">
+            <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col border-r border-color pt-5 pb-4">
               <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="absolute top-0 right-0 -mr-12 pt-2">
                   <button type="button" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebarOpen = false">
@@ -17,21 +17,21 @@
                 </div>
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
-                <RouterLink :to="{name: 'Organizations'}" class="inline-block h-8 w-8 rounded-md bg-mute flex items-center justify-center">
+                <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
                   <span class="text-heading text-lg font-bold">{{organization.value.name[0]}}</span>
                 </RouterLink>
                 <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
               </div>
-              <nav class="mt-5 h-full flex-shrink-0 divide-y divide-blue-800 overflow-y-auto" aria-label="Sidebar">
+              <nav class="mt-5 h-full flex-shrink-0 divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
                 <div class="space-y-1 px-2">
-                  <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-blue-800 text-white' : 'text-blue-100 hover:text-white hover:bg-blue-600', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+                  <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-pink-700 text-white' : 'text-blue-100 hover:text-white hover:bg-soft', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
                     <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-blue-200" aria-hidden="true" />
                     {{ item.name }}
                   </a>
                 </div>
                 <div class="mt-6 pt-6">
                   <div class="space-y-1 px-2">
-                    <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-blue-100 hover:bg-blue-600 hover:text-white">
+                    <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-blue-100 hover:bg-soft hover:text-white">
                       <component :is="item.icon" class="mr-4 h-6 w-6 text-blue-200" aria-hidden="true" />
                       {{ item.name }}
                     </a>
@@ -49,23 +49,23 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col z-40">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
-      <div class="flex flex-grow flex-col overflow-y-auto bg-blue-700 pt-5 pb-4">
+      <div class="flex flex-grow flex-col overflow-y-auto border-r border-color pt-5 pb-4">
         <div class="flex flex-shrink-0 items-center px-4">
-          <RouterLink :to="{name: 'Organizations'}" class="inline-block h-8 w-8 rounded-md bg-mute flex items-center justify-center">
+          <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
             <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
           </RouterLink>
           <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
         </div>
-        <nav class="mt-5 flex flex-1 flex-col divide-y divide-blue-800 overflow-y-auto" aria-label="Sidebar">
+        <nav class="mt-5 flex flex-1 flex-col divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
           <div class="space-y-1 px-2">
-            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-blue-800 text-white' : 'text-blue-100 hover:text-white hover:bg-blue-600', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-pink-700 text-white' : 'text-blue-100 hover:text-white hover:bg-soft', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
               <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-blue-200" aria-hidden="true" />
               {{ item.name }}
             </a>
           </div>
           <div class="mt-6 pt-6">
             <div class="space-y-1 px-2">
-              <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-blue-100 hover:bg-blue-600 hover:text-white">
+              <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-blue-100 hover:bg-soft hover:text-white">
                 <component :is="item.icon" class="mr-4 h-6 w-6 text-blue-200" aria-hidden="true" />
                 {{ item.name }}
               </a>
@@ -92,14 +92,14 @@
             <!-- Profile dropdown -->
             <Menu as="div" class="relative ml-3">
               <div>
-                <MenuButton class="flex max-w-xs items-center rounded-full  text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 lg:rounded-md lg:p-2 lg:hover:bg-gray-50">
-                  <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                  <span class="ml-3 hidden text-sm font-medium lg:block"><span class="sr-only">Open user menu for </span>{{user?.name}}</span>
+                <MenuButton class="flex max-w-xs items-center rounded-full  text-sm focus:outline-none lg:rounded-md lg:p-2 lg:hover:bg-soft">
+                  <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                  <span class="ml-3 hidden text-sm font-medium lg:block text-heading"><span class="sr-only">Open user menu for </span>{{user?.name}}</span>
                   <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none bg-mute">
+                <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none bg-mute text-heading">
                   <MenuItem v-slot="{ active }" class="hover:bg-soft">
                   <RouterLink :to="{name: 'AccountProfile'}" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']"> Account Settings</RouterLink>
                   </MenuItem>
@@ -119,7 +119,7 @@
   </div>
 </template>
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView, useRoute } from "vue-router";
 import { ref } from 'vue'
 import {
   Dialog,
@@ -168,16 +168,11 @@ if (organization.value == undefined) {
   getCurrentOrganization(user.value)
 }
 
-
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon, current: true },
-  { name: 'Add job', href: '/jobs/new', icon: DocumentChartBarIcon, current: false },
-  { name: 'Add Candidates', href: '/candidates/new', icon: UserGroupIcon, current: false },
+  { name: 'Home', href: '/', icon: HomeIcon },
 ]
 const secondaryNavigation = [
   { name: 'App Settings', href: '/settings/organization', icon: CogIcon },
-  { name: 'Help', href: '#', icon: QuestionMarkCircleIcon },
-  { name: 'Privacy', href: '#', icon: ShieldCheckIcon },
 ]
 const sidebarOpen = ref(false)
 </script>

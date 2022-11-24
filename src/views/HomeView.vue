@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div class="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
-      <div class="py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200">
+      <div class="py-6 md:flex md:items-center md:justify-between lg:border-t border-color">
         <div class="min-w-0 flex-1">
           <!-- Profile -->
           <div class="flex items-center">
@@ -27,8 +27,8 @@
           </div>
         </div>
         <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
-          <!-- <button type="button" class="inline-flex items-center rounded-md border border-gray-300  px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Add money</button> -->
-          <RouterLink type="button" to="/jobs/new" class="inline-flex items-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Post a job</RouterLink>
+          <!-- <button type="button" class="inline-flex items-center rounded-md border border-gray-300  px-4 py-2 text-sm font-medium text-color-text shadow-sm hover:bg-soft focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Add money</button> -->
+          <RouterLink type="button" to="/jobs/new" class="inline-flex items-center rounded-md border border-transparent bg-pink-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Post a job</RouterLink>
         </div>
       </div>
       <div class="min-h-full">

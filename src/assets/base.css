@@ -78,18 +78,14 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.bg-mute {
-  background-color: var(--color-background-mute);
-}
-
-.hover\:bg-soft:hover, .bg-soft {
-  background-color: var(--color-background-soft);
-}
-
 .text-heading {
   color: var(--color-heading);
 }
 
-.hover\:bg-smoke:hover, .bg-smoke {
-  background-color: var(--color-background-smoke);
+.border-color {
+  border-color: var(--color-border) ;
+}
+
+.divide-border-color > :not([hidden]) ~ :not([hidden]) {
+  border-color:  var(--color-border) ;
 }

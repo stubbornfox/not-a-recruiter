@@ -3,7 +3,7 @@
     <div class="rounded bg-soft p-8">
       <div class="flex justify-between items-center">
         <h2 class="text-heading text-2xl font-semibold leading-10">Your organizations</h2>
-        <RouterLink :to="{name: 'NewOrganization'}" class="hover:bg-smoke rounded-md p-2 flex items-center justify-center h-8 w-8">
+        <RouterLink :to="{name: 'NewOrganization'}" class="hover:bg-smoke rounded-md p-2 flex items-center justify-center h-10 w-10">
           <PlusIcon class="flex-shrink h-5 w-5 mr-0" aria-hidden="true"></PlusIcon>
         </RouterLink>
       </div>

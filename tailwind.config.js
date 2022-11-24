@@ -11,6 +11,10 @@ module.exports = {
     extend: {
       colors: {
         blue: colors.blue,
+        'mute': 'var(--color-background-mute)',
+        'soft': 'var(--color-background-soft)',
+        'smoke': 'var(--color-background-smoke)',
+        'color-text': 'var(--color-text)',
       },
     }
   },
