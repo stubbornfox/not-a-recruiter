@@ -19,7 +19,6 @@ export const useAuthStore = defineStore('auth', {
           if (response.data.token) {
             const user = response.data
             this.user = user
-            useOrganizationStore().organization = user.organization
             localStorage.setItem('user', JSON.stringify(user));
             router.push(this.returnUrl || '/');
           }

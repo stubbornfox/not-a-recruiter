@@ -18,7 +18,7 @@
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
                 <RouterLink :to="{name: 'Organizations'}" class="inline-block h-8 w-8 rounded-md bg-mute flex items-center justify-center">
-                  <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
+                  <span class="text-heading text-lg font-bold">{{organization.value.name[0]}}</span>
                 </RouterLink>
                 <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
               </div>
@@ -162,6 +162,12 @@ import { useOrganizationStore } from '../stores/organization'
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 const { organization } = storeToRefs(useOrganizationStore())
+const { getCurrentOrganization } = useOrganizationStore()
+
+if (organization.value == undefined) {
+  getCurrentOrganization(user.value)
+}
+
 
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon, current: true },

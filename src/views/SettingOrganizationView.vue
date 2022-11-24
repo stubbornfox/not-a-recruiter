@@ -2,11 +2,11 @@
   <div class="flex flex-grow">
     <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8 h-full flex flex-col flex-grow h-full">
       <div class="h-full flex flex-col flex-grow mt-4">
-        <FormKit type="form" id="saveOrganization" @submit="saveOrganization" form-class="space-y-8 divide-y divide-gray-200" v-model="organization" :actions=false :incomplete-message=false novalidate>
+        <FormKit type="form" id="saveOrganization" @submit="(o) => updateOrganization(o)" form-class="space-y-8 divide-y divide-gray-200" v-model="organization" :actions=false :incomplete-message=false novalidate>
           <div class="space-y-8 divide-y divide-gray-200">
             <div>
               <div>
-                <h3 class="text-lg font-medium leading-6 ">Organization management</h3>
+                <h3 class="text-lg font-medium leading-6 text-heading">Organization management</h3>
                 <p class="mt-1 text-sm text-gray-500">Here's where you can edit and update your organization's information.</p>
               </div>
               <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
@@ -28,13 +28,15 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import axios from 'axios'
-
+import { storeToRefs } from 'pinia'
 import api from '../services/api';
 import { ref, onMounted } from 'vue'
 import { useAuthStore } from '@/stores/auth';
+import { useOrganizationStore } from '@/stores/organization';
+const { updateOrganization } = useOrganizationStore()
 const authStore = useAuthStore();
-const user  = authStore.user;
-
+const user = authStore.user;
+const organization = { ...useOrganizationStore().organization }
 const schema = [{
     $formkit: 'text',
     name: 'name',
@@ -69,38 +71,4 @@ const schema = [{
     }
   }
 ]
-
-const organization = ref([])
-
-onMounted(() => {
-  if (user && user.organization_ids && user.organization_ids.length > 0)
-    api.get(`/organizations/${user.organization_ids[0]}`)
-    .then((response) => {
-      organization.value = response.data;
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-})
-
-async function saveOrganization(modifiedOrganization) {
-  if (modifiedOrganization.id)
-    await api.put(`/organizations/${modifiedOrganization.id}`, { organization: modifiedOrganization })
-    .then((response) => {
-      alert('Updated!')
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-  else
-    await api.post('/organizations', { organization: modifiedOrganization })
-    .then((response) => {
-        alert('Created!')
-        user.organization_ids.push(response.data.id)
-        localStorage.setItem('user', JSON.stringify(user));
-    })
-    .catch((e) => {
-      console.log(e)
-    })
-}
 </script>
