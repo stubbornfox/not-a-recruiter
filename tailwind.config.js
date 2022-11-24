@@ -5,7 +5,6 @@ const colors = require('tailwindcss/colors')
 const formTailwind = require('@tailwindcss/forms')
 
 module.exports = {
-
   content: ["./index.html","./src/**/*.{vue,js,ts,jsx,ts}"],
   theme: {
     extend: {
@@ -18,5 +17,6 @@ module.exports = {
       },
     }
   },
+  important: true,
   plugins: [formKitTailwind, formTailwind],
 }

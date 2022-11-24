@@ -18,7 +18,7 @@
 import { RouterLink, RouterView } from "vue-router";
 const navigation = [
   { name: 'Organization', href: { name: 'SettingOrganization', key: 'SettingOrganization' } },
-  { name: 'JobBoard', href: { name: 'SettingJobBoardBranding', key: 'SettingJobBoard'} },
+  { name: 'Job board', href: { name: 'SettingJobBoardBranding', key: 'SettingJobBoard'} },
 ]
 </script>
 <style scoped>
