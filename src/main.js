@@ -9,6 +9,7 @@ import '@formkit/themes/genesis'
 import "./assets/main.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 import { plugin, defaultConfig } from '@formkit/vue'

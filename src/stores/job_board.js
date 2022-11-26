@@ -34,7 +34,7 @@ export const useJobBoardStore = defineStore({
         const job_boards = await api.get('/job_boards')
           .then((response) => response.data)
         if (job_boards.length > 0)
-          this.job_board = job_boards[1]
+          this.job_board = job_boards[0]
       } catch (error) {
         this.error = error
       } finally {
@@ -43,8 +43,9 @@ export const useJobBoardStore = defineStore({
     },
 
     async saveJobBoard(job_board_params) {
-      if (job_board_params.id)
-        await this.updateJobBoard(job_board_params.id, job_board_params)
+      const id = job_board_params.get('job_board[id]')
+      if (id)
+        await this.updateJobBoard(id, job_board_params)
       else
         await this.createJobBoard(job_board_params)
 
@@ -59,7 +60,8 @@ export const useJobBoardStore = defineStore({
           }
         }
         this.job_board = await api.post("/job_boards", job_board_params, config)
-          .then((response) => response.data.json())
+          .then((response) => response.data)
+        alert('Created')
       } catch (error) {
         this.error = error
       } finally {
@@ -70,8 +72,14 @@ export const useJobBoardStore = defineStore({
     async updateJobBoard(id, job_board_params) {
       this.loading = true
       try {
-        this.job_board = await api.put(`/job_boards/${id}`, { job_board: job_board_params })
-          .then((response) => response.data.json())
+        const config = {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          }
+        }
+        this.job_board = await api.put(`/job_boards/${id}`, job_board_params, config)
+          .then((response) => response.data)
+        alert('Update')
       } catch (error) {
         this.error = error
       } finally {

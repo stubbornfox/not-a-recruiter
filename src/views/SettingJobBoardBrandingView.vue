@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" #default="{ value }" @submit="submitHandler" id="jobBoardBrandingForm" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false>
+  <FormKit type="form" #default="{ value }" @submit="submitHandler" id="jobBoardBrandingForm" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false :value="job_board">
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div>
@@ -12,15 +12,23 @@
               logo_only: 'Show logo only',
               name_only: 'Show name only',
             }" help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
-          <FormKit v-if="value.header_setup == 'logo_only' || value.header_setup == 'logo_and_name'" type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image" />
-          <div class="sm:col-span-4" v-show="url">
-            <img :src="url" class="w-20 h-20 rounded border-4 border-mute" />
+          <div v-if="value.header_setup == 'logo_only' || value.header_setup == 'logo_and_name'" class="sm:col-span-4">
+            <FormKit type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image" />
+            <div class="sm:col-span-4" v-show="url">
+              <img :src="url" class="w-20 h-20 rounded border-4 border-mute" />
+            </div>
           </div>
           <FormKit type="select" label="Job board social media image" name="og_image_setup" :options="{
               default: 'Default',
               custom: 'Custom',
               nothing: 'None',
             }" help="The image that will be displayed when your job board is shared on sites such as LinkedIn, Twitter, and Facebook." />
+          <div v-if="value.og_image_setup == 'custom'" class="sm:col-span-4">
+            <FormKit type="file" label="Custom social media image" accept=".png,.jpg,.svg,.jpeg" help="Provide the custom image to use. It should be an 1.9:1 ratio image with dimensions of 1200 x 630. PNG and JPG file types are acceptable. If no image is provided, the default will be used." @change="socialMediaImageChange" name="social_media_image" />
+            <div class="sm:col-span-4" v-show="socialMediaImageUrl">
+              <img :src="socialMediaImageUrl" class="w-40 h-20 rounded border-4 border-mute" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,35 +43,51 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
-import { useRoute } from "vue-router";
 const emit = defineEmits(['saveSetting'])
 const error = ref([])
 
+let urlHasChanged = false
+let socialMediaImageUrlHasChanged = false
 const props = defineProps({
   job_board: Object,
 })
 
 const url = ref(null)
+const socialMediaImageUrl = ref(null)
 
 onMounted(() => {
   url.value = props.job_board.logo_image
+  socialMediaImageUrl.value = props.job_board.social_media_image
 })
 
 function onFileChange(e) {
   const file = e.target.files[0];
   url.value = URL.createObjectURL(file);
+  urlHasChanged = true
+}
+
+
+function socialMediaImageChange(e) {
+  const file = e.target.files[0];
+  socialMediaImageUrl.value = URL.createObjectURL(file);
+  socialMediaImageUrlHasChanged = true
 }
 
 const submitHandler = async (data) => {
   const body = new FormData()
-
+  body.append('job_board[id]', props.job_board.id)
   body.append('job_board[header_setup]', data.header_setup)
   body.append('job_board[og_image_setup]', data.og_image_setup)
-  body.append('job_board[organization_id]', 5)
+  body.append('job_board[organization_id]', props.job_board.organization_id)
 
-  data.logo_image.forEach((fileItem) => {
-    body.append('job_board[logo_image]', fileItem.file)
-  })
+  if (urlHasChanged)
+    data.logo_image.forEach((fileItem) => {
+      body.append('job_board[logo_image]', fileItem.file)
+    })
+  if (socialMediaImageUrlHasChanged)
+    data.social_media_image.forEach((fileItem) => {
+      body.append('job_board[social_media_image]', fileItem.file)
+    })
 
   emit('saveSetting', body)
 }

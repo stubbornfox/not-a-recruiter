@@ -10,8 +10,16 @@ export const useOrganizationStore = defineStore({
     error: null
   }),
   actions: {
-    setOrganization(organization_id) {
-      this.organization = this.organizations.find(o => o.id == organization_id)
+    async setOrganization(organization_id) {
+      try {
+        await api.put(`/organizations/${organization_id}/organizations_users/active`)
+          .then((response) => response.data)
+        this.organization = this.organizations.find(o => o.id == organization_id)
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
     },
 
     getCurrentOrganization(user) {

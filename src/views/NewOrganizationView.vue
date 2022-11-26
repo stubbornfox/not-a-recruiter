@@ -39,11 +39,6 @@ const schema = [{
 }]
 fetchOrganizations()
 
-function viewOrganization(organization_id) {
-  setOrganization(organization_id)
-  router.push({ name: 'Home' })
-}
-
 async function saveOrganization(new_organization) {
   await createOrganization(new_organization)
   if (error.value == undefined) {

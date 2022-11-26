@@ -18,9 +18,9 @@
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
                 <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
-                  <span class="text-heading text-lg font-bold">{{organization.value.name[0]}}</span>
+                  <span class="text-heading text-lg font-bold">{{me?.organization?.name[0]}}</span>
                 </RouterLink>
-                <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
+                <h5 class="text-heading text-md font-semibold ml-4">{{me?.organization?.name}}</h5>
               </div>
               <nav class="mt-5 h-full flex-shrink-0 divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
                 <div class="space-y-1 px-2">
@@ -52,9 +52,9 @@
       <div class="flex flex-grow flex-col overflow-y-auto border-r border-color pt-5 pb-4">
         <div class="flex flex-shrink-0 items-center px-4">
           <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
-            <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
+            <span class="text-heading text-lg font-bold">{{me?.organization?.name[0]}}</span>
           </RouterLink>
-          <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
+          <h5 class="text-heading text-md font-semibold ml-4">{{me?.organization?.name}}</h5>
         </div>
         <nav class="mt-5 flex flex-1 flex-col divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
           <div class="space-y-1 px-2">
@@ -94,7 +94,7 @@
               <div>
                 <MenuButton class="flex max-w-xs items-center rounded-full  text-sm focus:outline-none lg:rounded-md lg:p-2 lg:hover:bg-soft">
                   <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                  <span class="ml-3 hidden text-sm font-medium lg:block text-heading"><span class="sr-only">Open user menu for </span>{{user?.name}}</span>
+                  <span class="ml-3 hidden text-sm font-medium lg:block text-heading"><span class="sr-only">Open user menu for </span>{{me?.name}}</span>
                   <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
                 </MenuButton>
               </div>
@@ -157,16 +157,15 @@ import {
 
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
-import { useOrganizationStore } from '../stores/organization'
+import { useUserStore } from '@/stores/user';
 
 const authStore = useAuthStore();
-const { user } = storeToRefs(authStore);
-const { organization } = storeToRefs(useOrganizationStore())
-const { getCurrentOrganization } = useOrganizationStore()
+const userStore = useUserStore()
 
-if (organization.value == undefined) {
-  getCurrentOrganization(user.value)
-}
+const { me } = storeToRefs(userStore);
+
+userStore.getMe()
+
 
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },
