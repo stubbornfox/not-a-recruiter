@@ -1,5 +1,5 @@
 <template>
-  <FormKit type="form" #default="{ value }" @submit="(job_board) => $emit('save-setting', job_board)" id="jobBoardBrandingForm" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false>
+  <FormKit type="form" #default="{ value }" @submit="submitHandler" id="jobBoardBrandingForm" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false>
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div>
@@ -12,8 +12,8 @@
               logo_only: 'Show logo only',
               name_only: 'Show name only',
             }" help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
-          <FormKit v-if="value.header_setup == 'logo_only' || value.header_setup == 'logo_and_name'" type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image"/>
-          <div class="sm:col-span-4" v-if="url">
+          <FormKit v-if="value.header_setup == 'logo_only' || value.header_setup == 'logo_and_name'" type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image" />
+          <div class="sm:col-span-4" v-show="url">
             <img :src="url" class="w-20 h-20 rounded border-4 border-mute" />
           </div>
           <FormKit type="select" label="Job board social media image" name="og_image_setup" :options="{
@@ -36,23 +36,35 @@
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { useRoute } from "vue-router";
-
-const job = ref({})
+const emit = defineEmits(['saveSetting'])
 const error = ref([])
+
+const props = defineProps({
+  job_board: Object,
+})
+
 const url = ref(null)
+
+onMounted(() => {
+  url.value = props.job_board.logo_image
+})
 
 function onFileChange(e) {
   const file = e.target.files[0];
   url.value = URL.createObjectURL(file);
 }
 
-async function saveJobboard(modifiedJobboard) {
-  const res = await axios.put(`/jobs/${slug}`, modifiedJob)
-    .then((response) => {
-      alert('Updated!')
-    })
-    .catch((e) => {
-      console.log(e)
-    })
+const submitHandler = async (data) => {
+  const body = new FormData()
+
+  body.append('job_board[header_setup]', data.header_setup)
+  body.append('job_board[og_image_setup]', data.og_image_setup)
+  body.append('job_board[organization_id]', 5)
+
+  data.logo_image.forEach((fileItem) => {
+    body.append('job_board[logo_image]', fileItem.file)
+  })
+
+  emit('saveSetting', body)
 }
 </script>
