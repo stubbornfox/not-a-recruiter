@@ -5,6 +5,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     // initialize state from local storage to enable user to stay logged in
     me: null,
+    organization: null,
     loading: false,
     error: null,
   }),
@@ -14,6 +15,7 @@ export const useUserStore = defineStore('user', {
       try {
         this.me = await api.get('/me')
           .then((response) => response.data)
+        this.organization = this.me.organization
       } catch (error) {
         this.error = error
       } finally {

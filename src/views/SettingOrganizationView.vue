@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-grow">
+  <div class="flex flex-grow" v-if="organization">
     <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8 h-full flex flex-col flex-grow h-full">
-      <div class="h-full flex flex-col flex-grow mt-4">
-        <FormKit type="form" id="saveOrganization" @submit="(o) => updateOrganization(o)" form-class="space-y-8 divide-y divide-gray-200" v-model="organization" :actions=false :incomplete-message=false novalidate>
+      <div class="h-full flex flex-col flex-grow mt-4 text-color-text">
+        <FormKit type="form" id="saveOrganization" @submit="(o) => {updateOrganization(o)}" form-class="space-y-8 divide-y divide-gray-200" v-model="organization" :actions=false :incomplete-message=false novalidate>
           <div class="space-y-8 divide-y divide-gray-200">
             <div>
               <div>
@@ -27,16 +27,17 @@
 </template>
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
-import axios from 'axios'
 import { storeToRefs } from 'pinia'
-import api from '../services/api';
 import { ref, onMounted } from 'vue'
-import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 import { useOrganizationStore } from '@/stores/organization';
+
 const { updateOrganization } = useOrganizationStore()
-const authStore = useAuthStore();
-const user = authStore.user;
-const organization = { ...useOrganizationStore().organization }
+const userStore = useUserStore()
+const { me, organization } = storeToRefs(userStore);
+userStore.getMe()
+// const org = ref(me.value.organization)
+
 const schema = [{
     $formkit: 'text',
     name: 'name',

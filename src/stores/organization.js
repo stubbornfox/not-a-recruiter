@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import api from '../services/api';
+import { useUserStore } from './user'
 
 export const useOrganizationStore = defineStore({
   id: 'organization',
@@ -10,11 +11,10 @@ export const useOrganizationStore = defineStore({
     error: null
   }),
   actions: {
-    async setOrganization(organization_id) {
+    async activeOrganization(organization_id) {
       try {
-        await api.put(`/organizations/${organization_id}/organizations_users/active`)
+        useUserStore().organization = await api.put(`/organizations/${organization_id}/organizations_users/active`)
           .then((response) => response.data)
-        this.organization = this.organizations.find(o => o.id == organization_id)
       } catch (error) {
         this.error = error
       } finally {
@@ -22,7 +22,7 @@ export const useOrganizationStore = defineStore({
       }
     },
 
-    getCurrentOrganization(user) {
+    getOrganization() {
       this.organization = user?.organization
     },
 
@@ -44,6 +44,7 @@ export const useOrganizationStore = defineStore({
       try {
         this.organization = await api.post('/organizations', { organization })
           .then((response) => response.data)
+          alert('Created')
       } catch (error) {
         this.error = error
       } finally {
@@ -56,6 +57,7 @@ export const useOrganizationStore = defineStore({
       try {
         this.organization = await api.put(`/organizations/${organization.id}`, { organization })
           .then((response) => response.data)
+           alert('Updated')
       } catch (error) {
         this.error = error
       } finally {

@@ -25,16 +25,18 @@
 <script setup>
 import { storeToRefs } from 'pinia'
 import { useOrganizationStore } from '../stores/organization'
+import { useUserStore } from '@/stores/user';
 import { useAuthStore } from '../stores/auth'
 import { useRouter, RouterLink } from 'vue-router'
 import { PlusIcon } from '@heroicons/vue/24/outline'
 const { organizations } = storeToRefs(useOrganizationStore())
-const { fetchOrganizations, setOrganization } = useOrganizationStore()
+const { fetchOrganizations, activeOrganization } = useOrganizationStore()
 const router = useRouter()
 fetchOrganizations()
 
 function viewOrganization(organization_id) {
-  setOrganization(organization_id)
+  activeOrganization(organization_id)
+  useUserStore().getMe()
   router.push({ name: 'Home' })
 }
 </script>

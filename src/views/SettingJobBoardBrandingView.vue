@@ -11,8 +11,9 @@
               logo_and_name: 'Show logo and name',
               logo_only: 'Show logo only',
               name_only: 'Show name only',
-            }" help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
-          <div v-if="value.header_setup == 'logo_only' || value.header_setup == 'logo_and_name'" class="sm:col-span-4">
+            }"
+            help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
+          <div v-if="value.header_setup !== 'name_only'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
             <FormKit type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image" />
             <div class="sm:col-span-4" v-show="url">
               <img :src="url" class="w-20 h-20 rounded border-4 border-mute" />
@@ -23,7 +24,7 @@
               custom: 'Custom',
               nothing: 'None',
             }" help="The image that will be displayed when your job board is shared on sites such as LinkedIn, Twitter, and Facebook." />
-          <div v-if="value.og_image_setup == 'custom'" class="sm:col-span-4">
+          <div v-if="value.og_image_setup == 'custom'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
             <FormKit type="file" label="Custom social media image" accept=".png,.jpg,.svg,.jpeg" help="Provide the custom image to use. It should be an 1.9:1 ratio image with dimensions of 1200 x 630. PNG and JPG file types are acceptable. If no image is provided, the default will be used." @change="socialMediaImageChange" name="social_media_image" />
             <div class="sm:col-span-4" v-show="socialMediaImageUrl">
               <img :src="socialMediaImageUrl" class="w-40 h-20 rounded border-4 border-mute" />
@@ -49,15 +50,20 @@ const error = ref([])
 let urlHasChanged = false
 let socialMediaImageUrlHasChanged = false
 const props = defineProps({
-  job_board: Object,
+  job_board: {
+    type: Object
+  }
 })
 
 const url = ref(null)
 const socialMediaImageUrl = ref(null)
 
 onMounted(() => {
-  url.value = props.job_board.logo_image
-  socialMediaImageUrl.value = props.job_board.social_media_image
+  if (props.job_board.logo_image)
+    url.value = props.job_board.logo_image
+
+  if (props.job_board.social_media_image)
+    socialMediaImageUrl.value = props.job_board.social_media_image
 })
 
 function onFileChange(e) {
@@ -89,6 +95,6 @@ const submitHandler = async (data) => {
       body.append('job_board[social_media_image]', fileItem.file)
     })
 
-  emit('saveSetting', body)
+  emit('saveSetting', props.job_board.id, body)
 }
 </script>

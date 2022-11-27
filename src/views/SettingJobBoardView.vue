@@ -12,13 +12,19 @@
 import SettingsJobboardSidebar from "../components/SettingsJobboardSidebar.vue";
 import { RouterView } from "vue-router";
 import { useJobBoardStore } from '@/stores/job_board';
+import { useUserStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
-const { saveJobBoard, fetchJobBoards } = useJobBoardStore()
+
+const userStore = useUserStore()
+const { me } = storeToRefs(userStore);
+userStore.getMe()
+
+const { updateJobBoard, fetchJobBoards } = useJobBoardStore()
 const { job_board } = storeToRefs(useJobBoardStore());
 
 fetchJobBoards()
 
-async function saveSetting(job_board_params) {
-  await saveJobBoard(job_board_params)
+async function saveSetting(id, job_board_params) {
+  await updateJobBoard(id, job_board_params)
 }
 </script>

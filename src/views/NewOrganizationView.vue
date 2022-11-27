@@ -29,7 +29,7 @@ import { useOrganizationStore } from '../stores/organization'
 import { useAuthStore } from '../stores/auth'
 import { useRouter, RouterLink } from 'vue-router'
 const { organizations, error } = storeToRefs(useOrganizationStore())
-const { fetchOrganizations, setOrganization, createOrganization } = useOrganizationStore()
+const { fetchOrganizations, activeOrganization, createOrganization } = useOrganizationStore()
 const router = useRouter()
 const schema = [{
   $formkit: 'text',

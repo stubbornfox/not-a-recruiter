@@ -18,9 +18,9 @@
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
                 <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
-                  <span class="text-heading text-lg font-bold">{{me?.organization?.name[0]}}</span>
+                  <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
                 </RouterLink>
-                <h5 class="text-heading text-md font-semibold ml-4">{{me?.organization?.name}}</h5>
+                <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
               </div>
               <nav class="mt-5 h-full flex-shrink-0 divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
                 <div class="space-y-1 px-2">
@@ -52,9 +52,9 @@
       <div class="flex flex-grow flex-col overflow-y-auto border-r border-color pt-5 pb-4">
         <div class="flex flex-shrink-0 items-center px-4">
           <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
-            <span class="text-heading text-lg font-bold">{{me?.organization?.name[0]}}</span>
+            <span class="text-heading text-lg font-bold">{{organization?.name[0]}}</span>
           </RouterLink>
-          <h5 class="text-heading text-md font-semibold ml-4">{{me?.organization?.name}}</h5>
+          <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
         </div>
         <nav class="mt-5 flex flex-1 flex-col divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
           <div class="space-y-1 px-2">
@@ -161,11 +161,8 @@ import { useUserStore } from '@/stores/user';
 
 const authStore = useAuthStore();
 const userStore = useUserStore()
-
-const { me } = storeToRefs(userStore);
-
+const { me, organization } = storeToRefs(userStore);
 userStore.getMe()
-
 
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },

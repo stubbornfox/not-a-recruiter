@@ -27,39 +27,37 @@
           </div>
         </div>
         <div class="mt-6 flex space-x-3 md:mt-0 md:ml-4">
-          <!-- <button type="button" class="inline-flex items-center rounded-md border border-gray-300  px-4 py-2 text-sm font-medium text-color-text shadow-sm hover:bg-soft focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Add money</button> -->
           <RouterLink type="button" to="/jobs/new" class="inline-flex items-center rounded-md border border-transparent bg-pink-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Post a job</RouterLink>
         </div>
       </div>
       <div class="min-h-full">
-        <JobList :jobs="jobs"/>
+        <JobList :jobs="jobs" />
       </div>
     </div>
   </div>
 </template>
-
 <script setup>
-  import JobList from "../components/JobList.vue";
-  import {ref, onMounted} from 'vue'
-  import axios from 'axios'
+import JobList from "../components/JobList.vue";
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+import { storeToRefs } from 'pinia';
+import { useAuthStore } from '@/stores/auth';
 
-  const jobs = ref([])
-  let error = ref([])
 
-  import { storeToRefs } from 'pinia';
+const jobs = ref([])
+let error = ref([])
 
-  import { useAuthStore } from '@/stores/auth';
 
-  const authStore = useAuthStore();
-  const { user } = storeToRefs(authStore);
+const authStore = useAuthStore();
+const { user } = storeToRefs(authStore);
 
-  onMounted(() => {
-    axios.get('/jobs')
+onMounted(() => {
+  axios.get('/jobs')
     .then((response) => {
       jobs.value = response.data;
     })
-   .catch((e) => {
+    .catch((e) => {
       error.value.push(e);
     })
-  })
+})
 </script>
