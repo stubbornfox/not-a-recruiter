@@ -17,6 +17,18 @@ const router = createRouter({
       meta: { layout: 'PlainLayout' }
     },
     {
+      path: "/:slug",
+      name: "JobBoard",
+      component: () => import("../views/JobBoardView.vue"),
+      meta: { layout: 'PlainLayout' }
+    },
+    {
+      path: "/:slug/preview",
+      name: "JobBoardPreview",
+      component: () => import("../views/JobBoardPreviewView.vue"),
+      meta: { layout: 'PlainLayout' }
+    },
+    {
       path: "/register",
       name: "Register",
       component: () => import("../views/RegisterView.vue"),
@@ -46,8 +58,8 @@ const router = createRouter({
     },
     {
       path: "/jobs/:slug",
-      name: "JobBoard",
-      component: () => import("../views/JobBoardView.vue"),
+      name: "Job",
+      component: () => import("../views/JobView.vue"),
       children: [{
           path: 'setup/details',
           name: 'JobSetupDetails',

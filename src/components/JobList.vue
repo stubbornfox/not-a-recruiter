@@ -5,7 +5,7 @@
         <a href="#" class="block hover:bg-soft">
           <div class="px-4 py-4 sm:px-6">
             <div class="flex items-center justify-between">
-              <RouterLink :to="{ name: 'JobBoard', params: { slug: job.slug } }"
+              <RouterLink :to="{ name: 'Job', params: { slug: job.slug } }"
                            class="truncate text-sm font-medium text-blue-600">{{ job.title }}
               </RouterLink>
               <div class="ml-2 flex flex-shrink-0">
