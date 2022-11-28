@@ -52,9 +52,25 @@ const router = createRouter({
       component: () => import("../views/NewCandidateView.vue"),
     },
     {
-      path: "/account/profile",
-      name: "AccountProfile",
-      component: () => import("../views/AccountProfileView.vue"),
+      path: "/account",
+      name: "AccountSetting",
+      component: () => import("../views/AccountSettingView.vue"),
+      children: [{
+          path: 'profile',
+          name: 'AccountSettingProfile',
+          component: () => import("../views/AccountSettingProfileView.vue"),
+        },
+        {
+          path: 'preferences',
+          name: 'AccountSettingPreferences',
+          component: () => import("../views/AccountSettingPreferencesView.vue"),
+        },
+        {
+          path: 'security',
+          name: 'AccountSettingSecurity',
+          component: () => import("../views/AccountSettingSecurityView.vue"),
+        },
+      ],
     },
     {
       path: "/jobs/:slug",
@@ -82,41 +98,42 @@ const router = createRouter({
       name: "Settings",
       component: () => import("../views/SettingView.vue"),
       children: [{
-        path: 'jobboard',
-        name: 'SettingJobBoard',
-        component: () => import("../views/SettingJobBoardView.vue"),
-        children: [
-        {
-          path: 'branding',
-          name: 'SettingJobBoardBranding',
-          component: () => import("../views/SettingJobBoardBrandingView.vue"),
-        },
-        {
-          path: 'content',
-          name: 'SettingJobBoardContent',
-          component: () => import("../views/SettingJobBoardContentView.vue"),
-        },
-        {
-          path: 'seo',
-          name: 'SettingJobBoardSeo',
-          component: () => import("../views/SettingJobBoardSeoView.vue"),
-        },
-        {
-          path: 'navigation',
-          name: 'SettingJobBoardNavigation',
-          component: () => import("../views/SettingJobBoardNagigationView.vue"),
-        },
-        {
-          path: 'custom-domain',
-          name: 'SettingJobBoardCustomDomain',
-          component: () => import("../views/SettingJobBoardCustomDomainView.vue"),
-        },
+          path: 'jobboard',
+          name: 'SettingJobBoard',
+          component: () => import("../views/SettingJobBoardView.vue"),
+          children: [{
+              path: 'branding',
+              name: 'SettingJobBoardBranding',
+              component: () => import("../views/SettingJobBoardBrandingView.vue"),
+            },
+            {
+              path: 'content',
+              name: 'SettingJobBoardContent',
+              component: () => import("../views/SettingJobBoardContentView.vue"),
+            },
+            {
+              path: 'seo',
+              name: 'SettingJobBoardSeo',
+              component: () => import("../views/SettingJobBoardSeoView.vue"),
+            },
+            {
+              path: 'navigation',
+              name: 'SettingJobBoardNavigation',
+              component: () => import("../views/SettingJobBoardNagigationView.vue"),
+            },
+            {
+              path: 'custom-domain',
+              name: 'SettingJobBoardCustomDomain',
+              component: () => import("../views/SettingJobBoardCustomDomainView.vue"),
+            },
 
-        ]
-      },
-        {path: 'organization',
-        name: 'SettingOrganization',
-        component: () => import("../views/SettingOrganizationView.vue")}
+          ]
+        },
+        {
+          path: 'organization',
+          name: 'SettingOrganization',
+          component: () => import("../views/SettingOrganizationView.vue")
+        }
       ],
     },
     {

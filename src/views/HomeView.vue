@@ -5,11 +5,21 @@
         <div class="min-w-0 flex-1">
           <!-- Profile -->
           <div class="flex items-center">
-            <img class="hidden h-16 w-16 rounded-full sm:block" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
+            <div v-if="me?.profile_picture">
+              <img class="hidden h-16 w-16 rounded-full sm:block" :src="me?.profile_picture" :alt="me?.first_name" />
+            </div>
+            <div v-else>
+              <span class="hidden rounded-full h-16 w-16 bg-mute text-color-text sm:flex items-center justify-center font-bold text-2xl">{{me?.first_name && me?.first_name[0]}}</span>
+            </div>
             <div>
               <div class="flex items-center">
-                <img class="h-16 w-16 rounded-full sm:hidden" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.6&w=256&h=256&q=80" alt="" />
-                <h1 class="ml-3 text-2xl font-bold leading-7  sm:truncate sm:leading-9">Good morning, {{user?.name}}</h1>
+                <div v-if="me?.profile_picture">
+                  <img class="h-16 w-16 rounded-full sm:hidden" :src="me?.profile_picture" :alt="me?.first_name" />
+                </div>
+                <div v-else>
+                  <span class="rounded-full h-16 w-16 bg-mute text-color-text flex items-center justify-center font-bold text-2xl sm:hidden">{{me?.first_name && me?.first_name[0]}}</span>
+                </div>
+                <h1 class="ml-3 text-2xl text-heading font-bold leading-7  sm:truncate sm:leading-9">Good morning, {{me?.first_name}}</h1>
               </div>
               <dl class="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
                 <dt class="sr-only">Company</dt>
@@ -42,6 +52,7 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
+import { useUserStore } from '@/stores/user';
 import api from '../services/api';
 
 const jobs = ref([])
@@ -50,6 +61,7 @@ let error = ref([])
 
 const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
+const { me } = storeToRefs(useUserStore());
 
 onMounted(() => {
   api.get('/jobs')

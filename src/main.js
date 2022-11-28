@@ -3,7 +3,7 @@ import { createPinia } from 'pinia';
 import App from "./App.vue";
 import router from "./router";
 import axios from 'axios'
-
+import applyTheme from './apply-theme'
 import "./assets/tailwind.css";
 import '@formkit/themes/genesis'
 import "./assets/main.css";
@@ -113,3 +113,4 @@ app.use(plugin, defaultConfig({
 
 
 app.mount("#app");
+applyTheme()

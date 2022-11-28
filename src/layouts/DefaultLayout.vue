@@ -96,15 +96,20 @@
             <Menu as="div" class="relative ml-3">
               <div>
                 <MenuButton class="flex max-w-xs items-center rounded-full  text-sm focus:outline-none lg:rounded-md lg:p-2 lg:hover:bg-soft">
-                  <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                  <span class="ml-3 hidden text-sm font-medium lg:block text-heading"><span class="sr-only">Open user menu for </span>{{me?.name}}</span>
+                  <div v-if="me?.profile_picture">
+                    <img class="h-10 w-10 rounded-full" :src="me.profile_picture" alt="" />
+                  </div>
+                  <div v-else>
+                    <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
+                  </div>
+                  <span class="ml-3 hidden text-sm font-medium lg:block text-heading"><span class="sr-only">Open user menu for </span>{{me?.first_name}}</span>
                   <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
                 </MenuButton>
               </div>
               <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                 <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none bg-mute text-heading">
                   <MenuItem v-slot="{ active }" class="hover:bg-soft">
-                  <RouterLink :to="{name: 'AccountProfile'}" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']"> Account Settings</RouterLink>
+                  <RouterLink :to="{name: 'AccountSettingProfile'}" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm']"> Account Settings</RouterLink>
                   </MenuItem>
                   <MenuItem v-slot="{ active }" class="hover:bg-soft">
                   <button @click="authStore.logout()" class="block text-left px-4 py-2 text-sm w-full">Logout</button>
