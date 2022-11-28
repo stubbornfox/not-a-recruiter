@@ -18,7 +18,7 @@
               </TransitionChild>
               <div class="flex flex-shrink-0 items-center px-4">
                 <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
-                  <span class="text-heading text-lg font-semibold">{{organization?.name[0]}}</span>
+                  <span class="text-heading text-lg font-semibold">{{organization?.name ? organization?.name[0] : ''}}</span>
                 </RouterLink>
                 <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
               </div>
@@ -52,7 +52,7 @@
       <div class="flex flex-grow flex-col overflow-y-auto border-r border-color pt-5 pb-4">
         <div class="flex flex-shrink-0 items-center px-4">
           <RouterLink :to="{name: 'Organizations'}" class="text-heading inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center change-current-organization" title="Change current organization" rel="acb">
-            <span class="text-heading text-lg font-semibold organization-initial">{{organization?.name[0]}}</span>
+            <span class="text-heading text-lg font-semibold organization-initial">{{organization?.name ? organization?.name[0] : ''}}</span>
             <i class="text-heading h-5 w-5">
               <ArrowPathRoundedSquareIcon />
             </i>

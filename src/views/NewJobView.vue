@@ -8,10 +8,10 @@
 
 <script setup>
   import JobForm from "../components/JobForm.vue";
-  import axios from 'axios'
+  import api from '../services/api';
 
   async function addJob (job) {
-    const res = await axios.post('/jobs', job)
+    const res = await api.post('/jobs', job)
     .then((response) => {
       alert('Created!')
     })

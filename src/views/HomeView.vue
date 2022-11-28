@@ -42,7 +42,7 @@ import { ref, onMounted } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
-
+import api from '../services/api';
 
 const jobs = ref([])
 let error = ref([])
@@ -52,7 +52,7 @@ const authStore = useAuthStore();
 const { user } = storeToRefs(authStore);
 
 onMounted(() => {
-  axios.get('/jobs')
+  api.get('/jobs')
     .then((response) => {
       jobs.value = response.data;
     })
