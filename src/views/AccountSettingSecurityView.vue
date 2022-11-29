@@ -1,9 +1,9 @@
 <template>
   <div class="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
     <div class="py-6 md:flex md:items-center md:justify-between">
-      <FormKit type="form" id="editAccountForm" @submit="save" form-class="flex-grow-1 space-y-8 lg:w-96" :value="user" :actions=false :incomplete-message=false novalidate>
+      <FormKit type="form" id="editAccountForm" @submit="save" form-class="flex-grow-1 space-y-8 lg:w-96" :actions=false :incomplete-message=false novalidate>
         <div class="space-y-8">
-           <h3 class="text-lg font-medium leading-6 text-heading text-heading">Change password
+          <h3 class="text-lg font-medium leading-6 text-heading text-heading">Change password
           </h3>
           <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
             <FormKitSchema :schema="schema" />
@@ -22,38 +22,35 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia';
 import api from '../services/api';
 import { useAuthStore } from '@/stores/auth';
+import { useToast } from 'vue-toastification';
+import { useUserStore } from '@/stores/user';
 
-const router = useRouter()
-const route = useRoute()
-const authStore = useAuthStore()
-const { user } = storeToRefs(authStore);
+const toast = useToast()
+const { logout } = useAuthStore()
+const { me } = storeToRefs(useUserStore());
 
 const schema = [{
     $formkit: 'password',
     name: 'password',
     label: 'New password',
-    validation: '?length:6',
+    validation: 'required|length:6',
   },
   {
     $formkit: 'password',
     name: 'password_confirmation',
     label: 'Confirm new password',
-    validation: "confirm:password"
+    validation: "required|confirm:password"
   },
 ]
 
 async function save(data, node) {
   node.clearErrors()
-  const res = await api.put(`/users/${data.id}`, { user: data })
+  const res = await api.put(`/users/${me.value.id}`, { user: data })
     .then((response) => {
-      const updatedUser = { ...authStore.user, ...response.data }
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      authStore.user = updatedUser;
-      alert('Updated')
+      toast.success("Updated account password!", { onClose: logout })
     })
     .catch((e) => {
       if (e.response && e.response.status == 422 && e.response.data)

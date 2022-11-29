@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import api from '../services/api';
 import { useUserStore } from './user'
+import { useToast } from 'vue-toastification'
 
 export const useOrganizationStore = defineStore({
   id: 'organization',
@@ -44,7 +45,6 @@ export const useOrganizationStore = defineStore({
       try {
         this.organization = await api.post('/organizations', { organization })
           .then((response) => response.data)
-          alert('Created')
       } catch (error) {
         this.error = error
       } finally {
@@ -54,10 +54,11 @@ export const useOrganizationStore = defineStore({
 
     async updateOrganization(organization) {
       this.loading = true
+      const toast = useToast()
       try {
         this.organization = await api.put(`/organizations/${organization.id}`, { organization })
           .then((response) => response.data)
-           alert('Updated')
+        toast.success("Updated organization successfully!")
       } catch (error) {
         this.error = error
       } finally {

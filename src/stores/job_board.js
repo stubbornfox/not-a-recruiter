@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import api from '../services/api';
+import { useUserStore } from './user'
+import { useToast } from 'vue-toastification'
 
 export const useJobBoardStore = defineStore({
   id: 'job_board',
@@ -44,6 +46,7 @@ export const useJobBoardStore = defineStore({
 
     async updateJobBoard(id, job_board_params) {
       this.loading = true
+      const toast = useToast()
       try {
         const config = {
           headers: {
@@ -52,7 +55,7 @@ export const useJobBoardStore = defineStore({
         }
         this.job_board = await api.put(`/job_boards/${id}`, job_board_params, config)
           .then((response) => response.data)
-        alert('Update')
+        toast.success('Job boards setting saved')
       } catch (error) {
         this.error = error
       } finally {

@@ -10,7 +10,7 @@
               system: 'Sync with system',
               light: 'Light Theme',
               dark: 'Dark Theme',
-            }" help="Select a single theme, or sync with your system and automatically switch between light and dark themes." @change="changeTheme" />
+            }" help="Select a single theme, or sync with your system and automatically switch between light and dark themes." @change="changeTheme" :value="theme"/>
           </div>
         </div>
       </FormKit>
@@ -20,7 +20,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import applyTheme from '../apply-theme'
-
+const theme = localStorage.theme
 function changeTheme(e) {
   localStorage.setItem('theme', e.target.value);
   applyTheme()

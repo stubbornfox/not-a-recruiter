@@ -1,17 +1,23 @@
 <template>
-  <FormKit type="form" id="registerForm" @submit="register" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false novalidate>
+  <div>
+  <FormKit type="form" id="registerForm" @submit="register" form-class="flex-grow-1 space-y-8 w-96  bg-soft p-6 rounded-md" :actions=false :incomplete-message=false novalidate>
     <div class="space-y-8">
+      <h3 class="text-lg font-medium leading-6 text-heading text-heading">Create an account
+      </h3>
       <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
         <FormKitSchema :schema="schema" />
       </div>
     </div>
-    <div class="pt-5">
-      <div class="flex justify-center">
-        <button type="button" class="rounded-md border border-gray-300 py-2 px-4 text-sm font-medium shadow-sm hover:bg-soft focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" @click="$formkit.reset('registerForm')">Reset</button>
-        <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Register</button>
+    <div class="">
+      <div class="flex">
+        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Register</button>
       </div>
     </div>
   </FormKit>
+   <div class="flex text-xs text-color-text">
+      <RouterLink :to="{ name: 'Login'}" class="py-4 px-2 hover:underline">Already have an account?</RouterLink>
+    </div>
+  </div>
 </template>
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
@@ -29,8 +35,14 @@ const schema = [{
   },
   {
     $formkit: 'text',
-    name: 'name',
-    label: 'Full Name',
+    name: 'first_name',
+    label: 'First Name',
+    validation: 'required',
+  },
+  {
+    $formkit: 'text',
+    name: 'last_name',
+    label: 'Last Name',
     validation: 'required',
   },
   {
@@ -53,16 +65,15 @@ async function register(user, node) {
 
   const res = await axios.post('/users', { user })
     .then((response) => {
-      alert('Created')
       router.push({
         name: 'Login',
       })
     })
     .catch((e) => {
       if (e.response && e.response.data)
-        node.setErrors([],e.response.data)
+        node.setErrors([], e.response.data)
       else
-        node.setErrors([e.message],{})
+        node.setErrors([e.message], {})
     })
 }
 </script>

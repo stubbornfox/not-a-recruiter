@@ -3,20 +3,20 @@
     <div class="w-full py-6 lg:border-t border-color">
       <JobForm @save-job="addJob" />
     </div>
-</div>
+  </div>
 </template>
-
 <script setup>
-  import JobForm from "../components/JobForm.vue";
-  import api from '../services/api';
+import JobForm from "../components/JobForm.vue";
+import api from '../services/api';
+import router from "../router";
 
-  async function addJob (job) {
-    const res = await api.post('/jobs', job)
+async function addJob(job) {
+  const res = await api.post('/jobs', job)
     .then((response) => {
-      alert('Created!')
+      router.push({name: 'Home'})
     })
     .catch((e) => {
       console.log(e)
     })
-  }
+}
 </script>

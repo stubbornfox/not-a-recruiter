@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
             if (user.organization === undefined) {
               router.push({name: "NewOrganization"})
             } else {
-              router.push(this.returnUrl || '/');
+              router.push(this.returnUrl || '/jobs');
             }
           }
         })

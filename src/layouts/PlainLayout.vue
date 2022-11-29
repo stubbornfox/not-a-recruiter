@@ -1,9 +1,8 @@
 <template>
   <div class="flex items-center justify-center h-full">
-    <slot />
+    <router-view></router-view>
   </div>
 </template>
-
-<script>
-  export default {}
+<script setup>
+import { RouterView } from "vue-router";
 </script>

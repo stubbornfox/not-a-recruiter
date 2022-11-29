@@ -32,7 +32,7 @@
                 <div class="mt-6 pt-6">
                   <div class="space-y-1 px-2">
                     <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-blue-100 hover:bg-soft hover:text-white">
-                      <component :is="item.icon" class="mr-4 h-6 w-6 text-blue-200" aria-hidden="true" />
+                      <component :is="item.icon" class="mr-4 h-6 w-6 text-color-text" aria-hidden="true" />
                       {{ item.name }}
                     </a>
                   </div>
@@ -61,15 +61,15 @@
         </div>
         <nav class="mt-5 flex flex-1 flex-col divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
           <div class="space-y-1 px-2">
-            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-pink-700 text-white' : 'text-blue-100 hover:text-white hover:bg-soft', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
-              <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-blue-200" aria-hidden="true" />
+            <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-pink-700 text-white' : 'text-color-text hover:text-heading hover:bg-soft', 'group flex items-center px-2 py-2 text-sm leading-6 font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
+              <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0" aria-hidden="true" />
               {{ item.name }}
             </a>
           </div>
           <div class="mt-6 pt-6">
             <div class="space-y-1 px-2">
-              <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-blue-100 hover:bg-soft hover:text-white">
-                <component :is="item.icon" class="mr-4 h-6 w-6 text-blue-200" aria-hidden="true" />
+              <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-sm font-medium leading-6 text-color-text hover:bg-soft hover:text-heading">
+                <component :is="item.icon" class="mr-4 h-6 w-6" aria-hidden="true" />
                 {{ item.name }}
               </a>
             </div>
@@ -121,7 +121,7 @@
         </div>
       </div>
       <main class="flex-1 h-full flex flex-col">
-        <slot></slot>
+       <router-view></router-view>
       </main>
     </div>
   </div>

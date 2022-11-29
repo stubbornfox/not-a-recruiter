@@ -28,19 +28,16 @@
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
 import { ref, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia';
 import api from '../services/api';
-import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
 
-const router = useRouter()
-const route = useRoute()
-const authStore = useAuthStore()
-const { user } = storeToRefs(authStore);
 const { me } = storeToRefs(useUserStore());
+const { getMe } = useUserStore()
 let urlHasChanged = false
 let url = ref(null)
+import { useToast } from 'vue-toastification'
+const toast = useToast()
 
 function onFileChange(e) {
   const file = e.target.files[0];
@@ -63,10 +60,8 @@ async function save(data, node) {
 
   const res = await api.put(`/users/${data.id}`, body)
     .then((response) => {
-      const updatedUser = { ...authStore.user, ...response.data }
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      authStore.user = updatedUser;
-      alert('Updated')
+      getMe()
+      toast.success("Updated account profile!")
     })
     .catch((e) => {
       if (e.response && e.response.status == 422 && e.response.data)
