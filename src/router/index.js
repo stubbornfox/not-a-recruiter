@@ -145,6 +145,11 @@ const router = createRouter({
           component: () => import("../views/JobBoardPreviewView.vue"),
         },
         {
+          path: "/:slug/:job_slug/preview",
+          name: "JobPreview",
+          component: () => import("../views/JobPreviewView.vue"),
+        },
+        {
           path: "/organizations",
           name: "Organizations",
           component: () => import("../views/OrganizationsView.vue"),

@@ -1,7 +1,7 @@
 <template>
   <FormKit type="form" id="loginForm" @submit="authStore.login" form-class="flex-grow-1 space-y-8 w-96" :actions=false :incomplete-message=false novalidate>
     <div class="space-y-8">
-      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
+      <div class="mt-6 grid grid-cols-1 gap-y-6">
         <FormKitSchema :schema="schema" />
       </div>
     </div>

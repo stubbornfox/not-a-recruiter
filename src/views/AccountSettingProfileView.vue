@@ -5,7 +5,7 @@
         <div class="space-y-8">
           <h3 class="text-lg font-medium leading-6 text-heading text-heading">Your profile
           </h3>
-          <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
+          <div class="mt-6 grid grid-cols-1 gap-y-6">
             <FormKit type="text" label="First name" name="first_name" validation="required" />
             <FormKit type="text" label="Last name" name="last_name" validation="required" />
             <FormKit type="email" label="Email" name="email" validation="required|email" />

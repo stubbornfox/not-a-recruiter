@@ -5,7 +5,7 @@
         <h2 class="text-lg font-medium leading-6 text-heading">Job board navigation</h2>
         <p class="mt-1 text-sm text-gray-500">Here's where you can edit the URL and navigation behavior of your job board.</p>
       </div>
-      <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+      <div class="mt-6 grid grid-cols-1 gap-y-6">
         <FormKitSchema :schema="schema" />
       </div>
     </div>

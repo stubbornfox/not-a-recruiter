@@ -6,7 +6,7 @@
           <h2 class="text-lg font-medium leading-6 text-heading">Job board content</h2>
           <p class="mt-1 text-sm text-gray-500">Here's where you can define optional, additional content to be displayed on your job board.</p>
         </div>
-        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div class="mt-6 grid grid-cols-1 gap-y-6">
           <FormKit type="select" label="Job board banner" name="banner_setup" :options="{
               no_banner: 'None',
               image: 'Image',

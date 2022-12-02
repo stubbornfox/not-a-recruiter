@@ -9,7 +9,7 @@
                 <h3 class="text-lg font-medium leading-6 text-heading text-heading">Organization management</h3>
                 <p class="mt-1 text-sm text-gray-500">Here's where you can edit and update your organization's information.</p>
               </div>
-              <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+              <div class="mt-6 grid grid-cols-1 gap-y-6">
                 <FormKitSchema :schema="schema" />
               </div>
             </div>

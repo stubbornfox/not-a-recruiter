@@ -4,7 +4,7 @@
       <div class="space-y-8">
         <h3 class="text-lg font-medium leading-6 text-heading text-heading">Login
         </h3>
-        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4">
+        <div class="mt-6 grid grid-cols-1 gap-y-6">
           <FormKitSchema :schema="schema" />
         </div>
       </div>

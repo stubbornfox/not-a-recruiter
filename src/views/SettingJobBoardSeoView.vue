@@ -6,7 +6,7 @@
           <h2 class="text-lg font-medium leading-6 text-heading">Job board SEO</h2>
           <p class="mt-1 text-sm text-gray-500">Here's where you can configure how your job board appears in search results and when linked on social media.</p>
         </div>
-        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+        <div class="mt-6 grid grid-cols-1 gap-y-6">
           <FormKitSchema :schema="schema" />
         </div>
       </div>

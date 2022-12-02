@@ -31,7 +31,7 @@ app.use(plugin, defaultConfig({
   config: {
     classes: generateClasses({
       text: {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
         input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -40,7 +40,7 @@ app.use(plugin, defaultConfig({
         message: 'text-red-500 mb-1 text-xs'
       },
       file: {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded shadow-sm border',
         input: 'border block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -54,7 +54,7 @@ app.use(plugin, defaultConfig({
         fileRemove: 'hidden',
       },
       email: {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
         input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -63,7 +63,7 @@ app.use(plugin, defaultConfig({
         message: 'text-red-500 mb-1 text-xs'
       },
       url: {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
         input: '$reset text-color-text block w-full min-w-0 flex-1 rounded-r border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -72,7 +72,7 @@ app.use(plugin, defaultConfig({
         message: 'text-red-500 mb-1 text-xs',
       },
       password: {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
         input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -81,7 +81,7 @@ app.use(plugin, defaultConfig({
         message: 'text-red-500 mb-1 text-xs'
       },
       select: {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
         input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -90,7 +90,7 @@ app.use(plugin, defaultConfig({
         message: 'text-red-500 mb-1 text-xs'
       },
       'datetime-local': {
-        outer: '$reset sm:col-span-4',
+        outer: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
         input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
@@ -99,7 +99,7 @@ app.use(plugin, defaultConfig({
         message: 'text-red-500 mb-1 text-xs'
       },
       textarea: {
-        outer: '$reset sm:col-span-6',
+        outer: '$reset',
         wrapper: '$reset',
         label: '$reset block text-sm font-medium text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',

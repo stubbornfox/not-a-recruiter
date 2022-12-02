@@ -49,7 +49,6 @@
 <script setup>
 import JobList from "../components/JobList.vue";
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
