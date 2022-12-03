@@ -3,8 +3,8 @@
     <div class="space-y-8 divide-y divide-gray-200">
       <div>
         <div>
-          <h2 class="text-lg font-medium leading-6 text-heading">Job Details</h2>
-          <p class="mt-1 text-sm text-gray-500">Write a perfect job detail with AI help.</p>
+          <h2 class="text-lg font-medium leading-6 text-heading">Job details</h2>
+          <p class="mt-1 text-sm text-gray-500">Here's where you can edit the general information for this job. This includes things such as the job-type, hiring location, and if it's remote-friendly.</p>
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6">
           <FormKitSchema :schema="schema" />
@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="pt-5">
-      <div class="flex justify-end">
-        <button type="button" class="rounded-md border border-gray-300 py-2 px-4 text-sm font-medium shadow-sm hover:bg-soft focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" @click="$formkit.reset('jobForm')">Reset</button>
+      <div class="flex">
+        <button type="button" class="rounded-md border border-gray-300 py-2 px-4 text-sm font-medium shadow-sm hover:bg-soft focus:outline-none text-color-text" @click="$formkit.reset('jobForm')">Reset</button>
         <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Save</button>
       </div>
     </div>
@@ -77,13 +77,6 @@ const schema = [{
     validation: '',
     options: employmentType
   },
-  {
-    $formkit: 'textarea',
-    name: 'description',
-    label: 'Description',
-    validation: 'required',
-    help: 'Write a few sentences to describe your job and your criteria.'
-  }
 ]
 const emit = defineEmits(['saveJob'])
 

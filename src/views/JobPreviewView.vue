@@ -41,20 +41,28 @@
         </div>
       </div>
     </div>
-    <section class="w-full max-w-5xl px-3">
-      <FormKit type="form" id="jobForm" @submit="saveJob" form-class="flex-grow-1 space-y-8 border border-color-soft p-6 rounded-md max-w-2xl mt-10" :actions=false :incomplete-message=false :value="editJob">
+    <section v-if="!applied" class="w-full max-w-5xl px-3  mt-10">
+      <FormKit type="form" id="jobForm" @submit="submitCandidate" form-class="flex-grow-1 space-y-8 border border-color-soft p-6 rounded-md max-w-2xl" :actions=false :incomplete-message=false>
         <h3 class="text-2xl font-bold leading-6 text-heading text-heading">Apply here!
         </h3>
         <div class="grid grid-cols-1 mx-auto gap-y-3">
           <FormKitSchema :schema="schema" />
         </div>
         <div class="">
-        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit Application</button>
-      </div>
+          <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit Application</button>
+        </div>
       </FormKit>
       <div class="min-h-full">
         <div class="overflow-hidden  shadow sm:rounded-md">
         </div>
+      </div>
+    </section>
+    <section v-else class="w-full max-w-5xl px-3  mt-10">
+      <div class=" border rounded-lg border-mute py-10 text text-center flex flex-col items-center">
+        <i>
+          <PaperAirplaneIcon class="h-5 w-5" /></i>
+        <h5 class="text-md text-heading font-medium">Your application has been sent!</h5>
+        <p class="text-color-text text-sm">You can expect to receive a confirmation email shortly.</p>
       </div>
     </section>
   </div>
@@ -67,10 +75,11 @@ import { storeToRefs } from 'pinia';
 import { useUserStore } from '@/stores/user';
 import api from '../services/api';
 import { useJobBoardStore } from '@/stores/job_board';
-import { ChevronLeftIcon } from '@heroicons/vue/24/outline'
+import { ChevronLeftIcon, PaperAirplaneIcon } from '@heroicons/vue/24/outline'
 import { useRouter, useRoute } from 'vue-router'
 
 const job = ref({})
+const applied = ref(false)
 const { me, organization } = storeToRefs(useUserStore());
 useUserStore().getMe()
 const { job_board } = storeToRefs(useJobBoardStore());
@@ -88,31 +97,45 @@ onMounted(() => {
     })
 })
 
+
+function submitCandidate(candidate) {
+  const body = new FormData()
+  body.append('candidate[name]', candidate.name)
+  body.append('candidate[email]', candidate.email)
+  body.append('candidate[phone]', candidate.phone)
+  body.append('candidate[location]', candidate.location)
+
+  candidate.resume.forEach((fileItem) => {
+    body.append('candidate[resume]', fileItem.file)
+  })
+  api.post(`/publics/organizations/${route.params.slug}/jobs/${route.params.job_slug}/apply`, body )
+    .then((response) => {
+      applied.value = true
+    })
+    .catch((e) => {
+      error.value.push(e);
+    })
+}
 const schema = [{
     $formkit: 'text',
-    name: 'first_name',
-    label: 'First name',
-    validation: 'required',
-  },
-  {
-    $formkit: 'text',
-    name: 'last_name',
-    label: 'Last name',
+    name: 'name',
+    label: 'Name',
     validation: 'required',
   },
   {
     $formkit: 'email',
     name: 'email',
     label: 'Email address',
-    validation: 'required',
+    validation: 'required|email',
   },
   {
-    $formkit: 'text',
+    $formkit: 'tel',
     name: 'phone',
+    validation: "matches:/^[0-9]{2}-[0-9]{4}-[0-9]{4}$/",
+    placeholder: 'xx-xxxx-xxxx',
     label: 'Phone number',
-    validation: 'Location',
   },
-   {
+  {
     $formkit: 'text',
     name: 'location',
     label: 'Location',
@@ -123,7 +146,7 @@ const schema = [{
     $formkit: 'file',
     name: 'resume',
     label: 'Resume',
-    validation: '',
+    validation: 'required',
   }
 ]
 </script>

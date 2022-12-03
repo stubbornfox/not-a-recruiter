@@ -25,7 +25,7 @@
 
 
 <template>
- <div id="candidates" class="px-3">
+ <div id="candidates" class="px-3 lg:w-64">
   <div class="flex justify-between items-center">
     <h5 class="font-semibold">{{jobStage}}</h5>
     <fa :icon="['fas', 'fa-ellipsis-vertical']"></fa>

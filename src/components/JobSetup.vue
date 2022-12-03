@@ -9,7 +9,7 @@
 </script>
 
 <template>
-  <div id="jobsetup" class="pt-5 flex flex-col">
+  <div id="jobsetup" class="pt-5 flex flex-col lg:w-64">
     <nav class="flex-1 space-y-1  px-2" aria-label="Sidebar">
       <RouterLink v-for="item in navigation" :key="item.name" :to="item.href" :class="[$route.name==item.href.name ? 'bg-gray-100 ' : ' hover:bg-soft hover:', 'group flex items-center px-2 py-2 text-md font-medium rounded-md']">
         <span class="flex-1">{{ item.name }}</span>

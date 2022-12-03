@@ -1,73 +1,55 @@
 <script setup>
-  import {ref, onMounted} from 'vue'
-  import axios from 'axios'
-  import {
-    UserIcon,
-  } from '@heroicons/vue/24/outline'
+import {
+  UserIcon,
+  NoSymbolIcon
+} from '@heroicons/vue/24/outline'
 
-  const candidates = ref([])
-  let error = ref([])
+import { RouterLink } from 'vue-router'
 
-  onMounted(() => {
-    axios.get('/candidates')
-    .then((response) => {
-      candidates.value = response.data;
-    })
-   .catch((e) => {
-      error.value.push(e);
-    })
-  })
-
-  defineProps({
-    jobStage: {
-      type: String,
-      default: 'Inbox'
-    },
-  })
+defineProps({
+  candidates: []
+})
 </script>
-
-
 <template>
- <div id="candidates" class="pt-4">
-  <div class="flex justify-between items-center">
-    <h5 class="font-semibold  pl-3">{{jobStage}}</h5>
+  <div id="candidates">
+    <section v-if="candidates.length > 0">
+      <div v-for="(candidate, index) in candidates" :key="candidate.id">
+        <RouterLink class="flex text-color-text" :to="{name: 'Applicant', params: { candidate_id: candidate.id}}">
+          <UserIcon class="flex-shrink h-5 w-5" aria-hidden="true" />
+          <span class="ml-2 text-md">
+            {{candidate.name}}
+          </span>
+        </RouterLink>
+      </div>
+    </section>
+    <section v-else class="text-center pt-8 flex flex-col items-center">
+      <i>
+        <NoSymbolIcon class="flex-shrink h-5 w-5 text-heading" aria-hidden="true" />
+      </i>
+      <h4 class="text-heading font-semibold mt-1">No candidates</h4>
+      <p class="text-color-text text-xs leading-5">There are currently no candidates in this hiring stage</p>
+    </section>
   </div>
-  <div v-for="(candidate, index) in candidates" :key="candidate.id">
-    <a class="flex">
-      <UserIcon class="flex-shrink h-5 w-5" aria-hidden="true"></UserIcon>
-      <span class="ml-2 text-md">
-        {{candidate.first_name}} {{candidate.last_name}}
-      </span>
-    </a>
-  </div>
- </div>
 </template>
-
 <style scoped>
-  #candidates {
-    color: rgb(82, 82, 82);
-    border-right: 1px solid var(--color-border);
-    overflow-y: auto;
-  }
+#candidates a {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+  margin-left: 0.125rem;
+  margin-right: 0.125rem;
+  padding-left: 0.375rem;
+  padding-right: 10px;
+  margin-bottom: 2px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
 
-  #candidates a {
-    height: 32px;
-    display: flex;
-    align-items: center;
-    border-radius: 5px;
-    margin-left: 0.125rem;
-    margin-right: 0.125rem;
-    padding-left: 0.375rem;
-    padding-right: 10px;
-    margin-bottom: 2px;
-    flex-shrink: 0;
-    cursor: pointer;
-  }
-  #jobsidebar a span {
-    margin-right: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-   }
+#jobsidebar a span {
+  margin-right: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 </style>
-

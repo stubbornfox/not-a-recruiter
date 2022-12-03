@@ -15,7 +15,7 @@
             help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
           <div v-if="value.header_setup !== 'name_only'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
             <FormKit type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image" />
-            <div class="sm:col-span-4" v-show="url">
+            <div v-show="url">
               <img :src="url" class="w-20 h-20 rounded border-4 border-mute" />
             </div>
           </div>

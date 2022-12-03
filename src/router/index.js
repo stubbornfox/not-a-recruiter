@@ -11,8 +11,7 @@ const router = createRouter({
       path: '',
       name: 'AppLayout',
       component: DefaultLayout,
-      children: [
-        {
+      children: [{
           path: '/jobs',
           name: 'Home',
           component: HomeView,
@@ -21,7 +20,7 @@ const router = createRouter({
           path: "",
           name: "Index",
           component: 'PlainLayout',
-          redirect: {name: 'Home'}
+          redirect: { name: 'Home' }
         },
         {
           path: "/candidates/new",
@@ -53,6 +52,7 @@ const router = createRouter({
           path: "/jobs/:slug",
           name: "Job",
           component: () => import("../views/JobView.vue"),
+          redirect: { name: 'JobSetupDetails' },
           children: [{
               path: 'setup/details',
               name: 'JobSetupDetails',
@@ -67,6 +67,17 @@ const router = createRouter({
               path: 'stages/:stage/applicants',
               name: 'JobStageApplicant',
               component: () => import("../views/JobStageApplicantView.vue"),
+              children:[{
+                path: ':candidate_id',
+                name: 'Applicant',
+                component: () => import("../views/ApplicantView.vue"),
+                redirect: {name: 'OverviewApplicant'},
+                children: [{
+                  path: 'overview',
+                  name: 'OverviewApplicant',
+                  component: () => import("../views/OverviewApplicantView.vue"),
+                }]
+              }, ]
             },
           ],
         },

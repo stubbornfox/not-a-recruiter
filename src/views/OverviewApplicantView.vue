@@ -3,12 +3,7 @@
     <div class="flex justify-between items-center">
       <h5 class="font-semibold pl-3 text-lg text-heading capitalize">{{stage}}</h5>
     </div>
-    <CandidateList :candidates="candidates" class="max-w-xs w-full" v-if="!loading"/>
-  </div>
-  <div class="w-full h-full flex flex-col flex-grow h-full">
-    <div class="h-full flex flex-col flex-grow ">
-      <RouterView/>
-    </div>
+    <CandidateList :candidates="candidates" class="max-w-xs w-full" />
   </div>
 </template>
 <script setup>
@@ -22,18 +17,14 @@ const { slug, stage } = route.params
 const candidates = ref([])
 const job = ref({})
 let error = ref([])
-let loading = ref(true)
+
 onMounted(() => {
   api.get(`/jobs/${slug}/candidates?stage=${stage}`)
     .then((response) => {
-      loading.value = false
       candidates.value = response.data;
     })
     .catch((e) => {
       error.value.push(e);
-    })
-    .finally(() =>{
-      loading.value = false
     })
 })
 </script>

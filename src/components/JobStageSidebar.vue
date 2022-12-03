@@ -23,7 +23,7 @@
     job: {
       type: Object,
       default(rawProps) {
-        return { inbox: 0, screen: 0, interview: 0, decide: 0, offer: 0, archived: 0, hired: '0' }
+        return { inbox: 0, screen: 0, interview: 0, decide: 0, offer: 0, archived: 0, hired: 0 }
       }
     },
     currentStage: {
@@ -34,11 +34,10 @@
 </script>
 
 <template>
-  <div id="jobsidebar" class="pt-4">
+  <div id="jobsidebar">
     <RouterLink v-for="item in jobStages"
       :key="item.code"
       :to="{ name: 'JobStageApplicant', params: {stage: item.code}}"
-      @click="$emit('changeStage', item.code, item.text)"
       :class="[$route.params.stage == item.code ? 'bg-gray-100 ' :' hover:bg-soft hover:', 'stage-stat justify-between']">
        <div class="flex">
         <component :is="item.icon" class="flex-shrink h-6 w-6" aria-hidden="true" />

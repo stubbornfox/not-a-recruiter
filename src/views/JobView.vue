@@ -1,21 +1,20 @@
 <template>
-  <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8 h-full flex flex-col flex-grow h-full">
+  <div class="w-full px-4 sm:px-6 lg:px-8 h-full flex flex-col flex-grow h-full">
     <div class="h-full flex flex-col flex-grow">
       <div class="flex flex-col flex-grow">
         <div :key="job.id" class='job-header'>
           <div class="flex items-center ">
-            <RouterLink :to="{name: 'Home'}">
-              <fa :icon="['fas', 'fa-arrow-left']"></fa>
+            <RouterLink :to="{name: 'Home'}" class="text-heading hover:bg-soft rounded w-8 h-8 mr-2" title="Back">
+              <i>
+                <ArrowLeftIcon class="h-4 w-4"/>
+              </i>
             </RouterLink>
-            <h2 class="font-semibold text-xl pl-2 ">{{job.title}}</h2>
+            <h2 class="font-medium text-lg text-heading">{{job.title}}</h2>
           </div>
-          <a>
-            <fa :icon="['fas', 'fa-ellipsis-vertical']"></fa>
-          </a>
         </div>
         <div id="jobboard">
-          <JobStageSidebar class="lg:w-1/5 md:w-1/3" />
-          <RouterView />
+          <JobStageSidebar :job="job" class="max-w-xs w-full pt-4"/>
+          <RouterView :key="$route.fullPath"/>
         </div>
       </div>
     </div>
@@ -26,15 +25,15 @@
   import JobStageSidebar from "../components/JobStageSidebar.vue";
   import { RouterLink, RouterView } from "vue-router";
   import {ref, onMounted} from 'vue'
-  import axios from 'axios'
   import { useRoute}  from "vue-router"
-
+  import api from "../services/api"
+  import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
   const job = ref({})
   let error = ref([])
 
   onMounted(() => {
     const slug = useRoute().params.slug
-    axios.get(`/jobs/${slug}`)
+    api.get(`/jobs/${slug}`)
     .then((response) => {
       job.value = response.data;
     })

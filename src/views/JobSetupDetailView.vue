@@ -1,5 +1,5 @@
 <template>
-    <JobSetup class="lg:w-1/4 md:w-1/3"/>
+    <JobSetup class=""/>
     <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8 h-full flex flex-col flex-grow h-full">
         <div class="h-full flex flex-col flex-grow mt-4">
             <JobForm :job="job" @save-job="updateJob" v-if="job.id" />
@@ -8,7 +8,7 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import api from "../services/api"
 import { useRoute } from "vue-router";
 import JobForm from "../components/JobForm.vue";
 import JobSetup from "../components/JobSetup.vue";
@@ -18,7 +18,7 @@ const error = ref([])
 const slug = useRoute().params.slug
 
 onMounted(() => {
-    axios.get(`/jobs/${slug}`)
+    api.get(`/jobs/${slug}`)
         .then((response) => {
             job.value = response.data;
         })
