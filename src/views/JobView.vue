@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full px-4 sm:px-6 lg:px-8 h-full flex flex-col flex-grow h-full">
+  <div class="w-full h-full flex flex-col flex-grow">
     <div class="h-full flex flex-col flex-grow">
       <div class="flex flex-col flex-grow h-full">
         <div :key="job.id" class='job-header'>

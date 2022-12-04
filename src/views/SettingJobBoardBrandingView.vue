@@ -1,7 +1,7 @@
 <template>
-  <FormKit type="form" #default="{ value }" @submit="submitHandler" id="jobBoardBrandingForm" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false :value="job_board">
-    <div class="space-y-8 divide-y divide-gray-200">
-      <div>
+  <FormKit type="form" #default="{ value }" @submit="submitHandler" id="jobBoardBrandingForm" form-class="h-full divide-y divide-border-color overflow-y-auto h-screen" :actions=false :incomplete-message=false :value="job_board">
+    <div class="mb-10">
+      <div class="overflow-y-auto">
         <div>
           <h2 class="text-lg font-medium leading-6 text-heading">Job board branding</h2>
           <p class="mt-1 text-sm text-gray-500">Here's where you can configure how your brand is represented on your job board and links shared on social media.</p>
@@ -11,8 +11,7 @@
               logo_and_name: 'Show logo and name',
               logo_only: 'Show logo only',
               name_only: 'Show name only',
-            }"
-            help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
+            }" help="Choose what to display at the top of your job board. If no logo image is provided, your organization name will be displayed." />
           <div v-if="value.header_setup !== 'name_only'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
             <FormKit type="file" label="Job board logo" accept=".png,.jpg,.svg,.jpeg" help="Your logo should be a square image with dimensions of at least 128px. PNG, JPG, and SVG file types are acceptable. The image you use on your company's Twitter, Facebook, or LinkedIn account should work great." @change="onFileChange" name="logo_image" />
             <div v-show="url">
@@ -33,11 +32,9 @@
         </div>
       </div>
     </div>
-    <div class="pt-5">
-      <div class="flex">
-        <button type="button" class="rounded-md border border-gray-300 py-2 px-4 text-sm font-medium shadow-sm hover:bg-soft focus:outline-none text-color-text" @click="$formkit.reset('jobBoardBrandingForm')">Reset</button>
-        <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Save</button>
-      </div>
+    <div class="h-20 flex items-center">
+      <button type="button" class="rounded-md border border-gray-300 py-2 px-4 text-sm font-medium shadow-sm hover:bg-soft focus:outline-none text-color-text" @click="$formkit.reset('jobBoardBrandingForm')">Reset</button>
+      <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Save</button>
     </div>
   </FormKit>
 </template>

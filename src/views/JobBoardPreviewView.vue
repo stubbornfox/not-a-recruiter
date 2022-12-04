@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full flex items-center flex-col">
+  <div class="h-full w-full flex items-center flex-col overflow-y-auto">
     <header class="header w-full max-w-5xl px-3">
       <div class="h-20 flex items-center justify-between">
         <div v-if="job_board">
@@ -30,7 +30,7 @@
           <FormKitSchema :schema="schema" />
         </div>
       </FormKit>
-      <div class="min-h-full">
+      <div class="h-full">
         <div class="overflow-hidden  shadow sm:rounded-md">
           <ul role="list" class="divide-y divide-gray-200">
             <li v-for="job in jobs" :key="job.id">

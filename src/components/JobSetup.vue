@@ -4,7 +4,6 @@
   const navigation = [
     { name: 'Job details', href: { name: 'JobSetupDetails' } },
     { name: 'Job description',  href: { name: 'JobSetupDescription' }, current: false },
-    { name: 'Hiring Stages', href: '#',  current: false },
   ]
 </script>
 

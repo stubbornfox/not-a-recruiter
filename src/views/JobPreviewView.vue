@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full flex items-center flex-col">
+  <div class="h-full w-full flex items-center flex-col overflow-y-auto">
     <header class="header w-full max-w-5xl px-3">
       <div class="h-20 flex items-center justify-between">
         <div v-if="job_board">
@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
-    <section v-if="!applied" class="w-full max-w-5xl px-3  mt-10">
+    <section v-if="!applied" class="w-full max-w-5xl px-3 my-10">
       <FormKit type="form" id="jobForm" @submit="submitCandidate" form-class="flex-grow-1 space-y-8 border border-color-soft p-6 rounded-md max-w-2xl" :actions=false :incomplete-message=false>
         <h3 class="text-2xl font-bold leading-6 text-heading text-heading">Apply here!
         </h3>
@@ -52,10 +52,6 @@
           <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit Application</button>
         </div>
       </FormKit>
-      <div class="min-h-full">
-        <div class="overflow-hidden  shadow sm:rounded-md">
-        </div>
-      </div>
     </section>
     <section v-else class="w-full max-w-5xl px-3  mt-10">
       <div class=" border rounded-lg border-mute py-10 text text-center flex flex-col items-center">

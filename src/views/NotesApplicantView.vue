@@ -84,7 +84,6 @@ const props = defineProps({
   candidate: { type: Object, default: {} }
 })
 
-console.log(props.candidate)
 const editor = useEditor({
   content: props.candidate.notes,
   extensions: [

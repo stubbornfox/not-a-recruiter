@@ -9,7 +9,7 @@
         </nav>
       </div>
     </div>
-    <div class="w-full">
+    <div class="w-full h-full">
       <RouterView />
     </div>
   </div>

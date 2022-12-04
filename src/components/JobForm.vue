@@ -1,7 +1,7 @@
 <template>
-  <FormKit type="form" id="jobForm" @submit="saveJob" form-class="flex-grow-1 space-y-8 divide-y divide-gray-200" :actions=false :incomplete-message=false :value="editJob">
+  <FormKit type="form" id="jobForm" @submit="saveJob" form-class="h-full divide-y divide-border-color overflow-y-scroll" :actions=false :incomplete-message=false :value="editJob">
     <div class="space-y-8 divide-y divide-gray-200">
-      <div>
+      <div class="overflow-y-auto">
         <div>
           <h2 class="text-lg font-medium leading-6 text-heading">Job details</h2>
           <p class="mt-1 text-sm text-gray-500">Here's where you can edit the general information for this job. This includes things such as the job-type, hiring location, and if it's remote-friendly.</p>
@@ -11,11 +11,8 @@
         </div>
       </div>
     </div>
-    <div class="pt-5">
-      <div class="flex">
-        <button type="button" class="rounded-md border border-gray-300 py-2 px-4 text-sm font-medium shadow-sm hover:bg-soft focus:outline-none text-color-text" @click="$formkit.reset('jobForm')">Reset</button>
-        <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Save</button>
-      </div>
+    <div class="h-20 flex items-center my-10">
+      <button type="submit" class="ml-3 inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Save changes</button>
     </div>
   </FormKit>
 </template>

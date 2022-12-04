@@ -103,7 +103,7 @@ body {
   border-color: var(--color-border);
 }
 
-#root,
+#app,
 body {
   height: 100%;
   overflow: hidden;
