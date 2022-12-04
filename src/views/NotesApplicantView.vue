@@ -60,7 +60,7 @@
       </button>
     </div>
     <editor-content :editor="editor" class="text-color-text flex-grow" />
-    <div class="border-t h-20 flex items-center">
+    <div class="border-t border-color h-20 flex items-center">
       <button class="text-white h-8 inline-flex bg-pink-600 hover:bg-pink-500 rounded items-center px-2" @click="saveNote">
         <span>Save changes</span>
       </button>
