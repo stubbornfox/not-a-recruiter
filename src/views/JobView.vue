@@ -13,7 +13,7 @@
           </div>
         </div>
         <div id="jobboard" class="h-full">
-          <JobStageSidebar :job="job" class="max-w-xs w-full pt-4"/>
+          <JobStageSidebar :job="job" class="max-w-sidebar w-full pt-4"/>
           <RouterView :key="$route.params.stage"/>
         </div>
       </div>

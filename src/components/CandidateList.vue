@@ -1,6 +1,6 @@
 <script setup>
 import {
-  UserIcon,
+  UserCircleIcon,
   NoSymbolIcon
 } from '@heroicons/vue/24/outline'
 
@@ -16,7 +16,7 @@ defineProps({
       <div v-for="(candidate, index) in candidates" :key="candidate.id">
         <RouterLink
           :class="[$route.params.candidate_id == candidate.id ? 'bg-soft' :'', 'h-8 flex items-center px-2 hover:bg-mute block rounded-lg text-color-text text-sm']" :to="{name: 'Applicant', params: { candidate_id: candidate.id}}">
-          <UserIcon class="flex-shrink h-5 w-5" aria-hidden="true" />
+          <UserCircleIcon class="flex-shrink h-5 w-5" aria-hidden="true" />
           <span class="ml-2 text-md">
             {{candidate.name}}
           </span>

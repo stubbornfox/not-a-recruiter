@@ -7,6 +7,9 @@ const formTailwind = require('@tailwindcss/forms')
 module.exports = {
   content: ["./index.html","./src/**/*.{vue,js,ts,jsx,ts}"],
   theme: {
+    maxWidth: {
+      'sidebar': '12rem',
+    },
     extend: {
       colors: {
         blue: colors.blue,

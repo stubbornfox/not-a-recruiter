@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-full">
-    <div class="border-r border-soft max-w-xs w-full p-2 h-full" v-if="candidate">
+    <div class="border-r border-soft max-w-sidebar w-full p-2 h-full" v-if="candidate">
       <h2 class="text-heading text-xl font-bold">{{candidate.name}}</h2>
       <div class="my-4">
         <RouterLink v-for="item in applicantSidebar" :to="{name: item.name}" class="h-8 flex items-center px-2 hover:bg-mute block rounded-lg text-color-text text-sm">
