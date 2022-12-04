@@ -102,3 +102,9 @@ body {
 .divide-border-color> :not([hidden])~ :not([hidden]) {
   border-color: var(--color-border);
 }
+
+#root,
+body {
+  height: 100%;
+  overflow: hidden;
+}

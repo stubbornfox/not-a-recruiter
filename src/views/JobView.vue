@@ -1,7 +1,7 @@
 <template>
   <div class="w-full px-4 sm:px-6 lg:px-8 h-full flex flex-col flex-grow h-full">
     <div class="h-full flex flex-col flex-grow">
-      <div class="flex flex-col flex-grow">
+      <div class="flex flex-col flex-grow h-full">
         <div :key="job.id" class='job-header'>
           <div class="flex items-center ">
             <RouterLink :to="{name: 'Home'}" class="text-heading hover:bg-soft rounded w-8 h-8 mr-2" title="Back">
@@ -12,7 +12,7 @@
             <h2 class="font-medium text-lg text-heading">{{job.title}}</h2>
           </div>
         </div>
-        <div id="jobboard">
+        <div id="jobboard" class="h-full">
           <JobStageSidebar :job="job" class="max-w-xs w-full pt-4"/>
           <RouterView :key="$route.params.stage"/>
         </div>

@@ -5,8 +5,8 @@
     </div>
     <CandidateList :candidates="candidates" class="max-w-xs w-full" v-if="!loading" />
   </div>
-  <div class="w-full">
-    <div class="h-full flex flex-col flex-grow ">
+  <div class="w-full h-full">
+    <div class="h-full flex flex-col flex-grow h-full">
       <RouterView :key="$route.params.candidate_id"/>
     </div>
   </div>

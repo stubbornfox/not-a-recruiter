@@ -77,13 +77,28 @@ const router = createRouter({
                 path: ':candidate_id',
                 name: 'Applicant',
                 component: () => import("../views/ApplicantView.vue"),
-                redirect: { name: 'OverviewApplicant' },
                 children: [{
-                  path: 'overview',
-                  name: 'OverviewApplicant',
-                  component: () => import("../views/OverviewApplicantView.vue"),
-                }]
-              }, ]
+                    path: 'overview',
+                    name: 'OverviewApplicant',
+                    component: () => import("../views/OverviewApplicantView.vue"),
+                  },
+                  {
+                    path: 'resume',
+                    name: 'ResumeApplicant',
+                    component: () => import("../views/ResumeApplicantView.vue"),
+                  },
+                  {
+                    path: 'message',
+                    name: 'MessagesApplicant',
+                    component: () => import("../views/MessagesApplicantView.vue"),
+                  },
+                  {
+                    path: 'notes',
+                    name: 'NotesApplicant',
+                    component: () => import("../views/NotesApplicantView.vue"),
+                  },
+                ]
+              }]
             },
           ],
         },

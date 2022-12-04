@@ -7,7 +7,7 @@ import {
 import { RouterLink } from 'vue-router'
 
 defineProps({
-  candidates: []
+  candidates: Array
 })
 </script>
 <template>
