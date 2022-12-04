@@ -21,6 +21,6 @@ const route = useRoute()
 const candidateStore = useCandidateStore()
 const { slug, stage } = route.params
 const { candidates , error, loading } = storeToRefs(candidateStore)
-const {getCandidates, getCandidate, moveCandidate} = candidateStore
-getCandidates(slug, stage)
+const {fetchCandidates, fetchCandidate, moveCandidate} = candidateStore
+fetchCandidates(slug, stage)
 </script>

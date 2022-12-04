@@ -13,12 +13,6 @@
       <button @click="editor.chain().focus().toggleCode().run()" :disabled="!editor.can().chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
         code
       </button>
-      <button @click="editor.chain().focus().unsetAllMarks().run()">
-        clear marks
-      </button>
-      <button @click="editor.chain().focus().clearNodes().run()">
-        clear nodes
-      </button>
       <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
         paragraph
       </button>
@@ -67,24 +61,43 @@
     </div>
     <editor-content :editor="editor" class="text-color-text flex-grow" />
     <div class="border-t h-20 flex items-center">
-      <a class="text-white h-8 inline-flex bg-pink-600 hover:bg-pink-400 rounded items-center px-2" @click="saveNote">
-        <i class="mr-2">
-          <ArrowDownTrayIcon class="w-5 h-5" /></i>
+      <button class="text-white h-8 inline-flex bg-pink-600 hover:bg-pink-500 rounded items-center px-2" @click="saveNote">
         <span>Save changes</span>
-      </a>
+      </button>
     </div>
   </div>
 </template>
 <script setup>
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
+import {useCandidateStore} from '../stores/candidate'
+import { useRoute } from "vue-router";
+import { ref, onMounted } from 'vue'
+import {storeToRefs} from 'pinia'
 
+const route = useRoute()
+const candidateStore = useCandidateStore()
+const { updateCandidate } = candidateStore
+const { slug, stage, candidate_id } = route.params
+
+const props = defineProps({
+  candidate: { type: Object, default: {} }
+})
+
+console.log(props.candidate)
 const editor = useEditor({
-  content: '<p>I’m running Tiptap with Vue.js. 🎉</p>',
+  content: props.candidate.notes,
   extensions: [
     StarterKit,
   ],
 })
+
+
+function saveNote() {
+  const noteHtml = editor.value.getHTML()
+  updateCandidate(slug, stage, candidate_id, { candidate: { notes: noteHtml }})
+}
+
 </script>
 <style lang="scss">
 button {
@@ -119,6 +132,11 @@ button {
   ul,
   ol {
     padding: 0 1rem;
+    list-style: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
   }
 
   h1,
