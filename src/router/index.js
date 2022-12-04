@@ -54,24 +54,30 @@ const router = createRouter({
           component: () => import("../views/JobView.vue"),
           redirect: { name: 'JobSetupDetails' },
           children: [{
-              path: 'setup/details',
-              name: 'JobSetupDetails',
-              component: () => import("../views/JobSetupDetailView.vue"),
-            },
-            {
-              path: 'setup/description',
-              name: 'JobSetupDescription',
-              component: () => import("../views/JobSetupDescriptionView.vue"),
+              path: 'setup',
+              name: 'JobSetup',
+              component: () => import("../views/JobSetupView.vue"),
+              children: [{
+                  path: 'details',
+                  name: 'JobSetupDetails',
+                  component: () => import("../views/JobSetupDetailView.vue"),
+                },
+                {
+                  path: 'description',
+                  name: 'JobSetupDescription',
+                  component: () => import("../views/JobSetupDescriptionView.vue"),
+                },
+              ]
             },
             {
               path: 'stages/:stage/applicants',
               name: 'JobStageApplicant',
               component: () => import("../views/JobStageApplicantView.vue"),
-              children:[{
+              children: [{
                 path: ':candidate_id',
                 name: 'Applicant',
                 component: () => import("../views/ApplicantView.vue"),
-                redirect: {name: 'OverviewApplicant'},
+                redirect: { name: 'OverviewApplicant' },
                 children: [{
                   path: 'overview',
                   name: 'OverviewApplicant',

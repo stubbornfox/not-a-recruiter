@@ -38,9 +38,11 @@
     <RouterLink v-for="item in jobStages"
       :key="item.code"
       :to="{ name: 'JobStageApplicant', params: {stage: item.code}}"
-      :class="[$route.params.stage == item.code ? 'bg-gray-100 ' :' hover:bg-soft hover:', 'stage-stat justify-between']">
-       <div class="flex">
-        <component :is="item.icon" class="flex-shrink h-6 w-6" aria-hidden="true" />
+      :class="[$route.params.stage == item.code ? 'bg-soft' :' hover:bg-mute', 'stage-stat justify-between']"
+      @click="$emit('changeStage')"
+      >
+       <div class="flex text-color-text">
+        <component :is="item.icon" class="flex-shrink h-5 w-5" aria-hidden="true" />
         <span class="ml-2">{{item.text}}</span>
       </div>
       <span>{{job[item.code]}}</span>
@@ -49,15 +51,15 @@
     <div class="mt-3">
       <RouterLink
         :to="{ name: 'JobSetupDetails'}"
-        :class="[$route.matched.some(route => route.path.includes('/setup/')) ? 'bg-gray-100 ' :' hover:bg-soft hover:','flex']"
+        :class="[$route.matched.some(route => route.path.includes('/setup/')) ? 'bg-soft' :' hover:bg-mute','flex text-color-text']"
         @click="$emit('setupJob')">
         <i>
-          <CogIcon class="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+          <CogIcon class="h-5 w-5 flex-shrink-0" aria-hidden="true" />
         </i>
         <span class="ml-2 flex-grow-1">Job setup</span>
       </RouterLink>
-      <a :class="[currentStage == 'Distribution' ? 'bg-gray-100 ' :' hover:bg-soft hover:', 'flex']">
-        <ShareIcon class="h-6 w-6  flex-shrink-0" aria-hidden="true" />
+      <a :class="[currentStage == 'Distribution' ? 'bg-soft' :' hover:bg-mute','flex text-color-text']">
+        <ShareIcon class="h-5 w-5  flex-shrink-0" aria-hidden="true" />
         <span class="ml-2 flex-grow-1">Distribution</span>
       </a>
     </div>

@@ -14,7 +14,7 @@
         </div>
         <div id="jobboard">
           <JobStageSidebar :job="job" class="max-w-xs w-full pt-4"/>
-          <RouterView :key="$route.fullPath"/>
+          <RouterView :key="$route.params.stage"/>
         </div>
       </div>
     </div>
