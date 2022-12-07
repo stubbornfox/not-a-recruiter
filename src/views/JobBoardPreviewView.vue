@@ -1,16 +1,16 @@
 <template>
-  <div class="h-full w-full flex items-center flex-col overflow-y-auto">
+  <div class="h-full w-full flex items-center flex-col overflow-y-auto"  v-if="organization">
     <header class="header w-full max-w-5xl px-3">
       <div class="h-20 flex items-center justify-between">
         <div v-if="job_board">
           <div v-if="job_board.header_setup == 'name_only'">
-            <h3 class="text-2xl font-semibold">{{organization?.name}}</h3>
+            <h3 class="text-2xl font-semibold">{{organization.name}}</h3>
           </div>
           <div v-else-if="job_board.header_setup == 'logo_only' && job_board.logo_image">
-            <img :src="job_board.logo_image" :alt="organization?.name" class="w-16 h-16 rounded-lg border-4 border-mute" />
+            <img :src="job_board.logo_image" :alt="organization.name" class="w-16 h-16 rounded-lg border-4 border-mute" />
           </div>
           <div v-else class="flex items-center gap-1">
-            <img :src="job_board.logo_image" :alt="organization?.name" class="w-16 h-16 rounded-lg border-4 border-mute" v-if="job_board.logo_image"/>
+            <img :src="job_board.logo_image" :alt="organization?.name" class="w-16 h-16 rounded-lg border-4 border-mute" v-if="job_board.logo_image" />
             <h3 class="text-2xl font-semibold">{{organization?.name}}</h3>
           </div>
         </div>
@@ -47,14 +47,14 @@
                         {{ job.location }}
                       </p>
                       <p class="inline-flex rounded-md px-2 text-xs leading-5 text-color-text border boder-soft">{{ job.employment_type }}</p>
-                      <p class="inline-flex rounded-md px-2 text-xs leading-5 text-color-text border boder-soft"  v-if="job.base_salary">{{ job.base_salary }}</p>
+                      <p class="inline-flex rounded-md px-2 text-xs leading-5 text-color-text border boder-soft" v-if="job.base_salary">{{ job.base_salary }}</p>
                     </div>
                   </div>
                   <div class="font-semibold">
                     Job view
                   </div>
                 </div>
-             </RouterLink>
+              </RouterLink>
             </li>
           </ul>
         </div>
@@ -64,29 +64,19 @@
 </template>
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
-import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '@/stores/user';
-import api from '../services/api';
-import { useJobBoardStore } from '@/stores/job_board';
-import { CalendarIcon, MapPinIcon, UsersIcon } from '@heroicons/vue/20/solid'
+import { usePublicJobStore } from '@/stores/public_job'
 
-const jobs = ref([])
-const { me, organization } = storeToRefs(useUserStore());
-useUserStore().getMe()
-const { job_board } = storeToRefs(useJobBoardStore());
-const { fetchJobBoards } = useJobBoardStore()
-fetchJobBoards()
-onMounted(() => {
-  api.get('/jobs')
-    .then((response) => {
-      jobs.value = response.data;
-    })
-    .catch((e) => {
-      error.value.push(e);
-    })
-})
+const route = useRoute()
+const publicJobStore = usePublicJobStore()
+
+const { job_board, jobs, organization } = storeToRefs(publicJobStore)
+const { fetchJobBoard, fetchJobs, fetchOrganization } = publicJobStore
+const { slug } = route.params
+fetchOrganization(slug)
+fetchJobBoard(slug)
+fetchJobs(slug)
 
 const schema = [{
     $formkit: 'select',

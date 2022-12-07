@@ -8,10 +8,10 @@ const plugin = require('tailwindcss/plugin')
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,ts}"],
   theme: {
-    maxWidth: {
-      'sidebar': '12rem',
-    },
     extend: {
+      maxWidth: {
+        'sidebar': '12rem',
+      },
       colors: {
         blue: colors.blue,
         'mute': 'var(--color-background-mute)',

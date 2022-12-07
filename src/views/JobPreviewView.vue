@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full w-full flex items-center flex-col overflow-y-auto">
+  <div class="h-full w-full flex items-center flex-col overflow-y-auto" v-if="organization">
     <header class="header w-full max-w-5xl px-3">
       <div class="h-20 flex items-center justify-between">
         <div v-if="job_board">
@@ -20,7 +20,7 @@
       </div>
     </header>
     <div class="text-sm bg-pink-100 px-3 py-1 w-full text-center">This is a temporary preview of your job board—the jobs displayed are not active!</div>
-    <div class="job-view w-full max-w-5xl px-3">
+    <div class="job-view w-full max-w-5xl px-3" v-if="job">
       <div class="job-details mt-4">
         <RouterLink v-if="organization" :to="{ name: 'JobBoardPreview', params: { slug: organization?.slug } }" class="text-color-text flex items-center gap-2">
           <i>
@@ -65,34 +65,22 @@
 </template>
 <script setup>
 import { FormKitSchema } from '@formkit/vue'
-import { ref, onMounted } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia';
-import { useUserStore } from '@/stores/user';
-import api from '../services/api';
-import { useJobBoardStore } from '@/stores/job_board';
+
 import { ChevronLeftIcon, PaperAirplaneIcon } from '@heroicons/vue/24/outline'
-import { useRouter, useRoute } from 'vue-router'
+import { usePublicJobStore } from '@/stores/public_job'
 
-const job = ref({})
-const applied = ref(false)
-const { me, organization } = storeToRefs(useUserStore());
-useUserStore().getMe()
-const { job_board } = storeToRefs(useJobBoardStore());
-const { fetchJobBoards } = useJobBoardStore()
 const route = useRoute()
+const publicJobStore = usePublicJobStore()
 
-fetchJobBoards()
-onMounted(() => {
-  api.get(`/publics/organizations/${route.params.slug}/jobs/${route.params.job_slug}`)
-    .then((response) => {
-      job.value = response.data;
-    })
-    .catch((e) => {
-      error.value.push(e);
-    })
-})
+const { job_board, job, organization, applied } = storeToRefs(publicJobStore)
+const { fetchJobBoard, fetchJob, fetchOrganization, applyJob } = publicJobStore
+const { slug, job_slug } = route.params
 
+fetchOrganization(slug)
+fetchJobBoard(slug)
+fetchJob(slug, job_slug)
 
 function submitCandidate(candidate) {
   const body = new FormData()
@@ -104,13 +92,7 @@ function submitCandidate(candidate) {
   candidate.resume.forEach((fileItem) => {
     body.append('candidate[resume]', fileItem.file)
   })
-  api.post(`/publics/organizations/${route.params.slug}/jobs/${route.params.job_slug}/apply`, body )
-    .then((response) => {
-      applied.value = true
-    })
-    .catch((e) => {
-      error.value.push(e);
-    })
+  applyJob(slug, job_slug, body)
 }
 const schema = [{
     $formkit: 'text',
