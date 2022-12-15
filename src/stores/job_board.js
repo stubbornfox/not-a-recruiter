@@ -44,6 +44,20 @@ export const useJobBoardStore = defineStore({
       }
     },
 
+    async customDomain(id, job_board_params) {
+      this.loading = true
+      const toast = useToast()
+      try {
+        this.job_board = await api.post(`/job_boards/${id}/custom_domain`, job_board_params)
+          .then((response) => response.data)
+        toast.success('Updated custom domain')
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    },
+
     async updateJobBoard(id, job_board_params) {
       this.loading = true
       const toast = useToast()
