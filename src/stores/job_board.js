@@ -58,6 +58,20 @@ export const useJobBoardStore = defineStore({
       }
     },
 
+    async refreshSSL(id) {
+      this.loading = true
+      const toast = useToast()
+      try {
+        this.job_board = await api.post(`/job_boards/${id}/refresh_ssl`)
+          .then((response) => response.data)
+        toast.success('Refresh successfully')
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    },
+
     async updateJobBoard(id, job_board_params) {
       this.loading = true
       const toast = useToast()

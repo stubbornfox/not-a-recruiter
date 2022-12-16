@@ -22,8 +22,8 @@
               Supply this to your DNS provider for the destination of CNAME or ALIAS records.
             </p>
             <div class="mt-2 coppy-field p-2 text-color-text border border-color bg-transparent sm:text-sm rounded-md flex justify-between">
-              <span>{{job_board.cname}}</span>
-              <i @click="copyCname">
+              <span>{{job_board.hostname}}</span>
+              <i @click="copyCname" class="cursor-pointer">
                 <ClipboardDocumentIcon class="w-5 h-5 text-heading" />
               </i>
             </div>
@@ -43,7 +43,7 @@
                   </i>
                 </span>
               </p>
-              <button class="inline-flex justify-center rounded-md border border-transparent bg-soft py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-smoke focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Refresh</button>
+              <button type="button" @click="refresh" class="inline-flex justify-center rounded-md border border-transparent bg-soft py-2 px-4 text-sm font-medium text-heading shadow-sm hover:bg-mute focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Refresh</button>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ const props = defineProps({
 })
 
 let custom_domain_url = ref(props.job_board.custom_domain_url)
-const { customDomain } = useJobBoardStore()
+const { customDomain, refreshSSL } = useJobBoardStore()
 
 const submitHandler = async (data) => {
   customDomain(props.job_board.id, { custom_domain_url: custom_domain_url.value })
@@ -81,8 +81,12 @@ function removeProtocol(url) {
 }
 
 function copyCname() {
-  navigator.clipboard.writeText(props.job_board.cname).then((clipText) =>
+  navigator.clipboard.writeText(props.job_board.hostname).then((clipText) =>
     useToast().info('Copied')
   )
+}
+
+function refresh() {
+  refreshSSL(props.job_board.id)
 }
 </script>
