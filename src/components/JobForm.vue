@@ -31,6 +31,20 @@ const employmentType = [
   { label: "Other", value: "other" },
 ]
 
+const displaySalaryType = [
+  { label: "Not shown", value: "not_shown" },
+  { label: "Range", value: "range" },
+  { label: "Fixed amount", value: "fixed_amount" },
+];
+
+const timeframeType = [
+  { label: "Hourly", value: "hourly" },
+  { label: "Daily", value: "daily" },
+  { label: "Weekly", value: "weekly" },
+  { label: "Monthly", value: "monthly" },
+  { label: "Yearly", value: "yearly" },
+];
+
 const props = defineProps({
   job: Object,
   default: {}
@@ -62,10 +76,76 @@ const schema = [{
     label: 'Applicant Requirement Location',
   },
   {
-    $formkit: 'text',
-    name: 'base_salary',
-    label: 'Salary',
-    validation: '',
+    $el: "label",
+    children: ["Salary"],
+    attrs: {
+      class: "text-color-text font-bold",
+    },
+  },
+  {
+    $el: "div",
+    children: [
+      {
+        $formkit: "select",
+        name: "display_salary_type",
+        id: "display_salary_type",
+        label: "Display",
+        validation: "required",
+        options: displaySalaryType,
+      },
+      {
+        if: "$get(display_salary_type).value != 'not_shown'",
+        then: {
+          $el: "div",
+          attrs: {
+            class: "mt-4 pl-3 border-l-2 border-zinc-400 grid grid-cols-1 gap-y-6",
+          },
+          children: [
+            {
+              if: "$get(display_salary_type).value == 'fixed_amount'",
+              then: {
+                $formkit: "number",
+                name: "salary_amount",
+                label: "Amount",
+                validation: "required",
+              },
+              else: {
+                if: "$get(display_salary_type).value == 'range'",
+                then: {
+                  children: [
+                    {
+                      $formkit: "number",
+                      name: "min_salary_amount",
+                      label: "Minimum amount",
+                      validation: "required",
+                    },
+                    {
+                      $formkit: "number",
+                      name: "max_salary_amount",
+                      label: "Maximum amount",
+                      validation: "required",
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              $formkit: "select",
+              name: "salary_timeframe",
+              label: "Timeframe",
+              validation: "required",
+              options: timeframeType,
+            },
+            {
+              $formkit: "text",
+              name: "salary_currency",
+              label: "Currency",
+              validation: "required",
+            },
+          ],
+        },
+      },
+    ],
   },
   {
     $formkit: 'select',

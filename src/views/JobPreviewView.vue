@@ -37,7 +37,7 @@
             {{ job.location }}
           </p>
           <p class="inline-flex rounded px-2 py-1 text-sm leading-5 text-color-text border boder-soft">{{ job.employment_type }}</p>
-          <p class="inline-flex rounded px-2 py-1 text-xs leading-5 text-color-text border boder-soft" v-if="job.base_salary">{{ job.base_salary }}</p>
+          <p class="inline-flex rounded px-2 py-1 text-xs leading-5 text-color-text border boder-soft" v-if="job.salary_amount">{{ job.salary_amount }}</p>
         </div>
       </div>
     </div>
