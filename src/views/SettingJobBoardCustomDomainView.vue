@@ -16,7 +16,7 @@
               children: 'https://',
             },
           }" @input="removeProtocol" />
-          <div>
+          <div v-if="job_board.hostname">
             <label class="block text-sm font-medium text-heading">CName</label>
             <p class="text-xs text-color-text mb-3">
               Supply this to your DNS provider for the destination of CNAME or ALIAS records.
