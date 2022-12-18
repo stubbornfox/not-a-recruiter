@@ -67,6 +67,7 @@ export const useJobBoardStore = defineStore({
         toast.success('Refresh successfully')
       } catch (error) {
         this.error = error
+        toast.error(error)
       } finally {
         this.loading = false
       }

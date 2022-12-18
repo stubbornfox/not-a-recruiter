@@ -6,19 +6,19 @@
           <h2 class="text-lg font-medium leading-6 text-heading">Job board content</h2>
           <p class="mt-1 text-sm text-gray-500">Here's where you can define optional, additional content to be displayed on your job board.</p>
         </div>
-        <div class="mt-6 grid grid-cols-1 gap-y-6">
+        <div class="mt-6 grid gap-y-6">
           <FormKit type="select" label="Job board banner" name="banner_setup" :options="{
               no_banner: 'None',
-              image: 'Image',
-              video: 'Video',
+              image_banner: 'Image',
+              video_banner: 'Video',
             }" help="An optional, large image or video displayed at the top of your job board." />
-          <div v-if="value.banner_setup == 'image'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
+          <div v-if="value.banner_setup == 'image_banner'" class="border-l-4 pl-4 border-soft">
             <FormKit type="file" label="Job board banner image" accept=".png,.jpg,.jpeg" help="Provide the image to use. It must be at least 1728px wide. PNG and JPG file types are acceptable. The maxium height of the banner is limited to a 16:9 aspect ratio." @change="onFileChange" name="banner_image" />
-            <div class="sm:col-span-4" v-show="url">
+            <div class="" v-show="url">
               <img :src="url" class="rounded border-4 border-mute" />
             </div>
           </div>
-          <div v-if="value.banner_setup == 'video'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
+          <div v-if="value.banner_setup == 'video_banner'" class="border-l-4 pl-4 border-soft">
             <FormKit type="url" name="banner_video_url" label="Job board banner video" help="Provide a YouTube or Vimeo web address for the video you would like displayed." :sections-schema=" {
       prefix: {
         $el: 'div',

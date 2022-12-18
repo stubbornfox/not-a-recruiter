@@ -6,7 +6,7 @@
           <h2 class="text-lg font-medium leading-6 text-heading">Job board branding</h2>
           <p class="mt-1 text-sm text-gray-500">Here's where you can configure how your brand is represented on your job board and links shared on social media.</p>
         </div>
-        <div class="mt-6 grid grid-cols-1 gap-y-6">
+        <div class="mt-6 grid gap-y-6">
           <FormKit type="select" label="Header visuals" name="header_setup" :options="{
               logo_and_name: 'Show logo and name',
               logo_only: 'Show logo only',
@@ -19,13 +19,13 @@
             </div>
           </div>
           <FormKit type="select" label="Job board social media image" name="og_image_setup" :options="{
-              default: 'Default',
-              custom: 'Custom',
-              nothing: 'None',
+              og_default: 'Default',
+              og_custom: 'Custom',
+              og_none: 'None',
             }" help="The image that will be displayed when your job board is shared on sites such as LinkedIn, Twitter, and Facebook." />
-          <div v-if="value.og_image_setup == 'custom'" class="sm:col-span-4 border-l-4 pl-4 border-soft">
+          <div v-if="value.og_image_setup == 'og_custom'" class=" border-l-4 pl-4 border-soft">
             <FormKit type="file" label="Custom social media image" accept=".png,.jpg,.svg,.jpeg" help="Provide the custom image to use. It should be an 1.9:1 ratio image with dimensions of 1200 x 630. PNG and JPG file types are acceptable. If no image is provided, the default will be used." @change="socialMediaImageChange" name="social_media_image" />
-            <div class="sm:col-span-4" v-show="socialMediaImageUrl">
+            <div class="" v-show="socialMediaImageUrl">
               <img :src="socialMediaImageUrl" class="w-40 h-20 rounded border-4 border-mute" />
             </div>
           </div>
