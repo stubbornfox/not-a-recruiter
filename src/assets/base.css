@@ -5,7 +5,7 @@
   --vt-c-white-mute: #f2f2f2;
   --vt-c-white-smoke: #525252;
 
-  --vt-c-black: #181818;
+  --vt-c-black: #202430;
   --vt-c-black-soft: #222222;
   --vt-c-black-mute: #282828;
   --vt-c-black-smoke: #525252;
@@ -22,6 +22,7 @@
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
   --fk-max-width-input: 25rem;
+  --qrh-primary: #7330DF;
 }
 
 :root {
@@ -68,6 +69,24 @@ html.dark {
   --color-text: var(--vt-c-text-dark-2);
 }
 
+@font-face {
+  font-family: "Clash Display Variable";
+  src: url('@/assets/fonts/ClashDisplay-Regular.otf') format("opentype");
+}
+
+@font-face {
+  font-family: "Clash Display Variable";
+  font-weight: bold;
+  src: url('@/assets/fonts/ClashDisplay-Bold.otf') format("opentype");
+}
+
+@font-face {
+  font-family: "Clash Display Variable";
+  font-weight: 600;
+  src: url('@/assets/fonts/ClashDisplay-Semibold.otf') format("opentype");
+}
+
+
 *,
 *::before,
 *::after {
@@ -83,7 +102,7 @@ body {
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+  font-family: 'Epilogue', Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
     Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   font-size: 15px;
   text-rendering: optimizeLegibility;
@@ -106,4 +125,105 @@ body {
 #app,
 body {
   height: 100%;
+}
+
+.bg-side {
+  background: url('@/assets/images/design-7b051895-a4ce-4319-b607-11f9ae6a2e9c.png') center bottom no-repeat, url('@/assets/images/pattern.svg') 100% no-repeat;
+  max-width: 634px;
+  width: 100%;
+  height: 100vh;
+  background-size: 50%, 100%;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+}
+
+.authentication-side {
+  height: 100%;
+  overflow: scroll;
+  flex-grow: 1;
+}
+.authentication-side form {
+  width: 408px;
+}
+
+h3 {
+  font-family: 'Clash Display Variable';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 120%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.qrh-btn {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 16px;
+  gap: 10px;
+  height: 50px;
+  border-radius: 8px;
+
+  flex: none;
+  order: 2;
+  align-self: stretch;
+  flex-grow: 0;
+}
+
+.qrh-btn--secondary {
+  border: 1px solid #C7ACF2;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  color: var(--qrh-primary);
+}
+
+.qrh-btn--primary {
+  background: var(--qrh-primary);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  /* identical to box height, or 26px */
+
+  text-align: center;
+
+  /* Neutrals / 0 */
+
+  color: #FFFFFF;
+
+}
+
+.body-normal {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  opacity: 0.5;
+}
+
+.text-horizontal-line {
+  display: flex;
+  flex-direction: row;
+}
+.text-horizontal-line:before, .text-horizontal-line:after{
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid;
+  margin: auto;
+}
+.text-horizontal-line:before {
+  margin-right: 10px
+}
+.text-horizontal-line:after {
+  margin-left: 10px
+}
+input {
+  height: 50px;
 }

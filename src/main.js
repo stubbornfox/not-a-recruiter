@@ -32,27 +32,27 @@ app.use(plugin, defaultConfig({
     classes: generateClasses({
       text: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       tel: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       file: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded shadow-sm border',
-        input: 'border block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: 'border block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs',
@@ -64,45 +64,48 @@ app.use(plugin, defaultConfig({
       },
       email: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       url: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded-r border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded-r border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs',
       },
       password: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       select: {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
+      checkbox: {
+        label: '$reset block text-md font-normal text-color-text',
+      },
       'datetime-local': {
         outer: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -110,9 +113,9 @@ app.use(plugin, defaultConfig({
       textarea: {
         outer: '$reset',
         wrapper: '$reset',
-        label: '$reset block text-sm font-medium text-heading',
+        label: '$reset block text-md font-semibold text-heading',
         inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 sm:text-sm bg-transparent',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
         help: '$reset mt-2 text-xs text-gray-500',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'

@@ -18,6 +18,8 @@ module.exports = {
         'soft': 'var(--color-background-soft)',
         'smoke': 'var(--color-background-smoke)',
         'color-text': 'var(--color-text)',
+        'neutrals': '#E8E8E8',
+        'primary': '#7330DF',
       },
     }
   },
