@@ -1,8 +1,8 @@
 <template>
   <div>
-    <FormKit type="form" id="loginForm" @submit="authStore.login" form-class="flex-grow-1 p-6 rounded-md" :actions=false :incomplete-message=false novalidate>
+    <FormKit type="form" id="loginForm" @submit="authStore.login" form-class="flex-grow-1  py-14 rounded-md" :actions=false :incomplete-message=false novalidate>
       <div class="space-y-8">
-        <h3 class="text-heading mb-6">Welcome Back, Dude
+        <h3 class="text-heading mb-6  text-center">Welcome Back, Dude
         </h3>
         <button class="btn qrh-btn w-full qrh-btn--secondary ">
           <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
