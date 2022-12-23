@@ -1,6 +1,6 @@
 <template>
   <div class="form-wrapper px-6">
-    <FormKit type="form" id="loginForm" @submit="authStore.login" form-class="flex-grow-1  py-14 rounded-md" :actions=false :incomplete-message=false novalidate>
+    <FormKit type="form" id="loginForm" @submit="authStore.login" form-class="flex-grow-1 py-14 rounded-md" :actions=false :incomplete-message=false novalidate>
       <div class="space-y-8">
         <h3 class="text-heading mb-6  text-center">Welcome Back, Dude
         </h3>

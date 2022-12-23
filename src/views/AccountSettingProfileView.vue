@@ -10,8 +10,8 @@
             <FormKit type="text" label="Last name" name="last_name" validation="required" />
             <FormKit type="email" label="Email" name="email" validation="required|email" />
             <FormKit type="file" label="Profile picture" accept=".png,.jpg,.svg,.jpeg" help="Your picture should be a square image with dimensions of at least 80px. PNG, JPG, and SVG file types are acceptable." @change="onFileChange" name="profile_picture" />
-            <div v-show="url || me.profile_picture">
-              <img :src="url || me.profile_picture" class="w-20 h-20 rounded border-4 border-mute" />
+            <div v-show="url || me?.profile_picture">
+              <img :src="url || me?.profile_picture" class="w-20 h-20 rounded border-4 border-mute" />
             </div>
           </div>
         </div>

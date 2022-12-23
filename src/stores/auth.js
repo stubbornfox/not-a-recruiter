@@ -43,7 +43,6 @@ export const useAuthStore = defineStore('auth', {
               const user = response.data
               this.user = user
               localStorage.setItem('user', JSON.stringify(user));
-              debugger
               if (user.organization === undefined) {
                 router.push({ name: "NewOrganization" })
               } else {
