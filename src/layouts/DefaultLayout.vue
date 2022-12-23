@@ -169,7 +169,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
 
 const authStore = useAuthStore();
-const userStore = useUserStore()
+const userStore = useUserStore();
 const { me, organization } = storeToRefs(userStore);
 userStore.getMe()
 

@@ -191,6 +191,12 @@ const router = createRouter({
           name: "NewOrganization",
           component: () => import("../views/NewOrganizationView.vue"),
         },
+        {
+          path: "/google",
+          name: "GoogleAuth",
+          props: true,
+          component: () => import("../views/GoogleView.vue"),
+        }
       ]
     },
 
@@ -206,7 +212,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register'];
+  const publicPages = ['/login', '/register', '/google'];
   const authRequired = !publicPages.includes(to.path) && !['JobPreview', 'JobBoardPreview'].includes(to.name)
 
   const loggedIn = localStorage.getItem('user');

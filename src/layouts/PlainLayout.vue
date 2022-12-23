@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center h-full">
-    <div class="bg-neutrals bg-side">
+    <div class="bg-neutrals bg-side hidden lg:flex">
     </div>
     <div class="authentication-side flex items-center flex-col">
       <div class="flex-1"></div>

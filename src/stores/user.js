@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import api from '../services/api';
+import { useToast } from 'vue-toastification'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -21,6 +22,6 @@ export const useUserStore = defineStore('user', {
       } finally {
         this.loading = false
       }
-    }
-  },
+    },
+  }
 })

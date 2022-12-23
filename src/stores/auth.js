@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     // initialize state from local storage to enable user to stay logged in
     user: JSON.parse(localStorage.getItem('user')),
-    returnUrl: null
+    returnUrl: '/'
   }),
 
   actions: {
@@ -35,6 +35,26 @@ export const useAuthStore = defineStore('auth', {
         })
     },
 
+    async loginWithGoogle(userInfo) {
+      try {
+        await axios.post('/auth/google', userInfo)
+          .then((response) => {
+            if (response.data.token) {
+              const user = response.data
+              this.user = user
+              localStorage.setItem('user', JSON.stringify(user));
+              debugger
+              if (user.organization === undefined) {
+                router.push({ name: "NewOrganization" })
+              } else {
+                router.push(this.returnUrl || '/jobs');
+              }
+            }
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    },
     logout() {
       this.user = null;
       this.returnUrl = null;
