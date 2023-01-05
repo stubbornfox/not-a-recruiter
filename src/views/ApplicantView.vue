@@ -18,15 +18,15 @@
         <a :href="`mailto:${candidate.email}`" target="_blank" class="hover:underline">{{candidate.email}}</a>
       </address>
     </div>
-  <RouterView :candidate="candidate" class="flex-shrink" v-if="candidate"/>
-</div>
+    <RouterView :candidate="candidate" class="flex-shrink" v-if="candidate" />
+  </div>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
 import CandidateList from "../components/CandidateList.vue";
 import { useRoute, RouterView } from "vue-router";
-import {useCandidateStore} from '../stores/candidate'
-import {storeToRefs} from 'pinia'
+import { useCandidateStore } from '../stores/candidate'
+import { storeToRefs } from 'pinia'
 
 import {
   EnvelopeIcon,
@@ -39,7 +39,7 @@ import {
 const route = useRoute()
 const candidateStore = useCandidateStore()
 const { slug, stage, candidate_id } = route.params
-const { candidate , error, loading } = storeToRefs(candidateStore)
+const { candidate, error, loading } = storeToRefs(candidateStore)
 const { fetchCandidate } = candidateStore
 
 fetchCandidate(slug, stage, candidate_id)

@@ -88,9 +88,9 @@
           <div class="flex flex-1">
           </div>
           <div class="ml-4 flex items-center md:ml-6">
-            <button type="button" class="rounded-full  p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            <button type="button" class="relative rounded-full  p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="{ unread: hasUnread }">
               <span class="sr-only">View notifications</span>
-              <BellIcon class="h-6 w-6" aria-hidden="true" />
+              <i><img :src="NotificationIcon" alt="Google Logo" /></i>
             </button>
             <!-- Profile dropdown -->
             <Menu as="div" class="relative ml-3">
@@ -121,14 +121,13 @@
         </div>
       </div>
       <main class="flex-1 h-full flex flex-col">
-       <router-view></router-view>
+        <router-view></router-view>
       </main>
     </div>
   </div>
 </template>
 <script setup>
 import { RouterLink, RouterView, useRoute } from "vue-router";
-import { ref } from 'vue'
 import {
   Dialog,
   DialogPanel,
@@ -164,9 +163,13 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/vue/20/solid'
 
+import NotificationIcon from '@/assets/images/notification.svg';
+
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
+import consumer from '@/cable';
+import { ref, onMounted } from 'vue'
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
@@ -180,6 +183,21 @@ const secondaryNavigation = [
   { name: 'App Settings', href: '/settings/organization', icon: CogIcon },
 ]
 const sidebarOpen = ref(false)
+const hasUnread = ref(false)
+
+onMounted(() => {
+  consumer.subscriptions.create({
+    channel: 'Noticed::NotificationChannel',
+    id: '8',
+  }, {
+    connected: () => console.log('connected'),
+    disconnected: () => console.log('disconnected'),
+    received: data => {
+      hasUnread.value = true
+    }
+  })
+
+})
 </script>
 <style scoped>
 .change-current-organization i {
