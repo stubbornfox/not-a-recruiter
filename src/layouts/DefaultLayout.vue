@@ -168,14 +168,23 @@ import NotificationIcon from '@/assets/images/notification.svg';
 import { storeToRefs } from 'pinia';
 import { useAuthStore } from '@/stores/auth';
 import { useUserStore } from '@/stores/user';
-import consumer from '@/cable';
+import { createConsumer } from '@rails/actioncable';
 import { ref, onMounted } from 'vue'
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
 const { me, organization } = storeToRefs(userStore);
 userStore.getMe()
+const WS_URL = import.meta.env.VITE_WS_URL
+let consumer = createConsumer(getWebSocketURL());
 
+function getWebSocketURL() {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (user)
+    return `${WS_URL}?token=${user['token']}`
+  else
+    return WS_URL
+}
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },
 ]
@@ -188,10 +197,13 @@ const hasUnread = ref(false)
 onMounted(() => {
   consumer.subscriptions.create({
     channel: 'Noticed::NotificationChannel',
-    id: '8',
   }, {
     connected: () => console.log('connected'),
-    disconnected: () => console.log('disconnected'),
+    disconnected() {
+      console.log('disconnected')
+    },
+    rejected() {
+    },
     received: data => {
       hasUnread.value = true
     }

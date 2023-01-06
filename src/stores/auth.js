@@ -23,7 +23,7 @@ export const useAuthStore = defineStore('auth', {
             if (user.organization === undefined) {
               router.push({name: "NewOrganization"})
             } else {
-              router.push(this.returnUrl || '/jobs');
+              router.push(this.returnUrl);
             }
           }
         })
@@ -46,7 +46,7 @@ export const useAuthStore = defineStore('auth', {
               if (user.organization === undefined) {
                 router.push({ name: "NewOrganization" })
               } else {
-                router.push(this.returnUrl || '/jobs');
+                router.push(this.returnUrl);
               }
             }
           })
@@ -56,7 +56,7 @@ export const useAuthStore = defineStore('auth', {
     },
     logout() {
       this.user = null;
-      this.returnUrl = null;
+      this.returnUrl = '/';
       localStorage.removeItem('user');
       router.push({name: 'Login'})
     }

@@ -7,12 +7,62 @@ import PlainLayout from '../layouts/PlainLayout.vue'
 const router = createRouter({
   history: createWebHistory(
     import.meta.env.BASE_URL),
-  routes: [{
+  routes: [
+    {
+      path: '',
+      name: 'PlainLayout',
+      component: PlainLayout,
+      redirect: { name: 'Home' },
+      children: [{
+          path: "/login",
+          name: "Login",
+          component: () => import("../views/LoginView.vue"),
+        },
+        {
+          path: "/register",
+          name: "Register",
+          component: () => import("../views/RegisterView.vue"),
+        },
+        {
+          path: "/:slug",
+          name: "JobBoard",
+          component: () => import("../views/JobBoardView.vue"),
+        },
+        {
+          path: "/:slug/preview",
+          name: "JobBoardPreview",
+          component: () => import("../views/JobBoardPreviewView.vue"),
+        },
+        {
+          path: "/:slug/:job_slug/preview",
+          name: "JobPreview",
+          component: () => import("../views/JobPreviewView.vue"),
+        },
+        {
+          path: "/organizations",
+          name: "Organizations",
+          component: () => import("../views/OrganizationsView.vue"),
+        },
+        {
+          path: "/organizations/new",
+          name: "NewOrganization",
+          component: () => import("../views/NewOrganizationView.vue"),
+        },
+        {
+          path: "/google",
+          name: "GoogleAuth",
+          props: true,
+          component: () => import("../views/GoogleView.vue"),
+        }
+      ]
+    },
+    {
       path: '',
       name: 'AppLayout',
       component: DefaultLayout,
+      redirect: { name: 'Home' },
       children: [{
-          path: '/jobs',
+          path: '/',
           name: 'Home',
           component: HomeView,
         },
@@ -157,54 +207,6 @@ const router = createRouter({
         },
       ]
     },
-    {
-      path: '',
-      name: 'PlainLayout',
-      component: PlainLayout,
-      children: [{
-          path: "/login",
-          name: "Login",
-          component: () => import("../views/LoginView.vue"),
-        },
-        {
-          path: "/register",
-          name: "Register",
-          component: () => import("../views/RegisterView.vue"),
-        },
-        {
-          path: "/:slug",
-          name: "JobBoard",
-          component: () => import("../views/JobBoardView.vue"),
-        },
-        {
-          path: "/:slug/preview",
-          name: "JobBoardPreview",
-          component: () => import("../views/JobBoardPreviewView.vue"),
-        },
-        {
-          path: "/:slug/:job_slug/preview",
-          name: "JobPreview",
-          component: () => import("../views/JobPreviewView.vue"),
-        },
-        {
-          path: "/organizations",
-          name: "Organizations",
-          component: () => import("../views/OrganizationsView.vue"),
-        },
-        {
-          path: "/organizations/new",
-          name: "NewOrganization",
-          component: () => import("../views/NewOrganizationView.vue"),
-        },
-        {
-          path: "/google",
-          name: "GoogleAuth",
-          props: true,
-          component: () => import("../views/GoogleView.vue"),
-        }
-      ]
-    },
-
     {
       path: "/about",
       name: "about",
