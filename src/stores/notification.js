@@ -22,30 +22,16 @@ export const useNotificationStore = defineStore({
       }
     },
 
-    // async markAsRead(job_id) {
-    //   this.loading = true
-    //   try {
-    //     this.notification = await api.get(`/jobs/${job_id}`)
-    //       .then((response) => response.data)
-    //   } catch (error) {
-    //     this.error = error
-    //   } finally {
-    //     this.loading = false
-    //   }
-    // },
-
-    // async updateJob(job_id, data) {
-    //   this.loading = true
-    //   const toast = useToast()
-    //   try {
-    //     this.job = await api.put(`/jobs/${job_id}`, data)
-    //       .then((response) => response.data)
-    //     toast.success("Updated job successfully!")
-    //   } catch (error) {
-    //     this.error = error
-    //   } finally {
-    //     this.loading = false
-    //   }
-    // },
+    async markAsRead(notificationId) {
+      this.loading = true
+      try {
+        this.notification = await api.post(`/notifications/${notificationId}/mark_as_read`)
+          .then((response) => response.data)
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    }
   }
 })

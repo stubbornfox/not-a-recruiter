@@ -243,3 +243,11 @@ input {
   border-radius: 50%;
   border: 1px solid white;
 }
+
+.notification {
+  transition: background-color;
+  transition-duration: 0s;
+  cursor: pointer;
+  position: relative;
+}
+

@@ -17,6 +17,11 @@ const router = createRouter({
           component: HomeView,
         },
         {
+          path: "/notifications",
+          name: "Notification",
+          component: () => import("../views/NotificationView.vue"),
+        },
+        {
           path: "",
           name: "Index",
           component: 'PlainLayout',

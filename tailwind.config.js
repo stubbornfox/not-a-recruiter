@@ -20,6 +20,8 @@ module.exports = {
         'color-text': 'var(--color-text)',
         'neutrals': '#E8E8E8',
         'primary': '#7330DF',
+        'secondary': '#C7ACF2',
+        'tertiary': '#F1EAFC',
       },
     }
   },

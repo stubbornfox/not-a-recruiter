@@ -88,10 +88,10 @@
           <div class="flex flex-1">
           </div>
           <div class="ml-4 flex items-center md:ml-6">
-            <button type="button" class="relative rounded-full  p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" :class="{ unread: hasUnread }">
+            <RouterLink :to="{name: 'Notification'}" type="button" class="relative rounded-full" :class="{ unread: hasUnread }">
               <span class="sr-only">View notifications</span>
-              <i><img :src="NotificationIcon" alt="Google Logo" /></i>
-            </button>
+              <i aria-hidden="true"><img :src="NotificationIcon" /></i>
+            </RouterLink>
             <!-- Profile dropdown -->
             <Menu as="div" class="relative ml-3">
               <div>
