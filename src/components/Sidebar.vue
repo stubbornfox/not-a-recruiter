@@ -76,16 +76,9 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import Logo from '@/assets/images/logo.svg';
-import HelpIcon from '@/assets/images/sidebar-icon/help.svg';
-import SettingsIcon from '@/assets/images/sidebar-icon/settings.svg';
-// import DashboardIcon from '@/assets/images/sidebar-icon/dashboard.svg';
-import MessagesIcon from '@/assets/images/sidebar-icon/messages.svg';
-import CompanyIcon from '@/assets/images/sidebar-icon/company.svg';
-import JobListingIcon from '@/assets/images/sidebar-icon/job-listing.svg';
-import HrIcon from '@/assets/images/sidebar-icon/hr.svg';
-import CalendarIcon from '@/assets/images/sidebar-icon/calendar.svg';
 import { RouterLink, useRouter, useRoute } from 'vue-router'
+
+import Logo from '@/assets/images/logo.svg';
 import IconDashboard from '@/components/icons/IconDashboard.vue'
 import IconMessages from '@/components/icons/IconMessages.vue'
 import IconCalendar from '@/components/icons/IconCalendar.vue'
@@ -95,7 +88,6 @@ import IconJobListing from '@/components/icons/IconJobListing.vue'
 import IconSetings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
 
-const organization_name = 'test'
 const sidebarOpen = ref(false)
 
 const applicantNavigation = [
