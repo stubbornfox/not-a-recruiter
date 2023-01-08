@@ -22,6 +22,15 @@ module.exports = {
         'primary': '#7330DF',
         'secondary': '#C7ACF2',
         'tertiary': '#F1EAFC',
+        'neutrals': {
+          0: '#F8F8FD',
+          10: '#F9FAFC',
+          20: '#E4E5E7',
+          40: '#A8ADB7',
+          60: '#7C8493',
+          80: '#515B6F',
+          100: '#25324B',
+        },
       },
     }
   },
