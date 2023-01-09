@@ -56,7 +56,7 @@
         <div class="space-y-1 px-2 w-full">
           <RouterLink v-for="item in navigation" :key="item.name" :to="item.href" class="navigation-link" :class="{ active: isActive(item.href) }" :aria-current="item.current ? 'page' : undefined">
             <i aria-hidden="true" class="navigation-icon">
-              <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined"/>
+              <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" />
             </i>
             <span class="navigation-caption">{{ item.name }}</span>
           </RouterLink>
@@ -65,12 +65,25 @@
           <div class="space-y-1 px-2">
             <h3 class="settings">SETTINGS</h3>
             <RouterLink v-for="item in secondaryNavigation" :key="item.name" :to="item.href" class="navigation-link" :class="{ active: isActive(item.href) }">
-              <i aria-hidden="true" class="navigation-icon"><component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined"/></i>
+              <i aria-hidden="true" class="navigation-icon">
+                <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" /></i>
               <span class="navigation-caption">{{ item.name }}</span>
             </RouterLink>
           </div>
         </div>
       </nav>
+    </div>
+    <div id="profile" v-if="user">
+      <div class="avatar">
+        <img v-if="user.profile_picture" :src="user.profile_picture">
+        <div v-else>
+          <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
+        </div>
+      </div>
+      <div>
+        <div class="name">{{user.first_name}}</div>
+        <div class="email">{{user.email}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -87,6 +100,11 @@ import IconHr from '@/components/icons/IconHr.vue'
 import IconJobListing from '@/components/icons/IconJobListing.vue'
 import IconSetings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
+
+
+defineProps({
+  user: { type: Object, default: { email: '', name: '', profile_picture: '' } },
+})
 
 const sidebarOpen = ref(false)
 
@@ -132,9 +150,10 @@ function isActive(href) {
   gap: 126px;
   position: relative;
   width: 272px;
-  background: #E8E8E8;
+  background-color: #E8E8E8;
   height: 100%;
   box-shadow: 1px 0px 0px #D3D6DB;
+  background-image: url('@/assets/images/sidebar-bg.svg') bottom left;
 }
 
 .navigation-icon {
@@ -217,5 +236,54 @@ h3.settings {
   opacity: 0.5;
   padding: 12px 16px 12px 32px;
 
+}
+
+#profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 32px 0;
+  gap: 16px;
+}
+
+#profile .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+#profile .name {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 160%;
+  /* identical to box height, or 29px */
+
+  display: flex;
+  align-items: center;
+
+  /* Neutrals/100 */
+
+  color: #171717;
+}
+
+#profile .email {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  /* or 22px */
+
+  display: flex;
+  align-items: center;
+
+  /* Neutrals/80 */
+
+  color: #454545;
+
+  opacity: 0.5;
 }
 </style>
