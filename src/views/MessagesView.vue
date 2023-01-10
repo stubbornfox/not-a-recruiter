@@ -26,7 +26,25 @@
         </div>
       </div>
       <div id="chats">
-        <div class="chat-header"></div>
+        <div class="chat-header">
+          <div class="chat-header-candidate">
+            <div class="chat-header-avatar">
+              <img :src="chatMate.profile_picture" />
+            </div>
+            <div class="chat-header-name-wrapper">
+              <div class="chat-header-name">{{chatMate.name}}</div>
+              <div class="chat-header-title">{{chatMate.title}}</div>
+            </div>
+          </div>
+          <div class="chat-action">
+            <IconPin />
+            <IconStar />
+            <IconVerticalDot />
+            <RouterLink :to="{name: 'Home'}" class="chat-action-view-profile">
+              View profile
+            </RouterLink>
+          </div>
+        </div>
         <div class="chat-person"></div>
         <div class="today"></div>
         <div class="chat-content">
@@ -41,8 +59,13 @@
 <script setup>
 import { useMessageStore } from '../stores/message'
 import { storeToRefs } from 'pinia'
+import IconPin from '@/components/icons/IconPin.vue'
+import IconStar from '@/components/icons/IconStar.vue'
+import IconVerticalDot from '@/components/icons/IconVerticalDot.vue'
+import { RouterLink } from 'vue-router'
+
 const messageStore = useMessageStore()
-const { messages, error, loading } = storeToRefs(messageStore)
+const { messages, error, loading, chatMate } = storeToRefs(messageStore)
 const { fetchMessages } = messageStore
 fetchMessages()
 </script>
@@ -239,7 +262,99 @@ fetchMessages()
   flex-direction: column;
   align-items: center;
   padding: 0px;
+  width: 100%;
+}
 
-  width: 752px;
+.chat-action {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  gap: 24px;
+  height: 50px;
+}
+
+.chat-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 32px 24px;
+  height: 112px;
+  background: #FFFFFF;
+  box-shadow: inset 0px -1px 0px #D6DDEB;
+  width: 100%;
+}
+
+.chat-header-candidate {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  gap: 16px;
+  height: 56px;
+}
+
+.chat-header-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.chat-header-name-wrapper {}
+
+.chat-header-name {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+  display: flex;
+  align-items: center;
+  color: #171717;
+}
+
+.chat-header-title {
+  /* Body/Normal - Regular */
+
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 160%;
+  /* or 26px */
+
+  display: flex;
+  align-items: center;
+
+  /* Neutrals/80 */
+
+  color: #454545;
+}
+
+.chat-action-view-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0px;
+  gap: 10px;
+  height: 50px;
+  border-radius: 8px;
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  /* identical to box height, or 26px */
+
+  text-align: center;
+
+  /* Brands/Primary */
+
+  color: #7330DF;
+
 }
 </style>
