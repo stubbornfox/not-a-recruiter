@@ -53,21 +53,25 @@
         <img :src="Logo" width="87" />
       </div>
       <nav class="main-menu divide-y divide-secondary overflow-y-auto" aria-label="Sidebar">
-        <div class="space-y-1 px-2 w-full">
+        <div class="w-full">
           <RouterLink v-for="item in navigation" :key="item.name" :to="item.href" class="navigation-link" :class="{ active: isActive(item.href) }" :aria-current="item.current ? 'page' : undefined">
-            <i aria-hidden="true" class="navigation-icon">
-              <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" />
-            </i>
-            <span class="navigation-caption">{{ item.name }}</span>
+            <div class="navigation-link-content">
+              <i aria-hidden="true" class="navigation-icon">
+                <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" />
+              </i>
+              <span class="navigation-caption">{{ item.name }}</span>
+            </div>
           </RouterLink>
         </div>
         <div class="py-8 w-full">
-          <div class="space-y-1 px-2">
+          <div class="">
             <h3 class="settings">SETTINGS</h3>
             <RouterLink v-for="item in secondaryNavigation" :key="item.name" :to="item.href" class="navigation-link" :class="{ active: isActive(item.href) }">
-              <i aria-hidden="true" class="navigation-icon">
-                <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" /></i>
-              <span class="navigation-caption">{{ item.name }}</span>
+              <div class="navigation-link-content">
+                <i aria-hidden="true" class="navigation-icon">
+                  <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" /></i>
+                <span class="navigation-caption">{{ item.name }}</span>
+               </div>
             </RouterLink>
           </div>
         </div>
@@ -164,15 +168,36 @@ function isActive(href) {
 .navigation-link {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  position: relative;
+  gap: 12px;
+}
+
+.navigation-link-content {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 12px 16px 12px 32px;
   gap: 16px;
   width: 100%;
   height: 48px;
+  margin: 0 16px;
 }
 
-.navigation-link.active {
+.active .navigation-link-content {
   background-color: #F1EAFC;
+}
+
+.navigation-link.active:before {
+  content: '';
+  border-left: 4px solid var(--qrh-primary);
+  position: absolute;
+  left: 0;
+  top: 8px;
+  height: 32px;
+  z-index: 1;
 }
 
 .active .navigation-caption {

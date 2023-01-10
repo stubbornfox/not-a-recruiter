@@ -1,8 +1,8 @@
 <template>
   <div class="h-full text-mute">
     <Sidebar :user="me" />
-    <div class="flex flex-1 flex-col lg:pl-64 lg:min-h-screen h-full w-full">
-      <div class="flex h-16 flex-shrink-0 border-b border-gray-200  lg:border-none">
+    <div class="main-content flex flex-1 flex-col lg:min-h-screen h-full w-full">
+      <div class="flex">
         <button type="button" class="border-r border-gray-200 px-4 text-gray-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 lg:hidden" @click="sidebarOpen = true">
           <span class="sr-only">Open sidebar</span>
           <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
@@ -78,6 +78,9 @@ onMounted(() => {
 })
 </script>
 <style scoped>
+.main-content {
+  padding-left: 272px;
+}
 .change-current-organization i {
   display: none;
 }

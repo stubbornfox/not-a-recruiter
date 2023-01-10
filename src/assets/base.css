@@ -228,26 +228,3 @@ h3 {
 input {
   height: 50px;
 }
-
-.unread::after {
-  position: absolute;
-  content: '';
-  left: 57.5%;
-  right: 12.5%;
-  top: 12.5%;
-  bottom: 62.5%;
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  background: var(--qrh-red);
-  border-radius: 50%;
-  border: 1px solid white;
-}
-
-.notification {
-  transition: background-color;
-  transition-duration: 0s;
-  cursor: pointer;
-  position: relative;
-}
-
