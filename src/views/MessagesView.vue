@@ -3,7 +3,7 @@
     <div class="title-wrapper w-full">
       <h2 class="title">Messages</h2>
     </div>
-    <div id="messages-wrapper">
+    <!-- <div id="messages-wrapper">
       <div id="messages">
         <div id="search-input-wrapper" class="relative">
           <input type="text" name="search-messages" id="search-input" placeholder="Search messages" class="text-neutrals-100">
@@ -53,7 +53,14 @@
           <div class="replay-messages"></div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <vue-advanced-chat height="calc(100vh - 160px)" :current-user-id="currentUserId"
+      :rooms="JSON.stringify(rooms)"
+      :rooms-loaded="true"
+      :messages="JSON.stringify(messages)"
+      :messages-loaded="messagesLoaded"
+      @send-message="sendMessage($event.detail[0])"
+      @fetch-messages="fetchMessages($event.detail[0])" />
   </div>
 </template>
 <script setup>
@@ -63,11 +70,138 @@ import IconPin from '@/components/icons/IconPin.vue'
 import IconStar from '@/components/icons/IconStar.vue'
 import IconVerticalDot from '@/components/icons/IconVerticalDot.vue'
 import { RouterLink } from 'vue-router'
+import { register } from 'vue-advanced-chat'
+import { ref } from 'vue'
+register()
+const currentUserId = '1234'
+const rooms = [{
+  roomId: '1',
+  roomName: 'Room 1',
+  avatar: 'https://66.media.tumblr.com/avatar_c6a8eae4303e_512.pnj',
+  users: [
+    { _id: '1234', username: 'John Doe' },
+    { _id: '4321', username: 'John Snow' }
+  ]
+}]
+let messages = ref([])
+
+const roomActions = [
+  { name: 'inviteUser', title: 'Invite User' },
+  { name: 'removeUser', title: 'Remove User' },
+  { name: 'deleteRoom', title: 'Delete Room' }
+]
 
 const messageStore = useMessageStore()
-const { messages, error, loading, chatMate } = storeToRefs(messageStore)
-const { fetchMessages } = messageStore
-fetchMessages()
+const {  error, loading, chatMate } = storeToRefs(messageStore)
+// const { fetchMessages } = messageStore
+const messagesLoaded = ref(true)
+// const messagesAd = [{
+//   _id: '7890',
+//   indexId: 12092,
+//   content: 'Message 1',
+//   senderId: '1234',
+//   username: 'John Doe',
+//   avatar: 'assets/imgs/doe.png',
+//   date: '13 November',
+//   timestamp: '10:20',
+//   system: false,
+//   saved: true,
+//   distributed: true,
+//   seen: true,
+//   deleted: false,
+//   failure: true,
+//   disableActions: false,
+//   disableReactions: false,
+//   files: [{
+//     name: 'My File',
+//     size: 67351,
+//     type: 'png',
+//     audio: true,
+//     duration: 14.4,
+//     url: 'https://firebasestorage.googleapis.com/...',
+//     preview: 'data:image/png;base64,iVBORw0KGgoAA...',
+//     progress: 88
+//   }],
+//   reactions: {
+//     '😁': [
+//       '1234', // USER_ID
+//       '4321'
+//     ],
+//     '🥰': [
+//       '1234'
+//     ]
+//   },
+//   replyMessage: {
+//     content: 'Reply Message',
+//     senderId: '4321',
+//     files: [{
+//       name: 'My Replied File',
+//       size: 67351,
+//       type: 'png',
+//       audio: true,
+//       duration: 14.4,
+//       url: 'https://firebasestorage.googleapis.com/...',
+//       preview: 'data:image/png;base64,iVBORw0KGgoAA...'
+//     }]
+//   },
+// }]
+// fetchMessages()
+
+function fetchMessages({ options = {} }) {
+  setTimeout(() => {
+    if (options.reset) {
+      messages.value = addMessages(true)
+      debugger
+    } else {
+      debugger
+      messages.value = [...addMessages(), ...messages.value]
+      messagesLoaded.value = true
+    }
+  })
+};
+
+function addMessages(reset) {
+  const messagesTemp = []
+  for (let i = 0; i < 30; i++) {
+    messagesTemp.push({
+      _id: reset ? i : messagesTemp.length + i,
+      content: `${reset ? '' : 'paginated'} message ${i + 1}`,
+      senderId: '4321',
+      username: 'John Doe',
+      date: '13 November',
+      timestamp: '10:20'
+    })
+  }
+  return messagesTemp
+};
+
+function sendMessage(message) {
+  messages = [
+    ...messages,
+    {
+      _id: messages.length,
+      content: message.content,
+      senderId: currentUserId,
+      timestamp: new Date().toString().substring(16, 21),
+      date: new Date().toDateString()
+    }
+  ]
+};
+
+function addNewMessage() {
+  setTimeout(() => {
+    messages = [
+      ...messages,
+      {
+        _id: messages.length,
+        content: 'NEW MESSAGE',
+        senderId: '1234',
+        timestamp: new Date().toString().substring(16, 21),
+        date: new Date().toDateString()
+      }
+    ]
+  }, 2000)
+}
 </script>
 <style scoped>
 .title-wrapper {
