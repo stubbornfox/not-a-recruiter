@@ -63,7 +63,7 @@
       :messages="JSON.stringify(messages)"
       :messages-loaded="messagesLoaded"
       @send-message="sendMessage($event.detail[0])"
-      @fetch-messages="fetchMessages($event.detail[0])"
+      @fetch-messages="fetchMessagesPerRoom($event.detail[0])"
       @add-room="addRoom($event.detail[0])"
     show-add-room="true">
       <div slot="search-icon">
@@ -114,12 +114,11 @@ const currentUserId = 8
 //     { _id: '13', username: 'John Snow' }
 //   ]
 // }]
-let messages = ref([])
 const messageStore = useMessageStore()
 const roomStore = useRoomStore()
-// const { error, loading, chatMate } = storeToRefs(messageStore)
+const { messages } = storeToRefs(messageStore)
 const { error, loading, rooms, chatMates } = storeToRefs(roomStore)
-const { sendMessages } = messageStore
+const { fetchMessages, createMessage } = messageStore
 const { fetchRooms, fetchChatMates, createRoom } = roomStore
 
 fetchRooms()
@@ -137,16 +136,9 @@ function createNewRoom(participant_id) {
   createRoom(participant_id)
 }
 
-function fetchMessages({ options = {} }) {
-  setTimeout(() => {
-    if (options.reset) {
-      messages.value = addMessages(true)
-    } else {
-      messages.value = [...addMessages(), ...messages.value]
-      messagesLoaded.value = true
-    }
-  })
-};
+function fetchMessagesPerRoom({ room, options = {} }) {
+  fetchMessages(room.roomId)
+}
 
 function addMessages(reset) {
   const messagesTemp = []
@@ -165,9 +157,7 @@ function addMessages(reset) {
 
   async function sendMessage({ content, roomId, files, replyMessage }) {
     const message = {
-      sender_id: currentUserId,
-      receiver_id: 10,
-      organization_id: 25,
+      user_id: currentUserId,
       content,
       timestamp: new Date()
     }
@@ -185,7 +175,7 @@ function addMessages(reset) {
       }
     }
 
-    sendMessages({ message: message })
+    createMessage(roomId, { message: message })
     // const { id } = await firestoreService.addMessage(roomId, message)
     // if (files) {
     //   for (let index = 0; index < files.length; index++) {

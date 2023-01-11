@@ -4,7 +4,7 @@ import api from '../services/api';
 export const useRoomStore = defineStore({
   id: 'rooms',
   state: () => ({
-    room: [],
+    room: null,
     rooms: [],
     chatMates: [],
     loading: false,
