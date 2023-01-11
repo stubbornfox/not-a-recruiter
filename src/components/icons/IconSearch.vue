@@ -1,8 +1,9 @@
 <template>
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="11.7664" cy="11.7664" r="8.98856" stroke="color" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M18.0181 18.4849L21.5421 21.9997" stroke="color" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="11.7664" cy="11.7664" r="8.98856" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M18.0181 18.4849L21.5421 21.9997" stroke="#A2A2A2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
   </svg>
+
 </template>
 <script setup>
 defineProps({

@@ -228,3 +228,11 @@ h3 {
 input {
   height: 50px;
 }
+.vac-textarea {
+  border-radius: 0;
+}
+
+.vac-message-wrapper .vac-message-card {
+  padding: 12px 16px;
+  border-radius: 8px 0px 8px 8px;
+}

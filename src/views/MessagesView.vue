@@ -54,106 +54,94 @@
         </div>
       </div>
     </div> -->
-    <vue-advanced-chat height="calc(100vh - 160px)" :current-user-id="currentUserId"
+    <vue-advanced-chat ref="chatWindow"
+      height="calc(100vh - 160px)"
+      :current-user-id="currentUserId"
+      :styles="JSON.stringify(styles)"
       :rooms="JSON.stringify(rooms)"
       :rooms-loaded="true"
       :messages="JSON.stringify(messages)"
       :messages-loaded="messagesLoaded"
       @send-message="sendMessage($event.detail[0])"
-      @fetch-messages="fetchMessages($event.detail[0])" />
+      @fetch-messages="fetchMessages($event.detail[0])"
+      @add-room="addRoom($event.detail[0])"
+    show-add-room="true">
+      <div slot="search-icon">
+        <IconSearch />
+      </div>
+      <div slot="send-icon">
+        <button class="btn btn-send">
+          <IconSendMessages />
+        </button>
+      </div>
+      <div slot="emoji-picker-icon">
+        <IconEmoji />
+      </div>
+      <div slot="paperclip-icon">
+        <IconPaperClip />
+      </div>
+    </vue-advanced-chat>
+    <NewRoom :open="addNewRoom"
+             :mates="chatMates"
+             @create-new-room="createNewRoom"
+             @close-new-room="addNewRoom = false"/>
   </div>
 </template>
 <script setup>
 import { useMessageStore } from '../stores/message'
+import { useRoomStore } from '../stores/room'
 import { storeToRefs } from 'pinia'
 import IconPin from '@/components/icons/IconPin.vue'
 import IconStar from '@/components/icons/IconStar.vue'
 import IconVerticalDot from '@/components/icons/IconVerticalDot.vue'
+import IconSearch from '@/components/icons/IconSearch.vue'
+import IconSendMessages from '@/components/icons/IconSendMessages.vue'
+import IconEmoji from '@/components/icons/IconEmoji.vue'
+import IconPaperClip from '@/components/icons/IconPaperClip.vue'
+import NewRoom from '@/components/NewRoom.vue'
 import { RouterLink } from 'vue-router'
 import { register } from 'vue-advanced-chat'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+
 register()
-const currentUserId = '1234'
-const rooms = [{
-  roomId: '1',
-  roomName: 'Room 1',
-  avatar: 'https://66.media.tumblr.com/avatar_c6a8eae4303e_512.pnj',
-  users: [
-    { _id: '1234', username: 'John Doe' },
-    { _id: '4321', username: 'John Snow' }
-  ]
-}]
-let messages = ref([])
-
-const roomActions = [
-  { name: 'inviteUser', title: 'Invite User' },
-  { name: 'removeUser', title: 'Remove User' },
-  { name: 'deleteRoom', title: 'Delete Room' }
-]
-
-const messageStore = useMessageStore()
-const {  error, loading, chatMate } = storeToRefs(messageStore)
-// const { fetchMessages } = messageStore
-const messagesLoaded = ref(true)
-// const messagesAd = [{
-//   _id: '7890',
-//   indexId: 12092,
-//   content: 'Message 1',
-//   senderId: '1234',
-//   username: 'John Doe',
-//   avatar: 'assets/imgs/doe.png',
-//   date: '13 November',
-//   timestamp: '10:20',
-//   system: false,
-//   saved: true,
-//   distributed: true,
-//   seen: true,
-//   deleted: false,
-//   failure: true,
-//   disableActions: false,
-//   disableReactions: false,
-//   files: [{
-//     name: 'My File',
-//     size: 67351,
-//     type: 'png',
-//     audio: true,
-//     duration: 14.4,
-//     url: 'https://firebasestorage.googleapis.com/...',
-//     preview: 'data:image/png;base64,iVBORw0KGgoAA...',
-//     progress: 88
-//   }],
-//   reactions: {
-//     '😁': [
-//       '1234', // USER_ID
-//       '4321'
-//     ],
-//     '🥰': [
-//       '1234'
-//     ]
-//   },
-//   replyMessage: {
-//     content: 'Reply Message',
-//     senderId: '4321',
-//     files: [{
-//       name: 'My Replied File',
-//       size: 67351,
-//       type: 'png',
-//       audio: true,
-//       duration: 14.4,
-//       url: 'https://firebasestorage.googleapis.com/...',
-//       preview: 'data:image/png;base64,iVBORw0KGgoAA...'
-//     }]
-//   },
+const currentUserId = 8
+// const rooms = [{
+//   roomId: '1',
+//   roomName: 'Jan mayer',
+//   avatar: 'https://66.media.tumblr.com/avatar_c6a8eae4303e_512.pnj',
+//   users: [
+//     { _id: 8, username: 'John Doe' },
+//     { _id: '13', username: 'John Snow' }
+//   ]
 // }]
-// fetchMessages()
+let messages = ref([])
+const messageStore = useMessageStore()
+const roomStore = useRoomStore()
+// const { error, loading, chatMate } = storeToRefs(messageStore)
+const { error, loading, rooms, chatMates } = storeToRefs(roomStore)
+const { sendMessages } = messageStore
+const { fetchRooms, fetchChatMates, createRoom } = roomStore
+
+fetchRooms()
+fetchChatMates()
+
+const messagesLoaded = ref(true)
+const chatWindow = ref(null)
+const addNewRoom = ref(false)
+
+function addRoom() {
+  addNewRoom.value = true
+}
+
+function createNewRoom(participant_id) {
+  createRoom(participant_id)
+}
 
 function fetchMessages({ options = {} }) {
   setTimeout(() => {
     if (options.reset) {
       messages.value = addMessages(true)
-      debugger
     } else {
-      debugger
       messages.value = [...addMessages(), ...messages.value]
       messagesLoaded.value = true
     }
@@ -162,7 +150,7 @@ function fetchMessages({ options = {} }) {
 
 function addMessages(reset) {
   const messagesTemp = []
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 1; i++) {
     messagesTemp.push({
       _id: reset ? i : messagesTemp.length + i,
       content: `${reset ? '' : 'paginated'} message ${i + 1}`,
@@ -175,35 +163,269 @@ function addMessages(reset) {
   return messagesTemp
 };
 
-function sendMessage(message) {
-  messages = [
-    ...messages,
-    {
-      _id: messages.length,
-      content: message.content,
-      senderId: currentUserId,
-      timestamp: new Date().toString().substring(16, 21),
-      date: new Date().toDateString()
+  async function sendMessage({ content, roomId, files, replyMessage }) {
+    const message = {
+      sender_id: currentUserId,
+      receiver_id: 10,
+      organization_id: 25,
+      content,
+      timestamp: new Date()
     }
-  ]
-};
-
-function addNewMessage() {
-  setTimeout(() => {
-    messages = [
-      ...messages,
-      {
-        _id: messages.length,
-        content: 'NEW MESSAGE',
-        senderId: '1234',
-        timestamp: new Date().toString().substring(16, 21),
-        date: new Date().toDateString()
+    if (files) {
+      message.files = this.formattedFiles(files)
+    }
+    if (replyMessage) {
+      message.replyMessage = {
+        _id: replyMessage._id,
+        content: replyMessage.content,
+        sender_id: replyMessage.senderId
       }
-    ]
-  }, 2000)
+      if (replyMessage.files) {
+        message.replyMessage.files = replyMessage.files
+      }
+    }
+
+    sendMessages({ message: message })
+    // const { id } = await firestoreService.addMessage(roomId, message)
+    // if (files) {
+    //   for (let index = 0; index < files.length; index++) {
+    //     await this.uploadFile({ file: files[index], messageId: id, roomId })
+    //   }
+    // }
+    // firestoreService.updateRoom(roomId, { lastUpdated: new Date() })
+  }
+
+  function addNewMessage() {
+    setTimeout(() => {
+      messages = [
+        ...messages,
+        {
+          _id: messages.length,
+          content: 'NEW MESSAGE',
+          senderId: '1234',
+          timestamp: new Date().toString().substring(16, 21),
+          date: new Date().toDateString()
+        }
+      ]
+    }, 2000)
+  }
+const styles = {
+  general: {
+    color: '#0a0a0a',
+    colorSpinner: '#333',
+    borderStyle: '1px solid #e1e4e8',
+    colorCaret: '#25324B',
+  },
+
+  container: {
+    border: 'none',
+    borderRadius: '0',
+    boxShadow: 'none'
+  },
+
+  content: {
+    background: '#FFFFFF'
+  },
+
+  footer: {
+    background: '#f8f9fa',
+    backgroundReply: 'rgba(0, 0, 0, 0.08)'
+  },
+
+  icons: {
+    microphone: '#7330DF',
+  },
+
+  message: {
+    background: '#FFFFFF',
+    backgroundMe: '#E8E8E8',
+    color: '#0a0a0a',
+    colorStarted: '#9ca6af',
+    backgroundDeleted: '#dadfe2',
+    backgroundSelected: '#c2dcf2',
+    colorDeleted: '#757e85',
+    colorUsername: '#9ca6af',
+    colorTimestamp: '#828c94',
+    backgroundDate: '#e5effa',
+    colorDate: '#505a62',
+    backgroundSystem: '#e5effa',
+    colorSystem: '#505a62',
+    backgroundMedia: 'rgba(0, 0, 0, 0.15)',
+    backgroundReply: 'rgba(0, 0, 0, 0.08)',
+    colorReplyUsername: '#0a0a0a',
+    colorReply: '#6e6e6e',
+    colorTag: '#0d579c',
+    backgroundImage: '#ddd',
+    colorNewMessages: '#7330DF',
+    backgroundScrollCounter: '#7330DF',
+    colorScrollCounter: '#fff',
+    backgroundReaction: '#eee',
+    borderStyleReaction: '1px solid #eee',
+    backgroundReactionHover: '#fff',
+    borderStyleReactionHover: '1px solid #ddd',
+    colorReactionCounter: '#0a0a0a',
+    backgroundReactionMe: '#cfecf5',
+    borderStyleReactionMe: '1px solid #3b98b8',
+    backgroundReactionHoverMe: '#cfecf5',
+    borderStyleReactionHoverMe: '1px solid #3b98b8',
+    colorReactionCounterMe: '#0b59b3',
+    backgroundAudioRecord: '#eb4034',
+    backgroundAudioLine: 'rgba(0, 0, 0, 0.15)',
+    backgroundAudioProgress: '#455247',
+    backgroundAudioProgressSelector: '#455247',
+    colorFileExtension: '#757e85'
+  },
+
+  sidemenu: {
+    background: '#fff',
+    backgroundHover: '#f6f6f6',
+    backgroundActive: '#F1EAFC',
+    colorActive: '#1976d2',
+    borderColorSearch: '#e1e5e8'
+  },
 }
+  onMounted(() => {
+  const style = document.createElement('style')
+  style.innerHTML = `
+  .vac-textarea { border-radius: 0}
+
+
+  .vac-message-wrapper .vac-message-card {
+    border: 1px solid #D1D1D1;
+    padding: 12px 16px;
+    box-shadow: none;
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 160%;
+    color: #454545;
+  }
+
+  .vac-message-wrapper .vac-message-current {
+    border-radius: 8px 0px 8px 8px;
+    border: 0px;
+  }
+  .vac-box-search {
+    padding: 0;
+    padding-bottom: 28px;
+  }
+
+  .vac-rooms-container .vac-room-list{
+    padding: 0;
+  }
+
+  .vac-col-messages .vac-messages-container {
+    padding: 28px 32px;
+  }
+
+  .vac-box-search .vac-icon-search {
+    left: 16px;
+  }
+
+  .vac-box-search .vac-input {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px 12px 48px;
+    gap: 16px;
+    width: 352px;
+    height: 50px;
+    background: #FFFFFF;
+    border-color: #D1D1D1;
+    border-radius: 0;
+  }
+
+  .vac-box-footer {
+    padding: 28px 32px;
+    background: white;
+  }
+
+  .vac-icon-textarea {
+    gap: 16px;
+  }
+
+  .vac-svg-button {
+    max-height: unset;
+  }
+
+  .vac-col-messages .vac-icon-scroll {
+    bottom: 120px;
+  }
+
+  .vac-rooms-container .vac-room-item {
+    border-radius: 0;
+    align-items: center;
+    display: flex;
+    flex: 1 1 100%;
+    margin-bottom: 5px;
+    padding: 0 14px;
+    position: relative;
+    min-height: 71px;
+    transition: background-color .3s cubic-bezier(.25,.8,.5,1);
+    padding: 16px;
+    gap: 16px;
+    height: 86px;
+    background: #FFFFFF;
+    box-shadow: inset 0px -1px 0px #D6DDEB;
+  }
+  .vac-rooms-container .vac-room-selected {
+    box-shadow: none;
+  }
+
+  .vac-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  .vac-rooms-container{
+    padding: 28px 32px;
+    flex: 0 0 416px;
+    box-sizing: border-box;
+  }
+
+  .vac-room-container .vac-room-name {
+    font-family: 'Epilogue';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 160%;
+    /* identical to box height, or 26px */
+
+    display: flex;
+    align-items: center;
+
+    /* Neutrals/100 */
+
+    color: #171717
+  }
+
+  .vac-info-wrapper .vac-avatar {
+    min-height: 56px;
+    min-width: 56px;
+  }
+  `
+  chatWindow.value.shadowRoot.appendChild(style)
+})
 </script>
 <style scoped>
+.btn-send {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 10px;
+
+  width: 73px;
+  height: 40px;
+  background: #7330DF;
+  border-radius: 8px;
+
+}
+
+
 .title-wrapper {
   box-shadow: inset 0px -1px 0px #D6DDEB;
   background: #FFFFFF;
@@ -220,7 +442,7 @@ function addNewMessage() {
   line-height: 120%;
   color: #171717;
   margin: 0 auto;
-  max-width: 1167px;
+  /*  max-width: 1167px;*/
 
 }
 
@@ -232,7 +454,7 @@ function addNewMessage() {
   gap: 1px;
   background: #FFFFFF;
   margin: 0 auto;
-  max-width: 1167px;
+  /*  max-width: 1167px;*/
   height: 100%;
 }
 

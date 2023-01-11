@@ -31,5 +31,17 @@ export const useMessageStore = defineStore({
         this.loading = false
       }
     },
+
+    async sendMessages(data) {
+      this.loading = true
+      try {
+        await api.post(`/messages`, data)
+          .then((response) => response.data)
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    },
   }
 })

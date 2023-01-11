@@ -24,7 +24,7 @@
         </RouterLink>
         <RouterLink type="button" to="/jobs/new" class="btn btn-primary">
           <IconPlus />
-          Post a job
+          <span>Post a job</span>
         </RouterLink>
       </div>
     </div>
@@ -57,7 +57,7 @@ defineProps({
   align-items: center;
   padding: 16px 32px;
   gap: 641px;
-  max-width: 1167px;
+/*  max-width: 1167px;*/
   margin: 0 auto;
 }
 
@@ -80,11 +80,12 @@ defineProps({
   padding: 12px 24px;
   gap: 10px;
   height: 50px;
-
-  /* Brands/Primary */
-
   background: #7330DF;
   border-radius: 8px;
+
+  /* Brands/Primary */
+}
+#action .btn span {
   font-family: 'Epilogue';
   font-style: normal;
   font-weight: 700;
@@ -92,6 +93,7 @@ defineProps({
   line-height: 160%;
   text-align: center;
   color: #FFFFFF;
+  white-space: nowrap;
 }
 
 #company-list {
