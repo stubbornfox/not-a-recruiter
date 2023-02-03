@@ -54,18 +54,7 @@
         </div>
       </div>
     </div> -->
-    <vue-advanced-chat ref="chatWindow"
-      height="calc(100vh - 160px)"
-      :current-user-id="currentUserId"
-      :styles="JSON.stringify(styles)"
-      :rooms="JSON.stringify(rooms)"
-      :rooms-loaded="true"
-      :messages="JSON.stringify(messages)"
-      :messages-loaded="messagesLoaded"
-      @send-message="sendMessage($event.detail[0])"
-      @fetch-messages="fetchMessagesPerRoom($event.detail[0])"
-      @add-room="addRoom($event.detail[0])"
-    show-add-room="true">
+    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="rooms" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" show-add-room="true" :show-audio="false">
       <div slot="search-icon">
         <IconSearch />
       </div>
@@ -81,10 +70,7 @@
         <IconPaperClip />
       </div>
     </vue-advanced-chat>
-    <NewRoom :open="addNewRoom"
-             :mates="chatMates"
-             @create-new-room="createNewRoom"
-             @close-new-room="addNewRoom = false"/>
+    <NewRoom :open="addNewRoom" :participants="chatMates" @create-new-room="createNewRoom" @close-new-room="addNewRoom = false" />
   </div>
 </template>
 <script setup>
@@ -104,7 +90,6 @@ import { register } from 'vue-advanced-chat'
 import { ref, onMounted } from 'vue'
 
 register()
-const currentUserId = 8
 // const rooms = [{
 //   roomId: '1',
 //   roomName: 'Jan mayer',
@@ -116,11 +101,19 @@ const currentUserId = 8
 // }]
 const messageStore = useMessageStore()
 const roomStore = useRoomStore()
-const { messages } = storeToRefs(messageStore)
+const { messages, newMessageId } = storeToRefs(messageStore)
 const { error, loading, rooms, chatMates } = storeToRefs(roomStore)
-const { fetchMessages, createMessage } = messageStore
+const { fetchMessages, createMessage, uploadFile } = messageStore
 const { fetchRooms, fetchChatMates, createRoom } = roomStore
 
+const props = defineProps({
+  me: Object,
+  default: {}
+})
+
+
+const currentUserId = props.me.id
+console.log('currentUserId', currentUserId)
 fetchRooms()
 fetchChatMates()
 
@@ -155,126 +148,171 @@ function addMessages(reset) {
   return messagesTemp
 };
 
-  async function sendMessage({ content, roomId, files, replyMessage }) {
-    const message = {
-      user_id: currentUserId,
-      content,
-      timestamp: new Date()
+async function sendMessage({ content, roomId, files, replyMessage }) {
+  const message = {
+    user_id: currentUserId,
+    content,
+    timestamp: new Date()
+  }
+  if (files) {
+    message.files = formattedFiles(files)
+  }
+  if (replyMessage) {
+    message.replyMessage = {
+      _id: replyMessage._id,
+      content: replyMessage.content,
+      sender_id: replyMessage.senderId
     }
-    if (files) {
-      message.files = this.formattedFiles(files)
+    if (replyMessage.files) {
+      message.replyMessage.files = replyMessage.files
     }
-    if (replyMessage) {
-      message.replyMessage = {
-        _id: replyMessage._id,
-        content: replyMessage.content,
-        sender_id: replyMessage.senderId
-      }
-      if (replyMessage.files) {
-        message.replyMessage.files = replyMessage.files
-      }
-    }
-
-    createMessage(roomId, { message: message })
-    // const { id } = await firestoreService.addMessage(roomId, message)
-    // if (files) {
-    //   for (let index = 0; index < files.length; index++) {
-    //     await this.uploadFile({ file: files[index], messageId: id, roomId })
-    //   }
-    // }
-    // firestoreService.updateRoom(roomId, { lastUpdated: new Date() })
   }
 
-  function addNewMessage() {
-    setTimeout(() => {
-      messages = [
-        ...messages,
-        {
-          _id: messages.length,
-          content: 'NEW MESSAGE',
-          senderId: '1234',
-          timestamp: new Date().toString().substring(16, 21),
-          date: new Date().toDateString()
-        }
-      ]
-    }, 2000)
-  }
-const styles = {
-  general: {
-    color: '#0a0a0a',
-    colorSpinner: '#333',
-    borderStyle: '1px solid #e1e4e8',
-    colorCaret: '#25324B',
-  },
+  await createMessage(roomId, message)
+  console.log(newMessageId)
+  // if (files) {
+  //   for (let index = 0; index < files.length; index++) {
+  //     await uploadFile1({ file: files[index], messageId: newMessageId.value, roomId })
+  //   }
+  // }
 
-  container: {
-    border: 'none',
-    borderRadius: '0',
-    boxShadow: 'none'
-  },
-
-  content: {
-    background: '#FFFFFF'
-  },
-
-  footer: {
-    background: '#f8f9fa',
-    backgroundReply: 'rgba(0, 0, 0, 0.08)'
-  },
-
-  icons: {
-    microphone: '#7330DF',
-  },
-
-  message: {
-    background: '#FFFFFF',
-    backgroundMe: '#E8E8E8',
-    color: '#0a0a0a',
-    colorStarted: '#9ca6af',
-    backgroundDeleted: '#dadfe2',
-    backgroundSelected: '#c2dcf2',
-    colorDeleted: '#757e85',
-    colorUsername: '#9ca6af',
-    colorTimestamp: '#828c94',
-    backgroundDate: '#e5effa',
-    colorDate: '#505a62',
-    backgroundSystem: '#e5effa',
-    colorSystem: '#505a62',
-    backgroundMedia: 'rgba(0, 0, 0, 0.15)',
-    backgroundReply: 'rgba(0, 0, 0, 0.08)',
-    colorReplyUsername: '#0a0a0a',
-    colorReply: '#6e6e6e',
-    colorTag: '#0d579c',
-    backgroundImage: '#ddd',
-    colorNewMessages: '#7330DF',
-    backgroundScrollCounter: '#7330DF',
-    colorScrollCounter: '#fff',
-    backgroundReaction: '#eee',
-    borderStyleReaction: '1px solid #eee',
-    backgroundReactionHover: '#fff',
-    borderStyleReactionHover: '1px solid #ddd',
-    colorReactionCounter: '#0a0a0a',
-    backgroundReactionMe: '#cfecf5',
-    borderStyleReactionMe: '1px solid #3b98b8',
-    backgroundReactionHoverMe: '#cfecf5',
-    borderStyleReactionHoverMe: '1px solid #3b98b8',
-    colorReactionCounterMe: '#0b59b3',
-    backgroundAudioRecord: '#eb4034',
-    backgroundAudioLine: 'rgba(0, 0, 0, 0.15)',
-    backgroundAudioProgress: '#455247',
-    backgroundAudioProgressSelector: '#455247',
-    colorFileExtension: '#757e85'
-  },
-
-  sidemenu: {
-    background: '#fff',
-    backgroundHover: '#f6f6f6',
-    backgroundActive: '#F1EAFC',
-    colorActive: '#1976d2',
-    borderColorSearch: '#e1e5e8'
-  },
+  // firestoreService.updateRoom(roomId, { lastUpdated: new Date() })
 }
-  onMounted(() => {
+
+async function uploadFile1({ file, messageId, roomId }) {
+    return new Promise(resolve => {
+      let type = file.extension || file.type
+      if (type === 'svg' || type === 'pdf') {
+        type = file.type
+      }
+      storageService.listenUploadImageProgress(
+        currentUserId,
+        messageId,
+        file,
+        type,
+        progress => {
+          updateFileProgress(messageId, file.localUrl, progress)
+        },
+        _error => {
+          resolve(false)
+        },
+        async url => {
+          const message = await firestoreService.getMessage(roomId, messageId)
+          message.files.forEach(f => {
+            if (f.url === file.localUrl) {
+              f.url = url
+            }
+          })
+          await firestoreService.updateMessage(roomId, messageId, {
+            files: message.files
+          })
+          resolve(true)
+        }
+      )
+    })
+  }
+  function updateFileProgress(messageId, fileUrl, progress) {
+    const message = messages.find(message => message._id === messageId)
+    if (!message || !message.files) return
+    message.files.find(file => file.url === fileUrl).progress = progress
+    messages = [...messages]
+  }
+
+  function formattedFiles(files) {
+    const formattedFiles = []
+    files.forEach(file => {
+      const messageFile = {
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        extension: file.extension || file.type,
+        url: file.url || file.localUrl
+      }
+      if (file.audio) {
+        messageFile.audio = true
+        messageFile.duration = file.duration
+      }
+      formattedFiles.push(messageFile)
+    })
+    return formattedFiles
+  }
+
+  const styles = {
+    general: {
+      color: '#0a0a0a',
+      colorSpinner: '#333',
+      borderStyle: '1px solid #e1e4e8',
+      colorCaret: '#25324B',
+    },
+
+    container: {
+      border: 'none',
+      borderRadius: '0',
+      boxShadow: 'none'
+    },
+
+    content: {
+      background: '#FFFFFF'
+    },
+
+    footer: {
+      background: '#f8f9fa',
+      backgroundReply: 'rgba(0, 0, 0, 0.08)'
+    },
+
+    icons: {
+      microphone: '#7330DF',
+    },
+
+    message: {
+      background: '#FFFFFF',
+      backgroundMe: '#E8E8E8',
+      color: '#0a0a0a',
+      colorStarted: '#9ca6af',
+      backgroundDeleted: '#dadfe2',
+      backgroundSelected: '#c2dcf2',
+      colorDeleted: '#757e85',
+      colorUsername: '#9ca6af',
+      colorTimestamp: '#828c94',
+      backgroundDate: '#e5effa',
+      colorDate: '#505a62',
+      backgroundSystem: '#e5effa',
+      colorSystem: '#505a62',
+      backgroundMedia: 'rgba(0, 0, 0, 0.15)',
+      backgroundReply: 'rgba(0, 0, 0, 0.08)',
+      colorReplyUsername: '#0a0a0a',
+      colorReply: '#6e6e6e',
+      colorTag: '#0d579c',
+      backgroundImage: '#ddd',
+      colorNewMessages: '#7330DF',
+      backgroundScrollCounter: '#7330DF',
+      colorScrollCounter: '#fff',
+      backgroundReaction: '#eee',
+      borderStyleReaction: '1px solid #eee',
+      backgroundReactionHover: '#fff',
+      borderStyleReactionHover: '1px solid #ddd',
+      colorReactionCounter: '#0a0a0a',
+      backgroundReactionMe: '#cfecf5',
+      borderStyleReactionMe: '1px solid #3b98b8',
+      backgroundReactionHoverMe: '#cfecf5',
+      borderStyleReactionHoverMe: '1px solid #3b98b8',
+      colorReactionCounterMe: '#0b59b3',
+      backgroundAudioRecord: '#eb4034',
+      backgroundAudioLine: 'rgba(0, 0, 0, 0.15)',
+      backgroundAudioProgress: '#455247',
+      backgroundAudioProgressSelector: '#455247',
+      colorFileExtension: '#757e85'
+    },
+
+    sidemenu: {
+      background: '#fff',
+      backgroundHover: '#f6f6f6',
+      backgroundActive: '#F1EAFC',
+      colorActive: '#1976d2',
+      borderColorSearch: '#e1e5e8'
+    },
+  }
+onMounted(() => {
   const style = document.createElement('style')
   style.innerHTML = `
   .vac-textarea { border-radius: 0}

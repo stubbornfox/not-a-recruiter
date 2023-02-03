@@ -34,6 +34,9 @@ function notificationClickHandler(item) {
   if (item.candidate_id && item.job_id) {
      router.push({name: "Applicant", params: {slug: item.job_id, stage: 'inbox', candidate_id: item.candidate_id}})
   }
+  if (item.message_id) {
+     router.push({name: "Messages", params: {message_id: item.message_id} })
+  }
 }
 </script>
 

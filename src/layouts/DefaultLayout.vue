@@ -10,7 +10,7 @@
         <TopbarCompany :user="me" :company="organization" :has-unread="hasUnread"/>
       </div>
       <main class="flex-1 h-full flex flex-col">
-        <router-view></router-view>
+        <router-view :me="me" v-if="me"></router-view>
       </main>
     </div>
   </div>
@@ -45,9 +45,10 @@ import TopbarCompany from '../components/TopbarCompany.vue'
 const authStore = useAuthStore();
 const userStore = useUserStore();
 const { me, organization } = storeToRefs(userStore);
-userStore.getMe()
+const hasUnread = ref(false)
+userStore.getMe().then(() => { hasUnread.value = me.value.has_unread })
 const WS_URL = import.meta.env.VITE_WS_URL
-let consumer = createConsumer(getWebSocketURL());
+let consumer = createConsumer(getWebSocketURL())
 
 function getWebSocketURL() {
   const user = JSON.parse(localStorage.getItem('user'))
@@ -58,7 +59,7 @@ function getWebSocketURL() {
 }
 
 const sidebarOpen = ref(false)
-const hasUnread = ref(false)
+// const hasUnread = ref(false)
 
 onMounted(() => {
   consumer.subscriptions.create({
