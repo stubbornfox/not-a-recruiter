@@ -7,7 +7,7 @@
           <span class="sr-only">Open sidebar</span>
           <Bars3CenterLeftIcon class="h-6 w-6" aria-hidden="true" />
         </button>
-        <TopbarCompany :user="me" :company="organization" :has-unread="hasUnread"/>
+        <TopbarCompany :user="me" :company="organization" :has-unread="hasUnread" />
       </div>
       <main class="flex-1 h-full flex flex-col">
         <router-view :me="me" v-if="me"></router-view>
@@ -47,7 +47,8 @@ const userStore = useUserStore();
 const { me, organization } = storeToRefs(userStore);
 const hasUnread = ref(false)
 userStore.getMe().then(() => { hasUnread.value = me.value.has_unread })
-const WS_URL = import.meta.env.VITE_WS_URL
+const WS_URL =
+  import.meta.env.VITE_WS_URL
 let consumer = createConsumer(getWebSocketURL())
 
 function getWebSocketURL() {
@@ -59,7 +60,6 @@ function getWebSocketURL() {
 }
 
 const sidebarOpen = ref(false)
-// const hasUnread = ref(false)
 
 onMounted(() => {
   consumer.subscriptions.create({
@@ -69,8 +69,7 @@ onMounted(() => {
     disconnected() {
       console.log('disconnected')
     },
-    rejected() {
-    },
+    rejected() {},
     received: data => {
       hasUnread.value = true
     }
@@ -82,6 +81,7 @@ onMounted(() => {
 .main-content {
   padding-left: 272px;
 }
+
 .change-current-organization i {
   display: none;
 }

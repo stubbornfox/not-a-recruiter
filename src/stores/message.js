@@ -7,17 +7,18 @@ export const useMessageStore = defineStore({
     newMessageId: null,
     messages: [],
     loading: false,
-    error: null
+    error: null,
+    messagesLoaded: null
   }),
   actions: {
     async fetchMessages(roomId) {
-      this.loading = true
+      this.messagesLoaded = false
       try {
         this.messages = await api.get(`/rooms/${roomId}/messages`).then((response) => response.data)
       } catch (error) {
         this.error = error
       } finally {
-        this.loading = false
+        this.messagesLoaded = true
       }
     },
 

@@ -54,7 +54,7 @@
         </div>
       </div>
     </div> -->
-    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="rooms" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" show-add-room="true" :show-audio="false">
+    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="JSON.stringify(rooms)" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" show-add-room="true" :show-audio="false">
       <div slot="search-icon">
         <IconSearch />
       </div>
@@ -90,19 +90,10 @@ import { register } from 'vue-advanced-chat'
 import { ref, onMounted } from 'vue'
 
 register()
-// const rooms = [{
-//   roomId: '1',
-//   roomName: 'Jan mayer',
-//   avatar: 'https://66.media.tumblr.com/avatar_c6a8eae4303e_512.pnj',
-//   users: [
-//     { _id: 8, username: 'John Doe' },
-//     { _id: '13', username: 'John Snow' }
-//   ]
-// }]
 const messageStore = useMessageStore()
 const roomStore = useRoomStore()
-const { messages, newMessageId } = storeToRefs(messageStore)
-const { error, loading, rooms, chatMates } = storeToRefs(roomStore)
+const { messages, newMessageId, messagesLoaded } = storeToRefs(messageStore)
+const { error, loading, rooms, chatMates, newRoom } = storeToRefs(roomStore)
 const { fetchMessages, createMessage, uploadFile } = messageStore
 const { fetchRooms, fetchChatMates, createRoom } = roomStore
 
@@ -113,11 +104,9 @@ const props = defineProps({
 
 
 const currentUserId = props.me.id
-console.log('currentUserId', currentUserId)
 fetchRooms()
 fetchChatMates()
 
-const messagesLoaded = ref(true)
 const chatWindow = ref(null)
 const addNewRoom = ref(false)
 
@@ -126,6 +115,7 @@ function addRoom() {
 }
 
 function createNewRoom(participant_id) {
+  messagesLoaded.value = true
   createRoom(participant_id)
 }
 

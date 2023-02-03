@@ -4,7 +4,7 @@ import api from '../services/api';
 export const useRoomStore = defineStore({
   id: 'rooms',
   state: () => ({
-    room: null,
+    newRoom: null,
     rooms: [],
     chatMates: [],
     loading: false,
@@ -40,8 +40,8 @@ export const useRoomStore = defineStore({
       try {
         await api.post('rooms', { user_id: participant_id })
           .then((response) => {
-            this.room = response.data
-            this.rooms.push(this.room)
+            this.newRoom = response.data
+            this.rooms = [this.newRoom, ...this.rooms]
           })
       } catch (error) {
         this.error = error
