@@ -1,47 +1,67 @@
 <template>
   <TransitionRoot as="template" :show="sidebarOpen">
-    <Dialog as="div" class="relative z-40 lg:hidden" @close="sidebarOpen = false">
+    <Dialog as="div" class="relative z-40 lg:hidden" @close="$emit('closeSidebar')">
       <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="transition-opacity ease-linear duration-300" leave-from="opacity-100" leave-to="opacity-0">
-        <div class="fixed inset-0 bg-gray-600 bg-opacity-75" />
+        <div class="fixed inset-0 bg-neutrals-10i" />
       </TransitionChild>
-      <div class="fixed inset-0 z-40 flex">
+      <div class="fixed inset-0 z-40 flex w-full">
         <TransitionChild as="template" enter="transition ease-in-out duration-300 transform" enter-from="-translate-x-full" enter-to="translate-x-0" leave="transition ease-in-out duration-300 transform" leave-from="translate-x-0" leave-to="-translate-x-full">
-          <DialogPanel class="relative flex w-full max-w-xs flex-1 flex-col border-r border-color pt-5 pb-4">
+          <DialogPanel class="relative flex w-full flex-1 flex-col pb-4">
             <TransitionChild as="template" enter="ease-in-out duration-300" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-300" leave-from="opacity-100" leave-to="opacity-0">
-              <div class="absolute top-0 right-0 -mr-12 pt-2">
-                <button type="button" class="ml-1 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" @click="sidebarOpen = false">
+              <div class="flex py-6 items-center">
+                <button type="button" class="ml-4 flex h-10 w-10 items-center justify-center rounded-full focus:outline-none" @click="$emit('closeSidebar')">
                   <span class="sr-only">Close sidebar</span>
-                  <XMarkIcon class="h-6 w-6 text-white" aria-hidden="true" />
+                  <IconXMark aria-hidden="true" />
                 </button>
+                <div class="logo-container ml-20">
+                  <img :src="Logo" width="87" />
+                </div>
               </div>
             </TransitionChild>
-            <div class="flex flex-shrink-0 items-center px-4">
-              <RouterLink :to="{name: 'Organizations'}" class="inline-block h-10 w-10 rounded-md bg-mute flex items-center justify-center">
-                <span class="text-heading text-lg font-semibold">{{organization?.name ? organization?.name[0] : ''}}</span>
-              </RouterLink>
-              <h5 class="text-heading text-md font-semibold ml-4">{{organization?.name}}</h5>
-            </div>
-            <nav class="mt-5 h-full flex-shrink-0 divide-y divide-border-color overflow-y-auto" aria-label="Sidebar">
-              <div class="space-y-1 px-2">
-                <a v-for="item in navigation" :key="item.name" :href="item.href" :class="[item.current ? 'bg-pink-700 text-white' : 'text-blue-100 hover:text-white hover:bg-soft', 'group flex items-center px-2 py-2 text-base font-medium rounded-md']" :aria-current="item.current ? 'page' : undefined">
-                  <!-- <component :is="item.icon" class="mr-4 h-6 w-6 flex-shrink-0 text-blue-200" aria-hidden="true" /> -->
-                  {{ item.name }}
-                </a>
+            <nav class="h-full flex-shrink-0 divide-y divide-secondary overflow-y-auto flex flex-col" aria-label="Sidebar">
+              <div class="w-full mb-6">
+                <RouterLink v-for="item in navigation" :key="item.name" :to="item.href" class="navigation-link" :class="{ active: isActive(item.href) }" :aria-current="item.current ? 'page' : undefined" @click="$emit('closeSidebar')">
+                  <div class="navigation-link-content">
+                    <i aria-hidden="true" class="navigation-icon">
+                      <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" />
+                    </i>
+                    <span class="navigation-caption">{{ item.name }}</span>
+                  </div>
+                </RouterLink>
               </div>
-              <div class="mt-6 pt-6">
-                <div class="space-y-1 px-2">
-                  <a v-for="item in secondaryNavigation" :key="item.name" :href="item.href" class="group flex items-center rounded-md px-2 py-2 text-base font-medium text-blue-100 hover:bg-soft hover:text-white">
-                    <!-- <component :is="item.icon" class="mr-4 h-6 w-6 text-color-text" aria-hidden="true" /> -->
-                    {{ item.name }}
-                  </a>
+              <div class="py-6 w-full flex-1">
+                <div class="">
+                  <h3 class="settings">SETTINGS</h3>
+                  <RouterLink v-for="item in secondaryNavigation" :key="item.name" :to="item.href" class="navigation-link" :class="{ active: isActive(item.href) }" @click="$emit('closeSidebar')">
+                    <div class="navigation-link-content">
+                      <i aria-hidden="true" class="navigation-icon">
+                        <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" /></i>
+                      <span class="navigation-caption">{{ item.name }}</span>
+                    </div>
+                  </RouterLink>
+                </div>
+                <div v-if="user" id="profile" class="pl-12 pt-3">
+                  <div class="avatar">
+                    <img v-if="user.profile_picture" :src="user.profile_picture">
+                    <div v-else>
+                      <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="name">{{user.first_name}}</div>
+                    <div class="email">{{user.email}}</div>
+                  </div>
+                </div>
+                <div id="mobilePostJob" class="p-4 absolute left-0 right-0 bottom-20">
+                  <RouterLink type="button" to="/jobs/new" class="btn btn-primary flex" @click="$emit('closeSidebar')">
+                    <IconPlus />
+                    <span>Post a job</span>
+                  </RouterLink>
                 </div>
               </div>
             </nav>
           </DialogPanel>
         </TransitionChild>
-        <div class="w-14 flex-shrink-0" aria-hidden="true">
-          <!-- Dummy element to force sidebar to shrink to fit close icon -->
-        </div>
       </div>
     </Dialog>
   </TransitionRoot>
@@ -71,7 +91,7 @@
                 <i aria-hidden="true" class="navigation-icon">
                   <component :is="item.icon" :color="isActive(item.href)? '#7330DF': undefined" /></i>
                 <span class="navigation-caption">{{ item.name }}</span>
-               </div>
+              </div>
             </RouterLink>
           </div>
         </div>
@@ -104,13 +124,24 @@ import IconHr from '@/components/icons/IconHr.vue'
 import IconJobListing from '@/components/icons/IconJobListing.vue'
 import IconSetings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
+import IconXMark from '@/components/icons/IconXMark.vue'
+import IconPlus from '@/components/icons/IconPlus.vue'
 
+import {
+  Dialog,
+  DialogPanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from '@headlessui/vue'
 
 defineProps({
   user: { type: Object, default: { email: '', name: '', profile_picture: '' } },
+  sidebarOpen: Boolean,
 })
-
-const sidebarOpen = ref(false)
 
 const applicantNavigation = [
   { name: 'Dashboard', href: '/', icon: IconDashboard },
@@ -310,5 +341,28 @@ h3.settings {
   color: #454545;
 
   opacity: 0.5;
+}
+
+#mobilePostJob .btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  gap: 10px;
+  height: 50px;
+  background: #7330DF;
+  border-radius: 8px;
+}
+
+#mobilePostJob .btn span {
+  font-family: 'Epilogue';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  text-align: center;
+  color: #FFFFFF;
+  white-space: nowrap;
 }
 </style>

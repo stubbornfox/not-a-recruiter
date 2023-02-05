@@ -1,6 +1,10 @@
 <template>
   <div id="topnav">
-    <div id="topnav-wrapper">
+    <div id="topnav-wrapper" class="pt-2 pb-4 px-4 lg:py-4 lg:px-8">
+      <button type="button" class="lg:hidden" @click="$emit('openSideBar')">
+        <span class="sr-only">Open sidebar</span>
+        <IconMobileTopNav class="h-6 w-6" aria-hidden="true" />
+      </button>
       <div id="company-list" v-if="company">
         <div class="company-logo">
           <img v-if="company.logo" :src="company.logo" />
@@ -22,7 +26,7 @@
         <RouterLink :to="{name: 'Notification'}" type="button">
           <IconNotification :hasUnread="hasUnread" />
         </RouterLink>
-        <RouterLink type="button" to="/jobs/new" class="btn btn-primary">
+        <RouterLink type="button" to="/jobs/new" class="btn btn-primary hidden lg:flex">
           <IconPlus />
           <span>Post a job</span>
         </RouterLink>
@@ -35,6 +39,7 @@ import { RouterLink } from "vue-router";
 import IconNotification from '@/components/icons/IconNotification.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
 import IconChervonDown from '@/components/icons/IconChervonDown.vue'
+import IconMobileTopNav from '@/components/icons/IconMobileTopNav.vue'
 
 defineProps({
   user: { type: Object, default: { email: '', name: '', profile_picture: '' } },
@@ -47,7 +52,6 @@ defineProps({
   background: #FFFFFF;
   box-shadow: inset 0px -1px 0px #D6DDEB;
   width: 100%;
-  height: 82px;
 }
 
 #topnav-wrapper {
@@ -55,9 +59,6 @@ defineProps({
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 32px;
-  gap: 641px;
-/*  max-width: 1167px;*/
   margin: 0 auto;
 }
 
@@ -82,9 +83,8 @@ defineProps({
   height: 50px;
   background: #7330DF;
   border-radius: 8px;
-
-  /* Brands/Primary */
 }
+
 #action .btn span {
   font-family: 'Epilogue';
   font-style: normal;
