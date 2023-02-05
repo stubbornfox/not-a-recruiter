@@ -62,7 +62,6 @@ export const useMessageStore = defineStore({
             "Content-Type": "multipart/form-data",
           }
         }
-        debugger
         body.append('file', file)
         await api.post(`/rooms/${roomId}/messages/${messageId}/upload_file`, body, config)
           .then((response) => {})

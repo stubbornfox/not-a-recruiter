@@ -41,7 +41,8 @@ export const useRoomStore = defineStore({
         await api.post('rooms', { user_id: participant_id })
           .then((response) => {
             this.newRoom = response.data
-            this.rooms = [this.newRoom, ...this.rooms]
+            const rooms = this.rooms.filter(room => room.roomId !== this.newRoom.roomId);
+            this.rooms = [this.newRoom, ...rooms]
           })
       } catch (error) {
         this.error = error
