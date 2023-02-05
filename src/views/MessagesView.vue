@@ -94,12 +94,45 @@ const messageStore = useMessageStore()
 const roomStore = useRoomStore()
 const { messages, newMessageId, messagesLoaded } = storeToRefs(messageStore)
 const { error, loading, rooms, chatMates, newRoom } = storeToRefs(roomStore)
-const { fetchMessages, createMessage, uploadFile } = messageStore
+const { fetchMessages, createMessage, receiveMessage, uploadFile } = messageStore
 const { fetchRooms, fetchChatMates, createRoom } = roomStore
+let selectedRoomId = null
+
+import { createConsumer } from '@rails/actioncable';
 
 const props = defineProps({
   me: Object,
   default: {}
+})
+const WS_URL =
+  import.meta.env.VITE_WS_URL
+
+let consumer = createConsumer(getWebSocketURL())
+
+function getWebSocketURL() {
+  const user = JSON.parse(localStorage.getItem('user'))
+  if (user)
+    return `${WS_URL}?token=${user['token']}`
+  else
+    return WS_URL
+}
+
+onMounted(() => {
+  consumer.subscriptions.create({
+    channel: 'Noticed::NotificationChannel',
+  }, {
+    connected: () => console.log('connected'),
+    disconnected() {
+      console.log('disconnected')
+    },
+    rejected() {},
+    received: data => {
+      if (data.room_id && data.message_id && data.room_id == selectedRoomId) {
+        receiveMessage(data.room_id, data.message_id)
+      }
+    }
+  })
+
 })
 
 
@@ -121,22 +154,8 @@ function createNewRoom(participant_id) {
 
 function fetchMessagesPerRoom({ room, options = {} }) {
   fetchMessages(room.roomId)
+  selectedRoomId = room.roomId
 }
-
-function addMessages(reset) {
-  const messagesTemp = []
-  for (let i = 0; i < 1; i++) {
-    messagesTemp.push({
-      _id: reset ? i : messagesTemp.length + i,
-      content: `${reset ? '' : 'paginated'} message ${i + 1}`,
-      senderId: '4321',
-      username: 'John Doe',
-      date: '13 November',
-      timestamp: '10:20'
-    })
-  }
-  return messagesTemp
-};
 
 async function sendMessage({ content, roomId, files, replyMessage }) {
   const message = {
@@ -159,14 +178,6 @@ async function sendMessage({ content, roomId, files, replyMessage }) {
   }
 
   await createMessage(roomId, message)
-  console.log(newMessageId)
-  // if (files) {
-  //   for (let index = 0; index < files.length; index++) {
-  //     await uploadFile1({ file: files[index], messageId: newMessageId.value, roomId })
-  //   }
-  // }
-
-  // firestoreService.updateRoom(roomId, { lastUpdated: new Date() })
 }
 
 async function uploadFile1({ file, messageId, roomId }) {

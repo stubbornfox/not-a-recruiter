@@ -2,7 +2,7 @@
   <div class="w-full h-full flex flex-col flex-grow">
     <div class="h-full flex flex-col flex-grow">
       <div class="flex flex-col flex-grow h-full">
-        <div class="mt-6 max-w-lg w-full mx-auto border border-tertiary rounded overflow-hidden">
+        <div v-if="notices.length > 0" class="mt-6 max-w-lg w-full mx-auto border border-tertiary rounded overflow-hidden">
           <div v-for="item in notices" :key="item.id" @click="notificationClickHandler(item)" class="notification group flex items-center p-4 py-6 text-md font-medium text-color-text justify-between" :class="[item.read ? 'bg-white hover:bg-mute' : 'bg-tertiary hover:bg-secondary']">
             <div v-if="!item.read" class="bg-primary rounded w-2 h-2 absolute">
 

@@ -22,6 +22,18 @@ export const useMessageStore = defineStore({
       }
     },
 
+    async receiveMessage(roomId, messageId) {
+      this.messagesLoaded = false
+      try {
+        const message = await api.get(`/rooms/${roomId}/messages/${messageId}`).then((response) => response.data)
+        this.messages = [...this.messages, message]
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.messagesLoaded = true
+      }
+    },
+
     async createMessage(roomId, data) {
       this.loading = true
       const body = new FormData()
@@ -44,7 +56,7 @@ export const useMessageStore = defineStore({
           .then((response) => {
             const message = response.data
             this.newMessageId = message._id
-            this.messages.push(message)
+            this.messages = [...this.messages, message]
           })
       } catch (error) {
         this.error = error
