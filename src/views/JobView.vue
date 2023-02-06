@@ -28,6 +28,7 @@
   import { useRoute}  from "vue-router"
   import api from "../services/api"
   import { ArrowLeftIcon } from '@heroicons/vue/24/outline'
+
   const job = ref({})
   let error = ref([])
 

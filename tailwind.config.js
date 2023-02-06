@@ -25,6 +25,9 @@ module.exports = {
         'primary': '#7330DF',
         'secondary': '#C7ACF2',
         'tertiary': '#F1EAFC',
+        'green': '#56CDAD',
+        'red': '#FF6550',
+        'yellow': '#FFB836',
         'neutrals': {
           0: '#F8F8FD',
           10: '#F9FAFC',

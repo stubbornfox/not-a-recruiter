@@ -109,6 +109,11 @@ const router = createRouter({
           component: () => import("../views/MessagesView.vue"),
         },
         {
+          path: "/jobs",
+          name: "Jobs",
+          component: () => import("../views/JobsView.vue"),
+        },
+        {
           path: "/jobs/:slug",
           name: "Job",
           component: () => import("../views/JobView.vue"),

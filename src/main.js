@@ -9,6 +9,8 @@ import '@formkit/themes/genesis'
 import "./assets/main.css";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import 'v-calendar/dist/style.css';
+import VCalendar from 'v-calendar';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -139,6 +141,8 @@ app.use(Toast, {
   icon: true,
   rtl: false
 });
+
+app.use(VCalendar, {input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],})
 
 app.mount("#app");
 applyTheme()

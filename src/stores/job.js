@@ -11,10 +11,11 @@ export const useJobStore = defineStore({
     error: null
   }),
   actions: {
-    async fetchJobs() {
+    async fetchJobs(filterParams) {
       this.loading = true
       try {
-        this.jobs = await api.get('/jobs')
+        const params = new URLSearchParams(filterParams);
+        this.jobs = await api.get('/jobs', {params})
           .then((response) => response.data)
       } catch (error) {
         this.error = error
