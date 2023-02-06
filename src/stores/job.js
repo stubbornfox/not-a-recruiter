@@ -6,6 +6,7 @@ export const useJobStore = defineStore({
   id: 'job',
   state: () => ({
     jobs: [],
+    paginate: null,
     job: null,
     loading: false,
     error: null
@@ -15,8 +16,11 @@ export const useJobStore = defineStore({
       this.loading = true
       try {
         const params = new URLSearchParams(filterParams);
-        this.jobs = await api.get('/jobs', {params})
-          .then((response) => response.data)
+        await api.get('/jobs', { params })
+          .then((response) => {
+            this.jobs = response.data.jobs
+            this.paginate = response.data.paginate
+          })
       } catch (error) {
         this.error = error
       } finally {

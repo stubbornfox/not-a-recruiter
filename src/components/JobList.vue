@@ -1,23 +1,14 @@
 <template>
-  <div class="text-neutrals-100 border border-neutrals-20">
-    <div class="flex items-center justify-between py-5 px-6">
-      <div class="title-2">
-        Job List
-      </div>
-      <div class="">
-        Filter
-      </div>
-    </div>
-    <table class="table-auto w-full">
+   <table class="table-auto w-full">
       <tr class="border-y border-neutrals-20">
         <th class="p-6">Roles</th>
-        <th>Status</th>
-        <th>Date Posted</th>
-        <th>Due Date</th>
-        <th>Job Types</th>
-        <th>Applicants</th>
-        <th>Needs</th>
-        <th></th>
+        <th class="p-6">Status</th>
+        <th class="p-6">Date Posted</th>
+        <th class="p-6">Due Date</th>
+        <th class="p-6">Job Types</th>
+        <th class="p-6">Applicants</th>
+        <th class="p-6">Needs</th>
+        <th class="p-6"></th>
       </tr>
       <tr v-for="job in jobs" :key="job.id" class="even:bg-white odd:bg-neutrals-10i">
         <td class="py-7 px-6 font-medium">{{ job.title }}</td>
@@ -42,32 +33,16 @@
         </td>
       </tr>
     </table>
-    <div class="p-6 text-neutrals-60 font-medium flex items-center justify-between">
-      <div id="per-page">
-        View
-        <select class="mx-3">
-          <option>10</option>
-          <option>20</option>
-          <option>50</option>
-          <option>100</option>
-        </select>
-        Jobs per page
-      </div>
-      <div id="paginage">
-        <ul>
-          <button class="btn bg-primary w-12 h-12 mr-1 rounded-lg text-white">1</button>
-        </ul>
-      </div>
-    </div>
-  </div>
 </template>
 <script setup>
   import { RouterLink } from "vue-router";
+  import { ref } from "vue";
   import IconHorizontalDot from '@/components/icons/IconHorizontalDot.vue'
   import dayjs from 'dayjs';
 
-  defineProps({
+  const props = defineProps({
     jobs: [],
+    paginate: {}
   })
 
   function formatDate(dateData) {
