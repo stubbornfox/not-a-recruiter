@@ -44,6 +44,14 @@
 
   --section-gap: 160px;
   --fk-color-primary: var(--qrh-primary);
+  --fk-bg-decorator: #fff;
+  --fk-box-size: 1.5rem;
+  --fk-margin-option-b: var(--fk-margin-option-y, 1.5rem);
+  --vs-border-radius: 0;
+  --vs-border-color: #E4E5E7;
+  --vs-actions-padding: 12px 16px;
+  --vs-selected-bg: #F1EAFC;
+  --vs-selected-border-color: #C7ACF2;
 }
 
 html.light {
@@ -176,6 +184,14 @@ h4 {
   line-height: 120%;
 }
 
+h5 {
+  font-family: 'Clash Display Variable';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 120%;
+}
+
 .title-2 {
   font-family: 'Epilogue';
   font-style: normal;
@@ -281,5 +297,32 @@ input {
   justify-content: center;
   align-items: center;
   gap: 8px;
-      white-space: nowrap;
+  white-space: nowrap;
+}
+
+[data-type="checkbox"] .formkit-input ~ .formkit-decorator {
+    background: var(--fk-bg-decorator);
+    display: block;
+    box-sizing: border-box;
+    width: var(--fk-box-size);
+    height: var(--fk-box-size);
+    flex: 0 0 var(--fk-box-size);
+    border: 2px solid;
+    box-shadow: var(--fk-border-box-shadow);
+    border-radius: var(--fk-border-radius);
+    margin: var(--fk-margin-decorator);
+    position: relative;
+}
+
+.vs__search, .vs__search:focus {
+  margin: 0;
+  height: 48px;
+}
+
+.vs__dropdown-toggle {
+  padding: 0;
+}
+
+.vs__selected {
+  height: 25px;
 }

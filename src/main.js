@@ -6,11 +6,12 @@ import axios from 'axios'
 import applyTheme from './apply-theme'
 import "./assets/tailwind.css";
 import '@formkit/themes/genesis'
-import "./assets/main.css";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import 'v-calendar/dist/style.css';
 import VCalendar from 'v-calendar';
+import "vue-select/dist/vue-select.css";
+import "./assets/main.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -22,10 +23,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+import vSelect from "vue-select";
 
 library.add(far, fas)
 const pinia = createPinia();
-const app = createApp(App).component('fa', FontAwesomeIcon);
+const app = createApp(App).component('fa', FontAwesomeIcon).component('v-select', vSelect);
 app.use(router);
 app.use(pinia)
 app.use(plugin, defaultConfig({
@@ -33,28 +35,37 @@ app.use(plugin, defaultConfig({
     classes: generateClasses({
       text: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
+        messages: 'list-none p-0 mt-1 mb-0',
+        message: 'text-red-500 mb-1 text-xs'
+      },
+      number: {
+        outer: '$reset',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       tel: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       file: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded shadow-sm border',
-        input: 'border block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex rounded shadow-sm border',
+        input: 'border block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs',
         fileName: 'text-color-text text-sm leading-4 text-color-text ',
@@ -65,59 +76,69 @@ app.use(plugin, defaultConfig({
       },
       email: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       url: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded-r border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1-r border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs',
       },
       password: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       select: {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       checkbox: {
-        label: '$reset block text-md font-normal text-color-text',
+        wrapper:'',
+        outer: '$reset',
+        options: 'mt-4 grid grid-cols-2',
+        fieldset: '$reset',
+        label: '$reset block font-normal text-neutrals-80',
+        inner: '$reset flex pl-1',
+        input: 'border-2 rounded-sm',
+        help: '$reset mt-2 text-sm text-neutrals-60',
+        messages: 'list-none p-0 mt-1 mb-0',
+        message: 'text-red-500 mb-1 text-xs',
+        decorator: '$reset formkit-decorator relative block content-box w-6 h-6 shadow-none bg-white border-2 border-neutrals-20',
       },
       'datetime-local': {
         outer: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
       textarea: {
         outer: '$reset',
         wrapper: '$reset',
-        label: '$reset block text-md font-semibold text-heading',
-        inner: '$reset mt-1 flex rounded-md shadow-sm',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 rounded border-gray-300 focus:border-blue-500 focus:ring-blue-500 bg-transparent',
-        help: '$reset mt-2 text-xs text-gray-500',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
       },
@@ -143,6 +164,6 @@ app.use(Toast, {
 });
 
 app.use(VCalendar, {input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],})
-
+app.use(vSelect)
 app.mount("#app");
 applyTheme()
