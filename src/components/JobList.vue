@@ -1,5 +1,32 @@
 <template>
-   <table class="table-auto w-full">
+  <div class="lg:hidden" v-if="isMobile()">
+    <div v-for="job in jobs" class="job-card p-4 border border-neutrals-20 mt-3" :key="job.slug">
+      <div class="flex items-center justify-between">
+        <div class="text-neutrals-100 font-bold">{{job.title}}</div>
+        <JobActionComponent :job="job"/>
+      </div>
+      <div class="flex items-center justify-between border-b border-neutrals-20 py-3">
+        <div>
+          <div class="text-neutrals-60">Date posted</div>
+          <div class="text-neutrals-80 font-medium"> {{ formatDate(job.created_at) }}</div>
+        </div>
+        <div>
+          <div class="text-neutrals-60">Applicants</div>
+          <div class="text-neutrals-80 font-medium"> {{ job.applicants }}</div>
+        </div>
+        <div>
+          <div class="text-neutrals-60">Needs</div>
+          <div class="text-neutrals-80 font-medium"> {{ job.needs }}</div>
+        </div>
+      </div>
+      <div class="pt-3 flex gap-x-2">
+        <span class="badge" :class="statusClass(job.status)">{{ job.display_status }}</span>
+        <span class="badge" :class="typeClass(job.employment_type)">{{ job.display_employment_type }}</span>
+      </div>
+    </div>
+  </div>
+  <div v-else>
+    <table class="lg:table-auto w-full">
       <tr class="border-y border-neutrals-20">
         <th class="p-6">Roles</th>
         <th class="p-6">Status</th>
@@ -26,19 +53,22 @@
         </td>
         <td class="py-7 px-6">
           <span class="badge" :class="typeClass(job.employment_type)">{{ job.display_employment_type }}</span></td>
-        <td class="py-7 px-6">{{ job.applicants }}</td>
-        <td class="py-7 px-6">{{ job.needs }}</td>
+        <td class="py-7 px-6 text-center">{{ job.applicants }}</td>
+        <td class="py-7 px-6 text-center">{{ job.needs }}</td>
         <td class="py-7 px-6">
-          <IconHorizontalDot />
+          <JobActionComponent :job="job"/>
         </td>
       </tr>
     </table>
+  </div>
 </template>
 <script setup>
   import { RouterLink } from "vue-router";
   import { ref } from "vue";
-  import IconHorizontalDot from '@/components/icons/IconHorizontalDot.vue'
+  import JobActionComponent from '@/components/JobActionComponent.vue'
   import dayjs from 'dayjs';
+
+  const isMobile = () => screen.width <= 768
 
   const props = defineProps({
     jobs: [],
@@ -58,7 +88,7 @@
          return 'text-red border-red'
         break;
       default:
-        // code block
+        return 'text-yellow border-yellow'
     }
   }
 
@@ -71,7 +101,7 @@
          return 'text-yellow border-yellow'
         break;
       default:
-        // code block
+        return 'text-yellow border-yellow'
     }
   }
 </script>

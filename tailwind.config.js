@@ -15,6 +15,12 @@ module.exports = {
       padding: {
         'sidebar': '17rem',
       },
+      fontFamily: {
+        inter: [
+          "Inter var, sans-serif",
+          { fontFeatureSettings: '"cv11", "ss01"' },
+        ],
+      },
       colors: {
         blue: colors.blue,
         'mute': 'var(--color-background-mute)',
