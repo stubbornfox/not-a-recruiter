@@ -3,7 +3,7 @@
     <div class="space-y-8 divide-y divide-gray-200">
       <div class="overflow-y-auto">
         <div class="mt-6 grid grid-cols-1 gap-y-6">
-          <FormKit name="title" type="text" help="At least 80 characters" placeholder="e.g. Software Engineer" validation="required|length:80," value="" wrapper-class="lg:flex lg:w-full lg:gap-x-28 lg:content-start" inner-class="lg:basis-96 lg:mt-0" help-class="lg:pl-64 lg:ml-28 lg:-mt-4">
+          <FormKit name="title" type="text" help="At least 8 characters" placeholder="e.g. Software Engineer" validation="required|length:8," value="" wrapper-class="lg:flex lg:w-full lg:gap-x-28 lg:content-start" inner-class="lg:basis-96 lg:mt-0" help-class="lg:pl-64 lg:ml-28 lg:-mt-4">
             <template #label="context">
               <div class="lg:basis-64">
                 <label :class="context.classes.label">Job Title</label>
@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="flex items-center my-6 justify-end">
-      <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 font-medium text-white bg-primary font-bold" @click="step+=1">Next Step</button>
+      <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 font-medium text-white bg-primary font-bold" @click="$emit('nextStep')">Next Step</button>
     </div>
   </FormKit>
 </template>

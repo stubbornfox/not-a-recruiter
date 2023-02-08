@@ -33,7 +33,7 @@
     </div>
     <hr class="mt-6" />
     <div class="flex items-center my-6 justify-end">
-      <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 font-medium text-white bg-primary font-bold" @click="step+=1">Next Step</button>
+      <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 font-medium text-white bg-primary font-bold" @click="emit('nextStep')">Next Step</button>
     </div>
   </form>
 </template>

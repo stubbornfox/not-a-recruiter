@@ -6,8 +6,8 @@
     <h4 class="text-neutrals-100">Post a job</h4>
   </div>
   <JobStepper :step="step" />
-  <JobFormStep1 v-if="step==1"/>
-  <JobFormStep2 v-if="step==2"/>
+  <JobFormStep1 v-if="step==1" @next-step="step+=1"/>
+  <JobFormStep2 v-if="step==2" @next-step="step+=1"/>
   <JobFormStep3 v-if="step==3"/>
 </template>
 <script setup>
@@ -18,7 +18,7 @@ import JobFormStep1 from '@/components/JobFormStep1.vue'
 import JobFormStep2 from '@/components/JobFormStep2.vue'
 import JobFormStep3 from '@/components/JobFormStep3.vue'
 import TagsInput from '@/components/TagsInput.vue';
-const step = 1
+const step = ref(1)
 const props = defineProps({
   job: Object,
   default: {}
