@@ -23,11 +23,14 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
   --fk-max-width-input: 25rem;
   --qrh-primary: #7330DF;
+  --qrh-secondary: #C7ACF2;
+  --qrh-tertiary: #F1EAFC;
   --qrh-yellow: #FFB836;
   --qrh-green: #56CDAD;
   --qrh-red: #FF6550;
   --qrh-blue: #26A4FF;
   --qrh-purple: #7B61FF;
+  --fk-max-width-input: unset;
 }
 
 :root {
@@ -52,6 +55,8 @@
   --vs-actions-padding: 12px 16px;
   --vs-selected-bg: #F1EAFC;
   --vs-selected-border-color: #C7ACF2;
+  --tw-translate-y: 0%;
+  --tw-translate-x: -100%;
 }
 
 html.light {
@@ -325,4 +330,12 @@ input {
 
 .vs__selected {
   height: 25px;
+}
+
+.vue3-emojipicker .-translate-y-full {
+  --tw-translate-y: 0 !important;
+}
+
+.vue3-emojipicker .transform {
+  --tw-translate-x: 100% !important;
 }

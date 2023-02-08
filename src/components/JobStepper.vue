@@ -1,13 +1,31 @@
 <template>
   <div class="py-4 px-3 border rounded border-neutrals-20">
-    <div class=" flex items-center justify-between ">
-      <IconJobStep1 :fill="step >= 1 ? '#7330DF':'#E9EBFD'" :stroke="step >= 1 ? '#FFF':'#747474'" />
-      <div class="steps"></div>
-      <IconJobStep2 :fill="step >= 2 ? '#7330DF':'#E9EBFD'" :stroke="step >= 2 ? '#FFF':'#747474'" />
-      <div class="steps"></div>
-      <IconJobStep3 :fill="step >= 3 ? '#7330DF':'#E9EBFD'" :stroke="step >= 3 ? '#FFF':'#747474'" />
+    <div class="flex items-center justify-between lg:grid lg:grid-cols-3 lg:divide-x lg:divide-neutrals-20">
+      <div class="lg:flex lg:flex-1 lg:items-center justify-center">
+        <IconJobStep1 :fill="step >= 1 ? '#7330DF':'#E9EBFD'" :stroke="step >= 1 ? '#FFF':'#747474'" />
+          <div class="hidden lg:block lg:ml-4">
+            <div class="text-primary font-normal">Step 1/3</div>
+            <h5 class="text-neutrals-100">{{jobStepDesc[1]}}</h5>
+          </div>
+      </div>
+      <div class="steps flex flex-1 lg:hidden"></div>
+      <div class="lg:flex lg:flex-1 lg:items-center justify-center">
+        <IconJobStep2 :fill="step >= 2 ? '#7330DF':'#E9EBFD'" :stroke="step >= 2 ? '#FFF':'#747474'" />
+          <div class="hidden lg:block lg:ml-4">
+            <div class="font-normal" :class="step >= 2 ? 'text-primary' : 'text-neutrals-40'">Step 2/3</div>
+            <h5 :class="step >= 2 ? 'text-neutrals-100' : 'text-neutrals-60'">{{jobStepDesc[2]}}</h5>
+          </div>
+      </div>
+      <div class="steps  flex flex-1  lg:hidden"></div>
+      <div class="lg:flex lg:flex-1 lg:items-center justify-center">
+        <IconJobStep3 :fill="step >= 3 ? '#7330DF':'#E9EBFD'" :stroke="step >= 3 ? '#FFF':'#747474'" />
+          <div class="hidden lg:block lg:ml-4">
+            <div class="font-normal" :class="step >= 3 ? 'text-primary' : 'text-neutrals-40'">Step 3/3</div>
+             <h5 :class="step >= 3 ? 'text-neutrals-100' : 'text-neutrals-60'">{{jobStepDesc[3]}}</h5>
+          </div>
+      </div>
     </div>
-    <div class="flex items-center mt-4">
+    <div class="flex lg:hidden items-center mt-4">
       <div class="text-primary font-normal pr-3 border-r border-neutrals-20">Step {{step}}/3</div>
       <h5 class="pl-3 text-neutrals-100">{{jobStepDesc[step]}}</h5>
     </div>
@@ -39,11 +57,6 @@ const jobStepBasicInfo = {
 }
 </script>
 <style scoped>
-.steps {
-  flex-grow: 1;
-  display: flex;
-}
-
 .steps:before,
 .steps:after {
   content: "";

@@ -29,7 +29,7 @@ library.add(far, fas)
 const pinia = createPinia();
 const app = createApp(App).component('fa', FontAwesomeIcon).component('v-select', vSelect);
 app.use(router);
-app.use(pinia)
+app.use(pinia);
 app.use(plugin, defaultConfig({
   config: {
     classes: generateClasses({
@@ -113,7 +113,7 @@ app.use(plugin, defaultConfig({
       checkbox: {
         wrapper:'',
         outer: '$reset',
-        options: 'mt-4 grid grid-cols-2',
+        options: 'mt-4',
         fieldset: '$reset',
         label: '$reset block font-normal text-neutrals-80',
         inner: '$reset flex pl-1',
