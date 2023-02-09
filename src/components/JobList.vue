@@ -21,7 +21,8 @@
       </div>
       <div class="pt-3 flex gap-x-2">
         <span class="badge" :class="statusClass(job.status)">{{ job.display_status }}</span>
-        <span class="badge" :class="typeClass(job.employment_type)">{{ job.display_employment_type }}</span>
+         <div class="flex gap-2"> <span class="badge" v-for="(type, index) in job.type_of_employments" :class="typeClass(type)">{{ job.display_type_of_employments[index] }}</span>
+          </div>
       </div>
     </div>
   </div>
