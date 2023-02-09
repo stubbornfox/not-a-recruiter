@@ -40,6 +40,20 @@ export const useJobStore = defineStore({
       }
     },
 
+    async createJob(data) {
+      this.loading = true
+      const toast = useToast()
+      try {
+        this.job = await api.post(`/jobs`, {job: data})
+          .then((response) => response.data)
+        toast.success("Created job successfully!")
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    },
+
     async updateJob(job_id, data) {
       this.loading = true
       const toast = useToast()

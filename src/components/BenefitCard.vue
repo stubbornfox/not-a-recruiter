@@ -3,7 +3,7 @@
   <div class="p-4 border border-neutrals-20 rounded" v-if="show">
     <div class="flex items-center justify-between pb-6">
       <component :is="benefit.icon"/>
-      <button @click="show=false">
+      <button @click.prevent="$emit('remove', benefit.value)">
         <IconXMark />
       </button>
       </div>

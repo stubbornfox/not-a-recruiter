@@ -216,7 +216,7 @@ async function uploadFile1({ file, messageId, roomId }) {
     const message = messages.find(message => message._id === messageId)
     if (!message || !message.files) return
     message.files.find(file => file.url === fileUrl).progress = progress
-    messages = [...messages]
+    // messages = [...messages]
   }
 
   function formattedFiles(files) {

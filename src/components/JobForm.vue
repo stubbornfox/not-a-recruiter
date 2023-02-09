@@ -6,9 +6,9 @@
     <h4 class="text-neutrals-100">Post a job</h4>
   </div>
   <JobStepper :step="step" />
-  <JobFormStep1 v-if="step==1" @next-step="step+=1"/>
-  <JobFormStep2 v-if="step==2" @next-step="step+=1"/>
-  <JobFormStep3 v-if="step==3"/>
+  <JobFormStep1 v-if="step==1" @save-job="saveJob"/>
+  <JobFormStep2 v-if="step==2" @save-job="saveJob"/>
+  <JobFormStep3 v-if="step==3" @save-job="saveJob"/>
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -24,11 +24,22 @@ const props = defineProps({
   default: {}
 })
 
-let editJob = props.job;
+let tmpJob = props.job;
 
-const emit = defineEmits(['saveJob'])
+const emit = defineEmits(['submit'])
 
-async function saveJob(modifiedJob) {
-  emit('saveJob', modifiedJob)
+async function saveJob(job) {
+  debugger
+  // step.value = step.value + 1;
+  tmpJob = {
+      ...tmpJob,
+      ...job
+  };
+
+  if (step.value == 3) {
+    emit('submit', tmpJob)
+  } else {
+    step.value += 1;
+  }
 }
 </script>

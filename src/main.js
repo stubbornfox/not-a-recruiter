@@ -10,7 +10,7 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 import 'v-calendar/dist/style.css';
 import VCalendar from 'v-calendar';
-import "vue-select/dist/vue-select.css";
+import 'vue-select/dist/vue-select.css'
 import "./assets/main.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
@@ -25,6 +25,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import vSelect from "vue-select";
 
+
 library.add(far, fas)
 const pinia = createPinia();
 const app = createApp(App).component('fa', FontAwesomeIcon).component('v-select', vSelect);
@@ -33,11 +34,19 @@ app.use(pinia);
 app.use(plugin, defaultConfig({
   config: {
     classes: generateClasses({
+      global: {
+        outer: '$reset',
+        label: '$reset block font-semibold text-neutrals-100',
+        inner: '$reset mt-4 flex',
+        help: '$reset mt-2 text-sm text-neutrals-60',
+        messages: 'list-none p-0 mt-1 mb-0',
+        message: 'text-red-500 mb-1 text-xs'
+      },
       text: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -46,7 +55,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -55,7 +64,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -68,8 +77,8 @@ app.use(plugin, defaultConfig({
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs',
-        fileName: 'text-color-text text-sm leading-4 text-color-text ',
-        fileItem: 'text-color-text text-sm leading-4 text-color-text ',
+        fileName: 'text-sm leading-4 ',
+        fileItem: 'text-sm leading-4 ',
         fileList: 'text-sm leading-4 text-color-text',
         noFiles: 'text-sm leading-4 text-color-text',
         fileRemove: 'hidden',
@@ -78,7 +87,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -87,7 +96,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1-r border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1-r border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs',
@@ -96,7 +105,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -105,7 +114,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -127,7 +136,7 @@ app.use(plugin, defaultConfig({
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'
@@ -137,7 +146,7 @@ app.use(plugin, defaultConfig({
         wrapper: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
         inner: '$reset mt-4 flex',
-        input: '$reset text-color-text block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
+        input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
         message: 'text-red-500 mb-1 text-xs'

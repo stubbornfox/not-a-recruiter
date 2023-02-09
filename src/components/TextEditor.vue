@@ -3,19 +3,19 @@
     <div v-if="editor" class="border border-neutrals-20">
       <editor-content :editor="editor" class="flex-grow text-neutrals-80 p-4 min-h-40"/>
       <div class="border-t border-neutrals-20 py-3 px-4">
-        <button @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }" >
+        <button @click.prevent="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }" >
           <IconTextEditorBold/>
         </button>
-        <button @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
+        <button @click.prevent="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
           <IconTextEditorItalic/>
         </button>
-        <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
+        <button @click.prevent="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
           <IconTextEditorListOrder/>
         </button>
-        <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+        <button @click.prevent="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
           <IconTextEditorList/>
         </button>
-        <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
+        <button @click.prevent="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
           <IconTextEditorUpload/>
         </button>
       </div>
@@ -27,7 +27,7 @@
   </div>
 </template>
 <script setup>
-import { useEditor, EditorContent } from '@tiptap/vue-3'
+import { Editor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
 import { ref, onMounted } from 'vue'
 import IconTextEditorBold from '@/components/icons/IconTextEditorBold.vue'
@@ -36,19 +36,30 @@ import IconTextEditorListOrder from '@/components/icons/IconTextEditorListOrder.
 import IconTextEditorList from '@/components/icons/IconTextEditorList.vue'
 import IconTextEditorUpload from '@/components/icons/IconTextEditorUpload.vue'
 
-const editor = useEditor({
-  content: '',
+const content = ref(props.context?.value || props.modelValue)
+const editor = new Editor({
+  content: content.value,
   extensions: [
     StarterKit,
   ],
 })
-const emo = ref(null)
-const props = defineProps({ modelValue: { type: Text, default: () => "" } })
 
+const props = defineProps({
+  modelValue: { type: Text, default: () => "" },
+  context: Object
+})
 
 onMounted(() => {
-  editor.value.commands.setContent(props.modelValue)
+  editor.on('update', ({ editor }) => {
+    props.context.node.input(editor.getHTML())
+  })
 })
+
+function update(val) {
+  debugger
+  props.context.node.input(val)
+}
+
 </script>
 <style lang="scss">
 
@@ -64,7 +75,7 @@ button {
 .is-active {
   color: var(--color-heading);
   font-weight: bold;
-  background-color: var(--color-background-mute);
+  background-color: var(--qrh-netrals-20);
 }
 
 .ProseMirror {

@@ -3,7 +3,7 @@
     <div v-for="job in jobs" class="job-card p-4 border border-neutrals-20 mt-3" :key="job.slug">
       <div class="flex items-center justify-between">
         <div class="text-neutrals-100 font-bold">{{job.title}}</div>
-        <JobActionComponent :job="job"/>
+        <JobActionComponent :job="job" />
       </div>
       <div class="flex items-center justify-between border-b border-neutrals-20 py-3">
         <div>
@@ -52,11 +52,13 @@
           </time>
         </td>
         <td class="py-7 px-6">
-          <span class="badge" :class="typeClass(job.employment_type)">{{ job.display_employment_type }}</span></td>
+          <div class="grid gap-2"> <span class="badge" v-for="(type, index) in job.type_of_employments" :class="typeClass(type)">{{ job.display_type_of_employments[index] }}</span>
+          </div>
+        </td>
         <td class="py-7 px-6 text-center">{{ job.applicants }}</td>
         <td class="py-7 px-6 text-center">{{ job.needs }}</td>
         <td class="py-7 px-6">
-          <JobActionComponent :job="job"/>
+          <JobActionComponent :job="job" />
         </td>
       </tr>
     </table>

@@ -1,6 +1,6 @@
 <template>
   <div class="tag-input">
-    <input v-model="newTag" type="text" @keydown.enter="addTag(newTag)" @keydown.prevent.tab="addTag(newTag)" class="border border-secondary rounded-md text-primary focus:border-primary focus:ring-0" placeholder="Add skills" />
+    <input v-model="newTag" type="text" @keydown.enter.prevent="addTag(newTag)" @keydown.prevent.tab="addTag(newTag)" class="border border-secondary rounded-md text-primary focus:border-primary focus:ring-0" placeholder="Add skills" />
 
     <div class="flex items-center gap-4 w-full flex-wrap mt-4">
       <div v-for="(tag, index) in tags" :key="tag" class="tag">
@@ -16,10 +16,13 @@
 import { ref, onMounted, watch, nextTick } from 'vue'
 import IconXTag from '@/components/icons/IconXTag.vue'
 
-const props = defineProps({ modelValue: { type: Array, default: () => [] } })
+const props = defineProps({
+  modelValue: { type: Array, default: () => [] },
+  context: Object,
+})
 const emit = defineEmits(['update:modelValue'])
 
-const tags = ref(props.modelValue);
+const tags = ref(props.context.value || [])
 const newTag = ref('')
 
 function removeTag(index) {
@@ -27,11 +30,13 @@ function removeTag(index) {
 };
 
 function addTag(tag) {
-  tags.value.push(tag)
+  if (!tags.value.includes(tag))
+    tags.value.push(tag)
   newTag.value = "";
 };
 
 const onTagsChange = () => {
+  props.context.node.input(tags.value)
   emit("update:modelValue", tags.value)
 };
 
