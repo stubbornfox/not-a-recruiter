@@ -1,5 +1,5 @@
 <template>
-  <div class="h-full text-mute">
+  <div class="h-full">
     <Sidebar :user="me" :sidebarOpen="sidebarOpen" @closeSidebar="sidebarOpen = false"/>
     <div class="main-content flex flex-1 flex-col lg:min-h-screen h-full w-full lg:pl-sidebar">
       <div class="flex">

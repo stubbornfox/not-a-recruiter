@@ -24,6 +24,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import vSelect from "vue-select";
+import dayjs from 'dayjs';
 
 
 library.add(far, fas)
@@ -174,5 +175,15 @@ app.use(Toast, {
 
 app.use(VCalendar, {input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],})
 app.use(vSelect)
+
+app.config.globalProperties.$filters = {
+  currencyUSD(value) {
+    return '$' + value
+  },
+  formatDate(value) {
+    return dayjs(value).format('MMM D, YYYY')
+  }
+}
+
 app.mount("#app");
 applyTheme()

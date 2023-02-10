@@ -7,8 +7,7 @@ import PlainLayout from '../layouts/PlainLayout.vue'
 const router = createRouter({
   history: createWebHistory(
     import.meta.env.BASE_URL),
-  routes: [
-    {
+  routes: [{
       path: '',
       name: 'PlainLayout',
       component: PlainLayout,
@@ -117,22 +116,32 @@ const router = createRouter({
           path: "/jobs/:slug",
           name: "Job",
           component: () => import("../views/JobView.vue"),
-          redirect: { name: 'JobSetupDetails' },
+          redirect: { name: 'JobDetails' },
           children: [{
-              path: 'setup',
-              name: 'JobSetup',
-              component: () => import("../views/JobSetupView.vue"),
-              children: [{
-                  path: 'details',
-                  name: 'JobSetupDetails',
-                  component: () => import("../views/JobSetupDetailView.vue"),
-                },
-                {
-                  path: 'description',
-                  name: 'JobSetupDescription',
-                  component: () => import("../views/JobSetupDescriptionView.vue"),
-                },
-              ]
+              path: 'details',
+              name: 'JobDetails',
+              component: () => import("../views/JobDetailsView.vue"),
+              // children: [{
+              //     path: 'details',
+              //     name: 'JobSetupDetails',
+              //     component: () => import("../views/JobSetupDetailView.vue"),
+              //   },
+              //   {
+              //     path: 'description',
+              //     name: 'JobSetupDescription',
+              //     component: () => import("../views/JobSetupDescriptionView.vue"),
+              //   },
+              // ]
+            },
+            {
+              path: 'applicants',
+              name: 'JobApplicants',
+              component: () => import("../views/JobDetailsView.vue")
+            },
+            {
+              path: 'analytics',
+              name: 'JobAnalytics',
+              component: () => import("../views/JobDetailsView.vue")
             },
             {
               path: 'stages/:stage/applicants',
