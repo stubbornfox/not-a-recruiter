@@ -11,10 +11,10 @@ export const useApplicantStore = defineStore({
     error: null
   }),
   actions: {
-    async fetchCandidates(job_id, stage) {
+    async fetchApplicants() {
       this.loading = true
       try {
-        this.applicants = await api.get(`/jobs/${job_id}/applicants?stage=${stage}`)
+        this.applicants = await api.get(`/applicants`)
           .then((response) => response.data)
       } catch (error) {
         this.error = error

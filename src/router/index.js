@@ -113,13 +113,24 @@ const router = createRouter({
           component: () => import("../views/JobsView.vue"),
         },
         {
+          path: "/applicants",
+          name: "Applicants",
+          component: () => import("../views/ApplicantsView.vue"),
+        },
+        {
+          path: "/schedule",
+          name: "Schedule",
+          component: () => import("../views/ScheduleView.vue"),
+        },
+        {
           path: "/applicants/:id",
           name: "Applicant",
           component: () => import("../views/ApplicantView.vue"),
+          redirect: { name: 'ProfileApplicant' },
           children: [{
-              path: 'overview',
-              name: 'OverviewApplicant',
-              component: () => import("../views/OverviewApplicantView.vue"),
+              path: 'profile',
+              name: 'ProfileApplicant',
+              component: () => import("../views/ProfileApplicantView.vue"),
             },
             {
               path: 'resume',
@@ -127,14 +138,14 @@ const router = createRouter({
               component: () => import("../views/ResumeApplicantView.vue"),
             },
             {
-              path: 'message',
-              name: 'MessagesApplicant',
-              component: () => import("../views/MessagesApplicantView.vue"),
+              path: 'interview',
+              name: 'InterviewApplicant',
+              component: () => import("../views/InterviewApplicantView.vue"),
             },
             {
-              path: 'notes',
-              name: 'NotesApplicant',
-              component: () => import("../views/NotesApplicantView.vue"),
+              path: 'stage',
+              name: 'StageApplicant',
+              component: () => import("../views/StagesApplicantView.vue"),
             },
           ]
         },
@@ -158,37 +169,6 @@ const router = createRouter({
               name: 'JobAnalytics',
               component: () => import("../views/JobDetailsView.vue")
             },
-            // {
-            //   path: 'stages/:stage/applicants',
-            //   name: 'JobStageApplicant',
-            //   component: () => import("../views/JobStageApplicantView.vue"),
-            //   children: [{
-            //     path: ':candidate_id',
-            //     name: 'Applicant',
-            //     component: () => import("../views/ApplicantView.vue"),
-            //     children: [{
-            //         path: 'overview',
-            //         name: 'OverviewApplicant',
-            //         component: () => import("../views/OverviewApplicantView.vue"),
-            //       },
-            //       {
-            //         path: 'resume',
-            //         name: 'ResumeApplicant',
-            //         component: () => import("../views/ResumeApplicantView.vue"),
-            //       },
-            //       {
-            //         path: 'message',
-            //         name: 'MessagesApplicant',
-            //         component: () => import("../views/MessagesApplicantView.vue"),
-            //       },
-            //       {
-            //         path: 'notes',
-            //         name: 'NotesApplicant',
-            //         component: () => import("../views/NotesApplicantView.vue"),
-            //       },
-            //     ]
-            //   }]
-            // },
           ],
         },
         {

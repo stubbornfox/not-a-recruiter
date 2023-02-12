@@ -72,7 +72,7 @@ const props = defineProps({
   applicants:{ type: Array, default: () => [] },
 })
 
-const view = ref('pipeline')
+const view = ref('table')
 const stages = {
   review: { text: 'In Review', color: 'yellow' },
   shortlisted: { text: 'Shortlisted', color: 'purple' },

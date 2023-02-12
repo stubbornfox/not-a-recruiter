@@ -37,8 +37,18 @@
     </div>
     <div class="flex lg:px-8 gap-8">
       <div class="border border-neutrals-20 p-6 basis-1/3" v-if="applicant">
-        <div class="flex items-center mb-6">
-          <h4 class="text-neutrals-100">{{applicant.name}}</h4>
+        <div>
+          <div class="flex items-center mb-6">
+            <div></div>
+            <div>
+              <h4 class="text-neutrals-100">{{applicant.name}}</h4>
+              <p class="flex items-center gap-2">
+                <i>
+                  <IconRate /></i>
+                <span class="text-neutrals-100 font-medium">{{applicant.score}}</span>
+              </p>
+            </div>
+          </div>
         </div>
         <div class="p-4 bg-neutrals-10i flex flex-col gap-8 devide devide-y-neutrals-20">
           <div class="flex items-center justify-between">
@@ -166,10 +176,10 @@
       <div class="basis-2/3 border border-neutrals-20">
         <div class="lg:px-8">
           <div class="flex border-b border-neutrals-20 gap-x-10 pt-3">
-            <RouterLink :to="{name:'Home'}" :class="[$route.name == 'Home' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Applicant Profile</RouterLink>
+            <RouterLink :to="{name:'ProfileApplicant'}" :class="[$route.name == 'ProfileApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Applicant Profile</RouterLink>
             <RouterLink :to="{name:'ResumeApplicant'}" :class="[$route.name == 'ResumeApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Resume</RouterLink>
-            <RouterLink :to="{name:'Home'}" :class="[$route.name == 'Home' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Hiring Progress</RouterLink>
-            <RouterLink :to="{name:'Home'}" :class="[$route.name == 'Home' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Interview Schedule</RouterLink>
+            <RouterLink :to="{name:'StageApplicant'}" :class="[$route.name == 'StageApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Hiring Progress</RouterLink>
+            <RouterLink :to="{name:'InterviewApplicant'}" :class="[$route.name == 'InterviewApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Interview Schedule</RouterLink>
           </div>
           <RouterView :applicant="applicant" v-if="applicant" />
         </div>
@@ -183,6 +193,7 @@ import { useRoute, RouterView, RouterLink } from "vue-router";
 import { useApplicantStore } from '../stores/applicant'
 import { storeToRefs } from 'pinia'
 import IconArrowBackLarge from '@/components/icons/IconArrowBackLarge.vue'
+import IconRate from '@/components/icons/IconRate.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 
 const route = useRoute()
