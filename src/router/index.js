@@ -116,6 +116,27 @@ const router = createRouter({
           path: "/applicants/:id",
           name: "Applicant",
           component: () => import("../views/ApplicantView.vue"),
+          children: [{
+              path: 'overview',
+              name: 'OverviewApplicant',
+              component: () => import("../views/OverviewApplicantView.vue"),
+            },
+            {
+              path: 'resume',
+              name: 'ResumeApplicant',
+              component: () => import("../views/ResumeApplicantView.vue"),
+            },
+            {
+              path: 'message',
+              name: 'MessagesApplicant',
+              component: () => import("../views/MessagesApplicantView.vue"),
+            },
+            {
+              path: 'notes',
+              name: 'NotesApplicant',
+              component: () => import("../views/NotesApplicantView.vue"),
+            },
+          ]
         },
         {
           path: "/jobs/:slug",
