@@ -9,7 +9,8 @@ export const useJobStore = defineStore({
     paginate: null,
     job: null,
     loading: false,
-    error: null
+    error: null,
+    applicants: [],
   }),
   actions: {
     async fetchJobs(filterParams) {
@@ -28,10 +29,10 @@ export const useJobStore = defineStore({
       }
     },
 
-    async fetchJob(job_id) {
+    async fetchJob(jobId) {
       this.loading = true
       try {
-        this.job = await api.get(`/jobs/${job_id}`)
+        this.job = await api.get(`/jobs/${jobId}`)
           .then((response) => response.data)
       } catch (error) {
         this.error = error
@@ -54,11 +55,11 @@ export const useJobStore = defineStore({
       }
     },
 
-    async updateJob(job_id, data) {
+    async updateJob(jobId, data) {
       this.loading = true
       const toast = useToast()
       try {
-        this.job = await api.put(`/jobs/${job_id}`, data)
+        this.job = await api.put(`/jobs/${jobId}`, data)
           .then((response) => response.data)
         toast.success("Updated job successfully!")
       } catch (error) {
@@ -67,5 +68,17 @@ export const useJobStore = defineStore({
         this.loading = false
       }
     },
+
+    async fetchApplicants(jobId) {
+    try {
+        this.applicants = await api.get(`/jobs/${jobId}/candidates`)
+          .then((response) => response.data)
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+
+    }
   }
 })

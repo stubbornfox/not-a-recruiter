@@ -113,6 +113,11 @@ const router = createRouter({
           component: () => import("../views/JobsView.vue"),
         },
         {
+          path: "/applicants/:id",
+          name: "Applicant",
+          component: () => import("../views/ApplicantView.vue"),
+        },
+        {
           path: "/jobs/:slug",
           name: "Job",
           component: () => import("../views/JobView.vue"),
@@ -121,59 +126,48 @@ const router = createRouter({
               path: 'details',
               name: 'JobDetails',
               component: () => import("../views/JobDetailsView.vue"),
-              // children: [{
-              //     path: 'details',
-              //     name: 'JobSetupDetails',
-              //     component: () => import("../views/JobSetupDetailView.vue"),
-              //   },
-              //   {
-              //     path: 'description',
-              //     name: 'JobSetupDescription',
-              //     component: () => import("../views/JobSetupDescriptionView.vue"),
-              //   },
-              // ]
             },
             {
               path: 'applicants',
               name: 'JobApplicants',
-              component: () => import("../views/JobDetailsView.vue")
+              component: () => import("../views/JobApplicantsView.vue")
             },
             {
               path: 'analytics',
               name: 'JobAnalytics',
               component: () => import("../views/JobDetailsView.vue")
             },
-            {
-              path: 'stages/:stage/applicants',
-              name: 'JobStageApplicant',
-              component: () => import("../views/JobStageApplicantView.vue"),
-              children: [{
-                path: ':candidate_id',
-                name: 'Applicant',
-                component: () => import("../views/ApplicantView.vue"),
-                children: [{
-                    path: 'overview',
-                    name: 'OverviewApplicant',
-                    component: () => import("../views/OverviewApplicantView.vue"),
-                  },
-                  {
-                    path: 'resume',
-                    name: 'ResumeApplicant',
-                    component: () => import("../views/ResumeApplicantView.vue"),
-                  },
-                  {
-                    path: 'message',
-                    name: 'MessagesApplicant',
-                    component: () => import("../views/MessagesApplicantView.vue"),
-                  },
-                  {
-                    path: 'notes',
-                    name: 'NotesApplicant',
-                    component: () => import("../views/NotesApplicantView.vue"),
-                  },
-                ]
-              }]
-            },
+            // {
+            //   path: 'stages/:stage/applicants',
+            //   name: 'JobStageApplicant',
+            //   component: () => import("../views/JobStageApplicantView.vue"),
+            //   children: [{
+            //     path: ':candidate_id',
+            //     name: 'Applicant',
+            //     component: () => import("../views/ApplicantView.vue"),
+            //     children: [{
+            //         path: 'overview',
+            //         name: 'OverviewApplicant',
+            //         component: () => import("../views/OverviewApplicantView.vue"),
+            //       },
+            //       {
+            //         path: 'resume',
+            //         name: 'ResumeApplicant',
+            //         component: () => import("../views/ResumeApplicantView.vue"),
+            //       },
+            //       {
+            //         path: 'message',
+            //         name: 'MessagesApplicant',
+            //         component: () => import("../views/MessagesApplicantView.vue"),
+            //       },
+            //       {
+            //         path: 'notes',
+            //         name: 'NotesApplicant',
+            //         component: () => import("../views/NotesApplicantView.vue"),
+            //       },
+            //     ]
+            //   }]
+            // },
           ],
         },
         {

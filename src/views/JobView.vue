@@ -9,7 +9,7 @@
             </a>
             <div>
               <h4 class="text-neutrals-100">{{job.title}}</h4>
-              <div class="flex items-center gap-2 mt-2">
+              <div class="flex items-center gap-2 mt-2 text-neutrals-100">
                 <div>{{job.categories.join(', ')}}</div>
                 <span class="w-1 h-1 bg-neutrals-100 rounded"></span>
                 <div>{{job.display_type_of_employments.join(', ')}}</div>
