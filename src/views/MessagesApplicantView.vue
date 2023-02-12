@@ -4,7 +4,6 @@
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
-import CandidateList from "../components/CandidateList.vue";
 import { useRoute, RouterView } from "vue-router";
 import api from "../services/api"
 
