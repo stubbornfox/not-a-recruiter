@@ -60,6 +60,7 @@
   --vs-selected-border-color: #C7ACF2;
   --tw-translate-y: 0%;
   --tw-translate-x: -100%;
+  --tw-ring-color:  #7330DF;
 }
 
 html.light {
@@ -340,4 +341,8 @@ input {
 
 .vue3-emojipicker .transform {
   --tw-translate-x: 100% !important;
+}
+
+input {
+  --tw-ring-color: var(--qrh-primary) !important;
 }

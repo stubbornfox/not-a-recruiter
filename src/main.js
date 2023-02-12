@@ -11,7 +11,7 @@ import "vue-toastification/dist/index.css";
 import 'v-calendar/dist/style.css';
 import VCalendar from 'v-calendar';
 import 'vue-select/dist/vue-select.css'
-import "./assets/main.css";
+
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -25,7 +25,7 @@ import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import vSelect from "vue-select";
 import dayjs from 'dayjs';
-
+import "./assets/main.css";
 
 library.add(far, fas)
 const pinia = createPinia();
