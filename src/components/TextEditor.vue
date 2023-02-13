@@ -48,16 +48,14 @@ const props = defineProps({
   modelValue: { type: Text, default: () => "" },
   context: Object
 })
+const emit = defineEmits(['update:modelValue'])
 
 onMounted(() => {
   editor.on('update', ({ editor }) => {
-    props.context.node.input(editor.getHTML())
+    props.context?.node?.input(editor.getHTML())
+    emit("update:modelValue", editor.getHTML())
   })
 })
-
-function update(val) {
-  props.context.node.input(val)
-}
 
 </script>
 <style lang="scss">

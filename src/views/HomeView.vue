@@ -1,6 +1,6 @@
 <template>
   <div class="py-4 lg:mx-auto lg:max-w-6xl lg:p-8">
-    <div class="mb-6 px-4 lg:flex lg:justify-between">
+    <div class="mb-6 px-4 lg:px-0 lg:flex lg:justify-between">
       <div>
         <h4 class="text-neutrals-100">
           {{greetings()}}, {{me?.first_name}}
@@ -16,7 +16,7 @@
         </template>
       </v-date-picker>
     </div>
-    <div class="flex flex-col gap-y-2 mb-4 px-4 lg:grid lg:grid-cols-3 lg:gap-6">
+    <div class="flex flex-col gap-y-2 mb-4 px-4 lg:px-0 lg:grid lg:grid-cols-3 lg:gap-6">
       <div class="bg-primary text-white flex items-center p-6">
         <div class="text-5xl font-semibold text-white">
           {{report.candidates}}
@@ -119,7 +119,7 @@
           </div>
         </div>
       </div>
-      <div class="basis-1/3 px-4 flex flex-col gap-6">
+      <div class="lg:basis-1/3 lg:px-0 px-4 flex flex-col gap-6">
         <div class="border border-neutrals-20 p-4">
           <div class="flex justify-between">
             <div class="text-lg text-neutrals-100 font-semibold">

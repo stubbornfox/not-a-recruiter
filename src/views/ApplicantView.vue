@@ -50,27 +50,30 @@
             </div>
           </div>
         </div>
-        <div class="p-4 bg-neutrals-10i flex flex-col gap-8 devide devide-y-neutrals-20">
-          <div class="flex items-center justify-between">
-            <label>Applied job</label>
-            <label>2 days ago</label>
+        <div class="p-4 bg-neutrals-10i flex flex-col gap-2 ">
+          <div class="text-sm">
+            <dl class="flex items-center justify-between">
+            <dt class="text-neutrals-100">Applied job</dt>
+            <dd>2 days ago</dd>
+          </dl>
           </div>
-          <div class="">
-            <div class="font-semibold">{{applicant.job_role}}</div>
-            <div class="">job.category</div>
-            <div class="">job.emlpymeng_type</div>
+          <div class="border-t border-neutrals-30 pt-2">
+            <div class="font-semibold text-neutrals-100">{{applicant.job_role}}</div>
+            <span class="text-neutrals-80 text-sm">{{applicant.job_categories?.join(' ● ')}}</span>
+            <span> ● </span>
+            <span class="text-neutrals-80 text-sm">{{applicant.job_type_of_employments?.join(' ● ')}}</span>
           </div>
         </div>
         <div class="mt-6 bg-neutrals-10i p-4">
           <div class="flex justify-between">
             <span class="text-neutrals-100">Stage</span>
-            <span>{{applicant.stage}}</span>
+            <div class="flex items-center gap-2 items-center">
+              <span class="w-2 h-2 rounded-full" :class="`bg-${stages[applicant.stage].color}`"></span>
+              <span :class="`text-${stages[applicant.stage].color} text-sm font-medium`">{{stages[applicant.stage].text}}</span>
+            </div>
           </div>
           <div class="grid grid-cols-4 gap-px mt-2">
-            <div class="bg-green h-3" />
-            <div class="bg-green h-3" />
-            <div class="bg-green h-3" />
-            <div class="bg-green h-3" />
+            <div :class="`${stages[applicant.stage].index >= index ? 'bg-blue':'bg-neutrals-40' } h-3`" v-for="index in 4" />
           </div>
         </div>
         <div class="flex items-center gap-x-2 mt-6">
@@ -195,7 +198,7 @@ import { storeToRefs } from 'pinia'
 import IconArrowBackLarge from '@/components/icons/IconArrowBackLarge.vue'
 import IconRate from '@/components/icons/IconRate.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-
+import { stages } from '@/const'
 const route = useRoute()
 const applicantStore = useApplicantStore()
 const { id } = route.params

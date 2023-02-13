@@ -1,9 +1,9 @@
 export const stages = {
-  review: { text: 'In Review', color: 'yellow' },
-  shortlisted: { text: 'Shortlisted', color: 'purple' },
-  interview: { text: 'Interview', color: 'blue' },
-  hired: { text: 'Hired', color: 'green' },
-  declined: { text: 'Declined', color: 'red' }
+  review: { index: 1, text: 'In Review', color: 'yellow' },
+  shortlisted: { index: 2, text: 'Shortlisted', color: 'purple' },
+  interview: { index: 3, text: 'Interview', color: 'blue' },
+  hired: { index: 4, text: 'Hired', color: 'green' },
+  declined: { index: 4, text: 'Declined', color: 'red' }
 }
 
 export const typeOfEmployments = {

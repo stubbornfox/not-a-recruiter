@@ -1,186 +1,89 @@
 <template>
-  <div class="w-full h-full p-5 flex flex-col">
-    <div v-if="editor">
-      <button @click="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }">
-        bold
-      </button>
-      <button @click="editor.chain().focus().toggleItalic().run()" :disabled="!editor.can().chain().focus().toggleItalic().run()" :class="{ 'is-active': editor.isActive('italic') }">
-        italic
-      </button>
-      <button @click="editor.chain().focus().toggleStrike().run()" :disabled="!editor.can().chain().focus().toggleStrike().run()" :class="{ 'is-active': editor.isActive('strike') }">
-        strike
-      </button>
-      <button @click="editor.chain().focus().toggleCode().run()" :disabled="!editor.can().chain().focus().toggleCode().run()" :class="{ 'is-active': editor.isActive('code') }">
-        code
-      </button>
-      <button @click="editor.chain().focus().setParagraph().run()" :class="{ 'is-active': editor.isActive('paragraph') }">
-        paragraph
-      </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 1 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 1 }) }">
-        h1
-      </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 2 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 2 }) }">
-        h2
-      </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 3 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 3 }) }">
-        h3
-      </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 4 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 4 }) }">
-        h4
-      </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 5 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 5 }) }">
-        h5
-      </button>
-      <button @click="editor.chain().focus().toggleHeading({ level: 6 }).run()" :class="{ 'is-active': editor.isActive('heading', { level: 6 }) }">
-        h6
-      </button>
-      <button @click="editor.chain().focus().toggleBulletList().run()" :class="{ 'is-active': editor.isActive('bulletList') }">
-        bullet list
-      </button>
-      <button @click="editor.chain().focus().toggleOrderedList().run()" :class="{ 'is-active': editor.isActive('orderedList') }">
-        ordered list
-      </button>
-      <button @click="editor.chain().focus().toggleCodeBlock().run()" :class="{ 'is-active': editor.isActive('codeBlock') }">
-        code block
-      </button>
-      <button @click="editor.chain().focus().toggleBlockquote().run()" :class="{ 'is-active': editor.isActive('blockquote') }">
-        blockquote
-      </button>
-      <button @click="editor.chain().focus().setHorizontalRule().run()">
-        horizontal rule
-      </button>
-      <button @click="editor.chain().focus().setHardBreak().run()">
-        hard break
-      </button>
-      <button @click="editor.chain().focus().undo().run()" :disabled="!editor.can().chain().focus().undo().run()">
-        undo
-      </button>
-      <button @click="editor.chain().focus().redo().run()" :disabled="!editor.can().chain().focus().redo().run()">
-        redo
-      </button>
+  <div class="flex flex-col gap-6 lg:p-6">
+    <div class="flex flex-col gap-6">
+      <div class="flex items-center justify-between w-full">
+        <p class="text-neutrals-100 text-lg font-semibold">Current Stage</p>
+        <button class="p-4 flex gap-2 items-center border border-secondary rounded-lg" @click="showRating=true">
+          <i><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.8337 7.0835L10.0003 12.9168L4.16699 7.0835" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </i>
+          <span class="text-primary font-semibold">Give Rating</span>
+        </button>
+      </div>
+      <div class="stages flex gap-3">
+        <div :class="[currentStage('review') ? 'text-white bg-blue': 'text-blue bg-tertiary', 'font-semibold py-3 px-12']">In-Review</div>
+        <div :class="[currentStage('shortlisted') ? 'text-white bg-blue': 'text-blue bg-tertiary', 'font-semibold py-3 px-12']">Shortlisted</div>
+        <div :class="[currentStage('interview') ? 'text-white bg-blue': 'text-blue bg-tertiary', 'font-semibold py-3 px-12']">Interview</div>
+        <div :class="[currentStage('hired/declined') ? 'text-white bg-blue': 'text-blue bg-tertiary', 'font-semibold py-3 px-12']">Hired/Declined</div>
+      </div>
+      <div class="stage-info">
+         <p class="text-neutrals-100 font-semibold">Stage Info</p>
+        <button class="mt-6 p-4 flex gap-2 items-center border border-secondary rounded-lg" @click="showRating=true">
+          <span class="text-primary font-semibold">Move to next stage</span>
+        </button>
+      </div>
     </div>
-    <editor-content :editor="editor" class="text-color-text flex-grow" />
-    <div class="border-t border-color h-20 flex items-center">
-      <button class="text-white h-8 inline-flex bg-pink-600 hover:bg-pink-500 rounded items-center px-2" @click="saveNote">
-        <span>Save changes</span>
-      </button>
+    <hr class="my-6">
+    <div>
+      <div class="flex items-center justify-between w-full">
+        <p class="text-neutrals-100 text-lg font-semibold">Notes</p>
+        <button class="py-2 px-4 flex gap-2 items-center" @click="showAddNote=true">
+          <i><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_29612_29878)">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0003 3.3335C10.4606 3.3335 10.8337 3.70659 10.8337 4.16683V15.8335C10.8337 16.2937 10.4606 16.6668 10.0003 16.6668C9.54009 16.6668 9.16699 16.2937 9.16699 15.8335V4.16683C9.16699 3.70659 9.54009 3.3335 10.0003 3.3335Z" fill="#7330DF" />
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M3.33301 9.99984C3.33301 9.5396 3.7061 9.1665 4.16634 9.1665H15.833C16.2932 9.1665 16.6663 9.5396 16.6663 9.99984C16.6663 10.4601 16.2932 10.8332 15.833 10.8332H4.16634C3.7061 10.8332 3.33301 10.4601 3.33301 9.99984Z" fill="#7330DF" />
+              </g>
+              <defs>
+                <clipPath id="clip0_29612_29878">
+                  <rect width="20" height="20" fill="white" />
+                </clipPath>
+              </defs>
+            </svg>
+          </i>
+          <span class="text-primary font-semibold">Add Note</span>
+        </button>
+      </div>
+      <div v-if="showAddNote" class="mt-6">
+        <TextEditor v-model="note" />
+        <button class=" mt-5 border border-primary rounded text-primary font-semibold px-4 py-2" @click="saveNote">Save</button>
+      </div>
+      <div class="mt-6 flex flex-col gap-6">
+        <div v-for="i_note in notes" class="border border-neutrals-20 p-4 text-neutrals-80" v-html="i_note">
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script setup>
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import StarterKit from '@tiptap/starter-kit'
-import {useCandidateStore} from '../stores/candidate'
+import { useCandidateStore } from '../stores/candidate'
 import { useRoute } from "vue-router";
 import { ref, onMounted } from 'vue'
-import {storeToRefs} from 'pinia'
-
+import { storeToRefs } from 'pinia'
+import IconPlus from '@/components/icons/IconPlus.vue'
+import TextEditor from '@/components/TextEditor.vue'
+const note = ref('')
 const route = useRoute()
 const candidateStore = useCandidateStore()
 const { updateCandidate } = candidateStore
 const { slug, stage, candidate_id } = route.params
-
+const showAddNote = ref(false)
 const props = defineProps({
-  candidate: { type: Object, default: {} }
+  applicant: { type: Object, default: {} }
 })
 
-const editor = useEditor({
-  content: props.candidate.notes,
-  extensions: [
-    StarterKit,
-  ],
-})
+const current_stage = ref(props.applicant.stage || 'review')
 
+const notes = ref(props.applicant.notes || [])
 
+function currentStage(stage) {
+  return stage == current_stage.value
+}
 function saveNote() {
-  const noteHtml = editor.value.getHTML()
-  updateCandidate(slug, stage, candidate_id, { candidate: { notes: noteHtml }})
+  notes.value.push(note.value)
+  showAddNote.value = false
+  // updateCandidate(slug, stage, candidate_id, { candidate: { notes: noteHtml } })
 }
-
 </script>
-<style lang="scss">
-button {
-  border: 1px solid var(--color-border);
-  padding: 2px 5px;
-  color: var(--color-text);
-  border-radius: 0.3rem;
-  padding: 0.1rem 0.4rem;
-  margin: 0.1rem;
-
-  &:hover {
-    background-color: var(--color-background-soft);
-    color: var(--color-heading);
-  }
-}
-
-.is-active {
-  color: var(--color-heading);
-  font-weight: bold;
-  background-color: var(--color-background-mute);
-}
-
-.ProseMirror {
-  height: 100%;
-  outline: none;
-  margin-top: 1rem;
-
-  >*+* {
-    margin-top: 0.75em;
-  }
-
-  ul,
-  ol {
-    padding: 0 1rem;
-    list-style: disc;
-  }
-
-  ol {
-    list-style-type: decimal;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1.1;
-  }
-
-  code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
-  }
-
-  pre {
-    background: #0D0D0D;
-    color: #FFF;
-    font-family: 'JetBrainsMono', monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-
-    code {
-      color: inherit;
-      padding: 0;
-      background: none;
-      font-size: 0.8rem;
-    }
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  blockquote {
-    padding-left: 1rem;
-    border-left: 2px solid rgba(#0D0D0D, 0.1);
-  }
-
-  hr {
-    border: none;
-    border-top: 2px solid rgba(#0D0D0D, 0.1);
-    margin: 2rem 0;
-  }
-}
-</style>
