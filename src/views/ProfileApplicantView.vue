@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-soft w-full p-2">
+  <div class="flex flex-col">
   </div>
 </template>
 <script setup>

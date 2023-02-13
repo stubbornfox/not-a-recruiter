@@ -174,15 +174,15 @@
         </div>
       </div>
       <div class="basis-2/3 border border-neutrals-20">
-        <div class="lg:px-8">
-          <div class="flex border-b border-neutrals-20 gap-x-10 pt-3">
+        <div class="lg:px-8 border-b border-neutrals-20">
+          <div class="flex gap-x-10 pt-3">
             <RouterLink :to="{name:'ProfileApplicant'}" :class="[$route.name == 'ProfileApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Applicant Profile</RouterLink>
             <RouterLink :to="{name:'ResumeApplicant'}" :class="[$route.name == 'ResumeApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Resume</RouterLink>
             <RouterLink :to="{name:'StageApplicant'}" :class="[$route.name == 'StageApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Hiring Progress</RouterLink>
             <RouterLink :to="{name:'InterviewApplicant'}" :class="[$route.name == 'InterviewApplicant' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Interview Schedule</RouterLink>
           </div>
-          <RouterView :applicant="applicant" v-if="applicant" />
         </div>
+        <RouterView :applicant="applicant" v-if="applicant" />
       </div>
     </div>
   </div>

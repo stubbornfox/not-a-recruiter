@@ -5,3 +5,11 @@ export const stages = {
   hired: { text: 'Hired', color: 'green' },
   declined: { text: 'Declined', color: 'red' }
 }
+
+export const typeOfEmployments = {
+  full_time: "Full time",
+  internship: "Internship",
+  part_time: "Part time",
+  contract: "Contract",
+  remote: "Remote",
+}

@@ -34,12 +34,7 @@
         <div class="pb-10">
           <h4 class="mb-4 text-neutrals-100">About this role</h4>
           <div>
-            <div class="progress my-6 bg-neutrals-10i p-4">
-              <span class="font-bold text-neutrals-100">{{job.applicants}} applied</span> of {{job.needs}} capacity
-              <div class="progress-bar  h-2 mt-3" style="background: #D1D1D1">
-                <div class="h-full left-0 top-0 bottom-0 bg-green" :style="`width: ${Math.min(job.applicants/job.needs*100, 100)}%`"></div>
-              </div>
-            </div>
+            <AppliedProgress :applied="job.applicants" :needs="job.needs" class="my-6 bg-neutrals-10i p-4"/>
             <div class="flex items-center justify-between mb-6">
               <label class="flex-1">Applied Before</label>
               <time :datetime="job.due_date" format="YYYY MM DD" class="font-semibold text-neutrals-100 flex-1">
@@ -100,6 +95,7 @@
 import { RouterLink } from "vue-router";
 import IconEditJob from '@/components/icons/IconEditJob.vue'
 import BenefitCard from '@/components/BenefitCard.vue'
+import AppliedProgress from '@/components/AppliedProgress.vue'
 import defaultBenefits from '@/benefits.js'
 
 function getBenefitsCard(benefits) {
