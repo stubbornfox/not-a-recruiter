@@ -5,7 +5,7 @@
         <img :src="job.logo_image" class="w-12 h-12" />
         <h3 class="text-neutrals-100">{{job.title}}</h3>
       </div>
-      <RouterLink :to="{name: 'JobDetails'}" class="flex items-center gap-x-3 border border-secondary px-4 py-3 rounded-lg">
+      <RouterLink :to="{name: 'JobEdit'}" class="flex items-center gap-x-3 border border-secondary px-4 py-3 rounded-lg">
         <i>
           <IconEditJob /></i>
         <span class="font-bold text-primary">Edit Job Details</span>
@@ -37,7 +37,7 @@
             <div class="progress my-6 bg-neutrals-10i p-4">
               <span class="font-bold text-neutrals-100">{{job.applicants}} applied</span> of {{job.needs}} capacity
               <div class="progress-bar  h-2 mt-3" style="background: #D1D1D1">
-                <div class="h-full left-0 top-0 bottom-0 bg-green" :style="`width: ${job.applicants/job.needs*100}%`"></div>
+                <div class="h-full left-0 top-0 bottom-0 bg-green" :style="`width: ${Math.min(job.applicants/job.needs*100, 100)}%`"></div>
               </div>
             </div>
             <div class="flex items-center justify-between mb-6">

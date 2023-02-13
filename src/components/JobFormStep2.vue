@@ -1,7 +1,7 @@
 <template>
   <FormKit type="form" id="jobForm" @submit="saveJob" form-class="h-full overflow-y-scroll" :actions=false :incomplete-message=false :value="editJob">
     <div class="lg:flex lg:w-full lg:gap-x-28 lg:content-start mt-6">
-      <FormKit :type="textAreaInput" name="description" outer-class="w-full" inner-class="$reset mt-4 lg:grow lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
+      <FormKit :type="textAreaInput" name="description" outer-class="w-full" inner-class="$reset mt-4 lg:flex-1 w-full lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
         <template #label="context">
           <div class="lg:basis-64">
             <label class="block font-semibold text-neutrals-100">Job Descriptions</label>
@@ -12,7 +12,7 @@
     </div>
     <hr class="my-6" />
     <div class="lg:flex lg:w-full lg:gap-x-28 lg:content-start mt-6">
-      <FormKit :type="textAreaInput" name="responsibilities" outer-class="w-full" inner-class="$reset mt-4 lg:grow lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
+      <FormKit :type="textAreaInput" name="responsibilities" outer-class="w-full" inner-class="$reset mt-4 lg:flex-1 w-full lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
         <template #label="context">
           <div class="lg:basis-64">
             <label class="block font-semibold text-neutrals-100">Responsibilities</label>
@@ -22,9 +22,8 @@
       </FormKit>
     </div>
     <hr class="my-6" />
-
     <div class="lg:flex lg:w-full lg:gap-x-28 lg:content-start mt-6">
-      <FormKit :type="textAreaInput" name="who_you_are" outer-class="w-full" inner-class="$reset mt-4 lg:grow lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
+      <FormKit :type="textAreaInput" name="who_you_are" outer-class="w-full" inner-class="$reset mt-4 lg:flex-1 w-full lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
         <template #label="context">
           <div class="lg:basis-64">
             <label class="block font-semibold text-neutrals-100">Who are you</label>
@@ -35,7 +34,7 @@
     </div>
     <hr class="my-6" />
     <div class="lg:flex lg:w-full lg:gap-x-28 lg:content-start mt-6">
-      <FormKit :type="textAreaInput" name="nice_to_have" outer-class="w-full" inner-class="$reset mt-4 lg:grow lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
+      <FormKit :type="textAreaInput" name="nice_to_have" outer-class="w-full" inner-class="$reset mt-4 lg:flex-1 w-full lg:mt-0" wrapper-class="$reset lg:flex lg:w-full lg:gap-x-28 lg:content-start">
         <template #label="context">
           <div class="lg:basis-64">
             <label class="block font-semibold text-neutrals-100">Nice-to-haves</label>
@@ -71,6 +70,7 @@ let editJob = props.job;
 const emit = defineEmits(['saveJob'])
 
 async function saveJob(modifiedJob) {
-  emit('saveJob', modifiedJob)
+  const { description, responsibilities, who_you_are, nice_to_have, ...obj } = modifiedJob;
+  emit('saveJob', { description, responsibilities, who_you_are, nice_to_have })
 }
 </script>

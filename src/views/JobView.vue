@@ -49,7 +49,7 @@
           <div class="flex border-b border-neutrals-20 gap-x-10 pt-3">
             <RouterLink :to="{name:'JobApplicants'}" :class="[$route.name == 'JobApplicants' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Applicants</RouterLink>
             <RouterLink :to="{name:'JobDetails'}" :class="[$route.name == 'JobDetails' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Job Details</RouterLink>
-            <RouterLink :to="{name:'JobAnalytics'}" :class="[$route.name == 'Analytics' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Analytics</RouterLink>
+            <RouterLink :to="{name:'JobAnalytics'}" :class="[$route.name == 'JobAnalytics' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Analytics</RouterLink>
           </div>
           <RouterView :key="$route.params.stage" :job="job"/>
         </div>

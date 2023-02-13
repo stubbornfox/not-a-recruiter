@@ -3,12 +3,12 @@
     <button type="button" class="inline-flex items-center" @click="$router.go(-1)">
       <IconArrowBack />
     </button>
-    <h4 class="text-neutrals-100">Post a job</h4>
+    <h4 class="text-neutrals-100">{{ job?.id ? 'Edit job':'Post a job'}}</h4>
   </div>
   <JobStepper :step="step" />
-  <JobFormStep1 v-if="step==1" @save-job="saveJob"/>
-  <JobFormStep2 v-if="step==2" @save-job="saveJob"/>
-  <JobFormStep3 v-if="step==3" @save-job="saveJob"/>
+  <JobFormStep1 v-if="step==1" :job="job" @save-job="saveJob" />
+  <JobFormStep2 v-if="step==2" :job="job" @save-job="saveJob" />
+  <JobFormStep3 v-if="step==3" :job="job" @save-job="saveJob" />
 </template>
 <script setup>
 import { ref, onMounted } from 'vue'
@@ -24,16 +24,14 @@ const props = defineProps({
   default: {}
 })
 
-let tmpJob = props.job;
+let tmpJob = {}
 
 const emit = defineEmits(['submit'])
 
 async function saveJob(job) {
-  debugger
-  // step.value = step.value + 1;
   tmpJob = {
-      ...tmpJob,
-      ...job
+    ...tmpJob,
+    ...job,
   };
 
   if (step.value == 3) {

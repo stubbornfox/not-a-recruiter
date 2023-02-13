@@ -24,15 +24,17 @@ import { createInput } from '@formkit/vue'
 const benefitInput = createInput(BenefitInput, {
   props: [],
 })
+
 const props = defineProps({
-  modelValue: { type: Array, default: () => [] },
+  job: Object,
+  default: {}
 })
 
-const benefits = ref(props.modelValue) || ['full_healcare', 'unlimited_vacation']
+let editJob = props.job;
 
 const emit = defineEmits(['saveJob'])
 async function saveJob(modifiedJob) {
-  emit('saveJob', modifiedJob)
+  const { benefits } = modifiedJob;
+  emit('saveJob', { benefits })
 }
-
 </script>

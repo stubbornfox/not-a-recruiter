@@ -16,7 +16,10 @@
             </template>
           </v-date-picker>
           <div class="md:hidden text-neutrals-100">
-            Filter
+            <button class="border border-neutrals-20 flex items-center px-4 py-3 gap-2">
+            <i><IconFilter/></i>
+            <span class="text-neutrals-100 font-medium">Filter</span>
+          </button>
           </div>
         </div>
       </div>
@@ -27,7 +30,10 @@
               Job List
             </div>
             <div class="">
-              Filter
+             <button class="border border-neutrals-20 flex items-center px-4 py-3 gap-2">
+            <i><IconFilter/></i>
+            <span class="text-neutrals-100 font-medium">Filter</span>
+          </button>
             </div>
           </div>
           <div class="">
@@ -61,6 +67,8 @@ import { useUserStore } from '@/stores/user';
 import api from '../services/api';
 import IconCalendar from '@/components/icons/IconCalendar.vue'
 import { useJobStore } from '@/stores/job'
+import IconFilter from '@/components/icons/IconFilter.vue'
+
 const jobStore = useJobStore()
 const { jobs, paginate } = storeToRefs(jobStore)
 const { fetchJobs } = jobStore

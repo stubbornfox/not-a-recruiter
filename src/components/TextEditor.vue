@@ -56,7 +56,6 @@ onMounted(() => {
 })
 
 function update(val) {
-  debugger
   props.context.node.input(val)
 }
 

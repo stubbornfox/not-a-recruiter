@@ -167,9 +167,14 @@ const router = createRouter({
             {
               path: 'analytics',
               name: 'JobAnalytics',
-              component: () => import("../views/JobDetailsView.vue")
+              component: () => import("../views/JobAnalyticsView.vue")
             },
           ],
+        },
+        {
+          path: '/jobs/:slug/edit',
+          name: 'JobEdit',
+          component: () => import("../views/JobEditView.vue")
         },
         {
           path: "/settings",

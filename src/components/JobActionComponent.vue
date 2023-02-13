@@ -15,7 +15,7 @@
           <RouterLink :to="{name: 'JobDetails', params: {slug: job.slug}}" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">View Job Detail</RouterLink>
           </MenuItem>
           <MenuItem v-slot="{ active }">
-          <RouterLink :to="{name: 'JobAnalytics', params: {slug: job.slug}}" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Edit Job</RouterLink>
+          <RouterLink :to="{name: 'JobEdit', params: {slug: job.slug}}" :class="[active ? 'bg-gray-100 text-gray-900' : 'text-gray-700', 'block px-4 py-2 text-sm']">Edit Job</RouterLink>
           </MenuItem>
         </div>
       </MenuItems>
