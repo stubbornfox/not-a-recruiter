@@ -78,7 +78,7 @@
         </div>
         <div class="flex items-center gap-x-2 mt-6">
           <RouterLink :to="{name: 'Home'}" class="text-primary flex-grow border border-secondary py-3 text-center rounded-md font-bold">Schedule Interview</RouterLink>
-          <RouterLink :to="{name: 'Home'}" class="border border-secondary p-3 text-center rounded-md"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <RouterLink :to="{name: 'Messages'}" class="border border-secondary p-3 text-center rounded-md"><svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_29612_29611)">
                 <path d="M12.9996 22.75L9.09961 18.85H6.49961C5.46527 18.85 4.47329 18.4391 3.74189 17.7077C3.0105 16.9763 2.59961 15.9843 2.59961 14.95V7.15C2.59961 6.11566 3.0105 5.12368 3.74189 4.39228C4.47329 3.66089 5.46527 3.25 6.49961 3.25H19.4996C20.534 3.25 21.5259 3.66089 22.2573 4.39228C22.9887 5.12368 23.3996 6.11566 23.3996 7.15V14.95C23.3996 15.9843 22.9887 16.9763 22.2573 17.7077C21.5259 18.4391 20.534 18.85 19.4996 18.85H16.8996L12.9996 22.75Z" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M7.7998 8.4502H18.1998" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

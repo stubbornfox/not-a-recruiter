@@ -3,11 +3,21 @@
     <div class="h-full flex flex-col flex-grow">
       <div class="flex flex-col flex-grow h-full">
         <div class="flex items-center justify-between lg:py-6 lg:px-8">
-          <div class="flex items-center gap-6">
-            <a @click.prevent="$router.go(-1)" href="#">
-              <IconArrowBackLarge />
-            </a>
-            <div>
+          <div class="flex flex-col gap-4 p-4 lg:flex-row lg:items-center lg:gap-6 lg:p-0 w-full lg:w-auto">
+            <div class="flex justify-between items-center">
+              <a @click.prevent="$router.go(-1)" href="#">
+                <IconArrowBackLarge class="hidden lg:inline-block" />
+                <IconArrowBack class="inline-block lg:hidden" />
+              </a>
+              <Menu as="div" class="lg:hidden relative inline-block text-left">
+                <MenuButton class="inline-flex py-3">
+                  <i>
+                    <IconHorizontalDot />
+                  </i>
+                </MenuButton>
+              </Menu>
+            </div>
+            <div class="">
               <h4 class="text-neutrals-100">{{job.title}}</h4>
               <div class="flex items-center gap-2 mt-2 text-neutrals-100">
                 <div>{{job.categories.join(', ')}}</div>
@@ -18,14 +28,14 @@
               </div>
             </div>
           </div>
-          <Menu as="div" class="relative inline-block text-left">
+          <Menu as="div" class="hidden relative lg:block text-left">
             <div>
-              <MenuButton class="inline-flex items-center border rounded-lg justify-center border-primary py-3 px-4 gap-x-3">
-                <svg width="20" height="21" viewBox="0 0 20 21" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15.8327 7.5835L9.99935 13.4168L4.16602 7.5835" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <MenuButton class="flex items-center border rounded-lg justify-center border-primary py-3 px-4 gap-x-3">
+                <i><svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.8327 7.5835L9.99935 13.4168L4.16602 7.5835" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                  <span class="text-primary font-bold ">More action</span>
+                </i>
+                <span class="flex-1 text-primary font-bold ">More action</span>
               </MenuButton>
             </div>
             <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
@@ -45,13 +55,13 @@
             </transition>
           </Menu>
         </div>
-        <div class="h-full lg:px-8">
+        <div class="h-full lg:px-8 px-4">
           <div class="flex border-b border-neutrals-20 gap-x-10 pt-3">
             <RouterLink :to="{name:'JobApplicants'}" :class="[$route.name == 'JobApplicants' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Applicants</RouterLink>
             <RouterLink :to="{name:'JobDetails'}" :class="[$route.name == 'JobDetails' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Job Details</RouterLink>
             <RouterLink :to="{name:'JobAnalytics'}" :class="[$route.name == 'JobAnalytics' ? 'border-b-4 border-primary text-neutrals-100' : '', 'font-semibold pb-3']">Analytics</RouterLink>
           </div>
-          <RouterView :key="$route.params.stage" :job="job"/>
+          <RouterView :key="$route.params.stage" :job="job" />
         </div>
       </div>
     </div>
@@ -66,7 +76,9 @@ import { useJobStore } from '@/stores/job'
 import { storeToRefs } from 'pinia';
 
 import IconArrowBackLarge from '@/components/icons/IconArrowBackLarge.vue'
+import IconArrowBack from '@/components/icons/IconArrowBack.vue'
 import IconChervonDown from '@/components/icons/IconChervonDown.vue'
+import IconHorizontalDot from '@/components/icons/IconHorizontalDot.vue'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 
 
