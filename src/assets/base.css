@@ -176,6 +176,14 @@ body {
   box-sizing: content-box;
 }
 
+h2 {
+  font-family: 'Clash Display Variable';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 48px;
+  line-height: 110%;
+}
+
 h3 {
   font-family: 'Clash Display Variable';
   font-style: normal;

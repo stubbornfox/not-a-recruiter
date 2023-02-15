@@ -1,5 +1,5 @@
 <template>
-  <div class="py-4 lg:mx-auto lg:max-w-6xl lg:p-8">
+  <div class="lg:mx-auto lg:max-w-7xl w-full py-4 lg:p-8">
     <div class="mb-6 px-4 lg:px-0 lg:flex lg:justify-between">
       <div>
         <h4 class="text-neutrals-100">

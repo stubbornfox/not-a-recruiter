@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+  <div class="px-4 sm:px-6 lg:mx-auto lg:max-w-7xl lg:px-8">
     <div class="py-6 md:flex md:items-center md:justify-between">
       <FormKit type="form" id="editThemeForm" form-class="flex-grow-1 space-y-8 lg:w-96" :actions=false :incomplete-message=false novalidate>
         <div class="space-y-8">

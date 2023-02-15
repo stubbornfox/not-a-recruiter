@@ -155,7 +155,7 @@ const applicantNavigation = [
 const companyNavigation = [
   { name: 'Dashboard', href: '/', icon: IconDashboard },
   { name: 'Messages', href: '/messages', icon: IconMessages },
-  { name: 'Company Profile', href: '/settings/jobboard', icon: IconCompany },
+  { name: 'Company Profile', href: '/company', icon: IconCompany },
   { name: 'All Applicants', href: '/applicants', icon: IconHr },
   { name: 'Job Listing', href: '/jobs', icon: IconJobListing },
   { name: 'My Schedule', href: '/schedule', icon: IconCalendar },

@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full lg:px-8">
-    <Applicants :applicants="applicants" class="w-full"/>
+  <div class="lg:mx-auto lg:max-w-7xl lg:px-8 w-full">
+    <Applicants :applicants="applicants"/>
   </div>
 </template>
 <script setup>

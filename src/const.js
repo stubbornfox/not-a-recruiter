@@ -13,3 +13,7 @@ export const typeOfEmployments = {
   contract: "Contract",
   remote: "Remote",
 }
+
+export const categories = [
+  'Design', 'Sales', 'Marketing', 'Finance', 'Technology', 'Engineering', 'Business', 'Human Resources'
+]

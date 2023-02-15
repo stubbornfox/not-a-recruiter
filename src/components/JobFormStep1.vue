@@ -80,7 +80,7 @@ import { ref, onMounted } from 'vue'
 import TagsInput from '@/components/TagsInput.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import { createInput } from '@formkit/vue'
-
+import { categories } from '@/const'
 const tags = []
 const tag = ''
 const job_categories = ref(null)
@@ -100,7 +100,6 @@ const employmentType = {
   "contract": "Contract",
   "remote": "Remote",
 }
-const categories = ["IT", "Designer", "Accountant", "Banker", "Restaurant", "Medicine"]
 const props = defineProps({
   job: Object,
   default: {}

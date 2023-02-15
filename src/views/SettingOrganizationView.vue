@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-grow" v-if="organization">
-    <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8 h-full flex flex-col flex-grow h-full">
+    <div class="w-full px-4 sm:px-6 lg:mx-auto lg:max-w-7xl lg:px-8 h-full flex flex-col flex-grow h-full">
       <div class="h-full flex flex-col flex-grow mt-4 text-color-text">
         <FormKit type="form" id="saveOrganization" @submit="(o) => {updateOrganization(o)}" form-class="space-y-8 divide-y divide-gray-200" v-model="organization" :actions=false :incomplete-message=false novalidate>
           <div class="space-y-8 divide-y divide-gray-200">

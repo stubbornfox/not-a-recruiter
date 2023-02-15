@@ -4,7 +4,7 @@ const props = defineProps(['foo'])
 console.log(props.foo)
 </script>
 <template>
-  <div class="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+  <div class="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-7xl lg:px-8">
     <div class="flex flex-1">
       <form class="flex w-full md:ml-0" action="#" method="GET">
         <label for="search-field" class="sr-only">Search</label>

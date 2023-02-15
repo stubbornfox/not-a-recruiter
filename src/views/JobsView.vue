@@ -1,7 +1,7 @@
 <template>
-  <div class="">
-    <div class="p-4 lg:py-6 lg:px-8">
-      <div class="lg:py-8 md:flex md:items-center md:justify-between">
+  <div class="p-4 lg:mx-auto lg:max-w-7xl lg:p-8 w-full">
+    <div class="w-full">
+      <div class="md:flex md:items-center md:justify-between">
         <div>
           <h4 class="text-neutrals-100">Job listing</h4>
           <p class="mt-2 text-neutrals-60">Here is your jobs listing status from {{rangeDate}}.</p>
@@ -17,9 +17,10 @@
           </v-date-picker>
           <div class="md:hidden text-neutrals-100">
             <button class="border border-neutrals-20 flex items-center px-4 py-3 gap-2">
-            <i><IconFilter/></i>
-            <span class="text-neutrals-100 font-medium">Filter</span>
-          </button>
+              <i>
+                <IconFilter /></i>
+              <span class="text-neutrals-100 font-medium">Filter</span>
+            </button>
           </div>
         </div>
       </div>
@@ -30,10 +31,11 @@
               Job List
             </div>
             <div class="">
-             <button class="border border-neutrals-20 flex items-center px-4 py-3 gap-2">
-            <i><IconFilter/></i>
-            <span class="text-neutrals-100 font-medium">Filter</span>
-          </button>
+              <button class="border border-neutrals-20 flex items-center px-4 py-3 gap-2">
+                <i>
+                  <IconFilter /></i>
+                <span class="text-neutrals-100 font-medium">Filter</span>
+              </button>
             </div>
           </div>
           <div class="">
