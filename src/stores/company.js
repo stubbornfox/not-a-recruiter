@@ -22,5 +22,19 @@ export const useCompanyStore = defineStore({
         this.loading = false
       }
     },
+
+    async updateProfile(organization) {
+      this.loading = true
+      const toast = useToast()
+      try {
+        this.organization = await api.put(`/organizations/${organization.id}`, { organization })
+          .then((response) => response.data)
+        toast.success("Updated organization successfully!")
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.loading = false
+      }
+    },
   }
 })

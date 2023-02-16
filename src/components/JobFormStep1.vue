@@ -100,6 +100,7 @@ const employmentType = {
   "contract": "Contract",
   "remote": "Remote",
 }
+
 const props = defineProps({
   job: Object,
   default: {}

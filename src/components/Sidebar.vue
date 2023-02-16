@@ -164,7 +164,7 @@ const companyNavigation = [
 const navigation = companyNavigation
 
 const secondaryNavigation = [
-  { name: 'Settings', href: '/settings/organization', icon: IconSetings },
+  { name: 'Settings', href: '/settings', icon: IconSetings },
   { name: 'Help center', href: 'help', icon: IconHelp },
 ]
 

@@ -2,7 +2,7 @@
   <div class="w-full h-full flex flex-col">
     <div v-if="editor" class="border border-neutrals-20">
       <editor-content :editor="editor" class="flex-grow text-neutrals-80 p-4 min-h-40"/>
-      <div class="border-t border-neutrals-20 py-3 px-4">
+      <div class="border-t border-neutrals-20 py-3 px-4 editor-actions">
         <button @click.prevent="editor.chain().focus().toggleBold().run()" :disabled="!editor.can().chain().focus().toggleBold().run()" :class="{ 'is-active': editor.isActive('bold') }" >
           <IconTextEditorBold/>
         </button>
@@ -60,7 +60,7 @@ onMounted(() => {
 </script>
 <style lang="scss">
 
-button {
+.editor-actions button {
   padding: 0.1rem;
   margin: 0.1rem;
 
@@ -69,7 +69,7 @@ button {
   }
 }
 
-.is-active {
+.editor-actions .is-active {
   color: var(--color-heading);
   font-weight: bold;
   background-color: var(--qrh-netrals-20);
