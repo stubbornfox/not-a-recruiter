@@ -27,7 +27,7 @@ export const useCompanyStore = defineStore({
       this.loading = true
       const toast = useToast()
       try {
-        this.organization = await api.put(`/organizations/${organization.id}`, { organization })
+        this.company = await api.put(`/organizations/${organization.id}`, { organization })
           .then((response) => response.data)
         toast.success("Updated organization successfully!")
       } catch (error) {

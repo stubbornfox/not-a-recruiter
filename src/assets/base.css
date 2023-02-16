@@ -56,11 +56,12 @@
   --vs-border-radius: 0;
   --vs-border-color: #E4E5E7;
   --vs-actions-padding: 12px 16px;
-  --vs-selected-bg: #F1EAFC;
-  --vs-selected-border-color: #C7ACF2;
+  --vs-selected-bg: #E8E8E8;
+  --vs-selected-color: var(--qrh-primary);
+  --vs-selected-border-color: transparent;
   --tw-translate-y: 0%;
   --tw-translate-x: -100%;
-  --tw-ring-color:  #7330DF;
+  --tw-ring-color: #7330DF;
 }
 
 html.light {
@@ -316,31 +317,42 @@ input {
   white-space: nowrap;
 }
 
-[data-type="checkbox"] .formkit-input ~ .formkit-decorator {
-    background: var(--fk-bg-decorator);
-    display: block;
-    box-sizing: border-box;
-    width: var(--fk-box-size);
-    height: var(--fk-box-size);
-    flex: 0 0 var(--fk-box-size);
-    border: 2px solid;
-    box-shadow: var(--fk-border-box-shadow);
-    border-radius: var(--fk-border-radius);
-    margin: var(--fk-margin-decorator);
-    position: relative;
+[data-type="checkbox"] .formkit-input~.formkit-decorator {
+  background: var(--fk-bg-decorator);
+  display: block;
+  box-sizing: border-box;
+  width: var(--fk-box-size);
+  height: var(--fk-box-size);
+  flex: 0 0 var(--fk-box-size);
+  border: 2px solid;
+  box-shadow: var(--fk-border-box-shadow);
+  border-radius: var(--fk-border-radius);
+  margin: var(--fk-margin-decorator);
+  position: relative;
 }
 
-.vs__search, .vs__search:focus {
+.vs__selected {
   margin: 0;
+  height: 34px;
+}
+
+.vs__selected-options {
+  gap: 8px;
+  padding: 8px;
+}
+
+.vs--single .vs__selected-options {
   height: 48px;
+}
+
+.vs__search,
+.vs__search:focus {
+  margin: 0;
+  height: 34px;
 }
 
 .vs__dropdown-toggle {
   padding: 0;
-}
-
-.vs__selected {
-  height: 25px;
 }
 
 .vue3-emojipicker .-translate-y-full {
@@ -354,3 +366,4 @@ input {
 input {
   --tw-ring-color: var(--qrh-primary) !important;
 }
+

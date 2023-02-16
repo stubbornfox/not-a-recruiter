@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, h } from "vue";
 import { createPinia } from 'pinia';
 import App from "./App.vue";
 import router from "./router";
@@ -26,6 +26,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import vSelect from "vue-select";
 import dayjs from 'dayjs';
 import "./assets/main.css";
+import IconChervonDown from '@/components/icons/IconChervonDown.vue'
+import IconXMarkPurple from '@/components/icons/IconXMarkPurple.vue'
 
 library.add(far, fas)
 const pinia = createPinia();
@@ -174,6 +176,16 @@ app.use(Toast, {
 });
 
 app.use(VCalendar, {input: ['L', 'YYYY-MM-DD', 'YYYY/MM/DD'],})
+
+vSelect.props.components.default = () => ({
+  Deselect: {
+    render: () => h('span', [h(IconXMarkPurple)]),
+  },
+  OpenIndicator: {
+    render: () => h('span', [h(IconChervonDown)]),
+  },
+});
+
 app.use(vSelect)
 
 app.config.globalProperties.$filters = {

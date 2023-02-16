@@ -3,7 +3,7 @@
     <div class="text-lg text-neutrals-100 font-semibold">Basic Information</div>
     <p class="text-neutrals-60">This is company information that you can update anytime.</p>
   </div>
-  <FormKit type="form" id="jobForm" @submit="saveJob" form-class="h-full overflow-y-scroll" :actions=false :incomplete-message=false :value="editJob">
+  <FormKit type="form" @submit="(data) => $emit('save', serialize(data))" form-class="h-full overflow-y-scroll" :actions=false :incomplete-message=false :value="company">
     <div class="space-y-8 divide-y divide-gray-200">
       <div class="overflow-y-auto">
         <div class="mt-6 grid grid-cols-1 gap-y-6">
@@ -27,31 +27,31 @@
             <div class="lg:basis-96 flex flex-col gap-6 grow max-w-xl">
               <FormKit name="name" id="name" type="text" label="Company Name" inner-class=" mt-1" />
               <FormKit name="website_url" id="website_url" type="text" label="Website" inner-class=" mt-1" />
-              <FormKit :type="selectInput" :options="categories" :multiple="true" name="countries" inner-class="mt-1" label="Location">
+              <FormKit :type="selectInput" :multiple="true" name="locations" inner-class="mt-1" label="Location" :taggable="true">
               </FormKit>
               <div class="flex flex-col lg:flex-row lg: gap-6">
                 <div class="flex-1">
-                  <FormKit :type="selectInput" :options="categories" name="Employee" inner-class="mt-1" label="Employee" />
+                  <FormKit :type="selectInput" :options="businessSizes" name="size" inner-class="mt-1" label="Employee" :reduce="(size) => size.code" />
                 </div>
                 <div class="flex-1">
-                  <FormKit :type="selectInput" :options="categories" name="Employee" inner-class="mt-1" label="Industry" />
+                  <FormKit :type="selectInput" :options="industries" name="industry" inner-class="mt-1" label="Industry" />
                 </div>
               </div>
               <div>
                 <label class="block font-semibold text-neutrals-100">Date founded</label>
                 <div class="flex gap-4 lg:gap-6 items-end">
                   <div class="flex-1">
-                    <FormKit :type="selectInput" :options="categories" name="Employee" inner-class="mt-1" />
+                    <FormKit :type="selectInput" :options="getDays()" name="day" inner-class="mt-1"/>
                   </div>
                   <div class="flex-1">
-                    <FormKit :type="selectInput" :options="categories" name="Employee" inner-class="mt-1" />
+                    <FormKit :type="selectInput" :options="months" name="month" inner-class="mt-1" :reduce="(month) => month.code"/>
                   </div>
                   <div class="flex-1">
-                    <FormKit :type="selectInput" :options="categories" name="Employee" inner-class="mt-1" />
+                    <FormKit :type="selectInput" :options="getYears()" :clearable="false" name="year" inner-class="mt-1" />
                   </div>
                 </div>
               </div>
-              <FormKit :type="selectInput" :options="categories" :multiple="true" name="countries" inner-class="mt-1" label="Tech Stack" tagable>
+              <FormKit :type="selectInput" :taggable="true" :multiple="true" name="tech_stacks" inner-class="mt-1" label="Tech Stack" tagable>
               </FormKit>
             </div>
           </div>
@@ -81,29 +81,43 @@ import TagsInput from '@/components/TagsInput.vue';
 import SelectInput from '@/components/SelectInput.vue';
 import TextEditor from '@/components/TextEditor.vue'
 import { createInput } from '@formkit/vue'
-import { categories } from '@/const'
-const tags = []
-const tag = ''
-const job_categories = ref(null)
+import { categories, businessSizes, industries, months } from '@/const'
+const yearsList = ref([])
 
-const values = ref({})
 const selectInput = createInput(SelectInput, {
-  props: ['options', 'multiple'],
+  props: ['options', 'multiple', 'taggable', 'reduce'],
 })
 const textAreaInput = createInput(TextEditor, {
   props: [],
 })
-
 const props = defineProps({
-  job: Object,
-  default: {}
+  company: { type: Object, default: () => {} },
 })
+let company = props.company;
+if (company.date_founded) {
+  const df = new Date(company.date_founded)
+  company.day = df.getDate();
+  company.month = '0';
+  company.year = df.getFullYear();
+}
+const getYears = () => {
+  const startYear = 1900;
+  const endYear = new Date().getFullYear();
+  return Array.from({ length: (endYear - startYear) + 1 },
+    (value, index) =>  endYear - index
+  );
+}
 
-let editJob = props.job;
+const getDays = () => {
+  return Array.from({ length: 31 },
+    (value, index) =>  index + 1
+  );
+}
 
-const emit = defineEmits(['saveJob'])
-
-async function saveJob(modifiedJob) {
-  emit('saveJob', modifiedJob)
+const serialize = (data) => {
+  if (data.year !== undefined && data.month !== undefined)
+    return {...data, date_founded: new Date(Date.UTC(data.year, data.month, data.day)) }
+  else
+    return data
 }
 </script>

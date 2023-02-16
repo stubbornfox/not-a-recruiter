@@ -1,9 +1,5 @@
 <template>
-  <v-select :options="options" :multiple="multiple" class="text-neutrals-60 w-full" v-model="selected" :value="selected" @update:modelValue="setSelected">
-    <template #open-indicator="{ attributes }">
-      <span v-bind="attributes">
-        <IconChervonDown /></span>
-    </template>
+  <v-select :clearable="false" :options="options" :multiple="multiple" :taggable="taggable" class="text-neutrals-60 w-full" v-model="selected" :value="selected" @update:modelValue="setSelected" :reduce="reduce">
   </v-select>
 </template>
 
@@ -14,7 +10,7 @@ const props = defineProps({
   context: Object,
 })
 
-const { options, multiple} = props.context
+const { options, multiple, taggable, reduce } = props.context
 const selected = ref(props.context.value || '')
 
 function setSelected(val) {

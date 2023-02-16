@@ -17,8 +17,7 @@
         <h4 class="text-neutrals-100">Company Profile</h4>
         <EditCompanyButton @edit="" />
       </div>
-      <p class="mt-4 text-neutrals-80">
-        {{company.description}}
+      <p class="mt-4 text-neutrals-80" v-html="company.description">
       </p>
     </div>
     <hr class="my-6">
