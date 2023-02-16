@@ -73,7 +73,7 @@ app.use(plugin, defaultConfig({
       file: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex rounded shadow-sm border',
+        inner: '$reset mt-4 flex',
         input: 'border block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',

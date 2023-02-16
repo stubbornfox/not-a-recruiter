@@ -1,30 +1,36 @@
 <template>
-  <div class="flex flex-grow border-t border-color">
-    <div class="lg:w-1/4 md:w-1/3">
-      <div id="setting-sidebar" class="pt-5 flex flex-col flex-grow h-full">
-        <nav class="flex-1 space-y-1  px-2" aria-label="Sidebar">
-          <RouterLink v-for="item in navigation" :key="item.name" :to="item.href" :class="[$route.name.includes(item.href.key) ? 'bg-soft' : 'hover:bg-mute', 'group flex items-center px-2 py-2 text-md font-medium rounded-md']">
-            <span class="flex-1 text-heading">{{ item.name }}</span>
-          </RouterLink>
-        </nav>
-      </div>
-    </div>
-    <div class="w-full h-full">
-      <RouterView />
-    </div>
+  <div class="lg:mx-auto lg:max-w-7xl w-full py-4 lg:p-8">
+    <TabGroup>
+      <TabList class="flex gap-10 border-b border-neutrals-20">
+        <Tab v-for="tab in tabs" :key="tab.name" class='hover:text-neutrals-80 hover:border-neutrals-80 py-3 hover:border-b-4 font-semibold outline-none'>{{ tab.name }}</Tab>
+      </TabList>
+      <TabPanels class="py-8">
+        <TabPanel><CompanyBasicInformation /></TabPanel>
+        <TabPanel><CompanySocialLink /></TabPanel>
+        <TabPanel><CompanyTeam /></TabPanel>
+      </TabPanels>
+    </TabGroup>
   </div>
 </template>
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
-const navigation = [
-  { name: 'Organization', href: { name: 'SettingOrganization', key: 'SettingOrganization' } },
-  { name: 'Job board', href: { name: 'SettingJobBoardBranding', key: 'SettingJobBoard'} },
+import { ref } from "vue";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+import CompanyBasicInformation from '@/components/CompanyBasicInformation.vue'
+import CompanySocialLink from '@/components/CompanySocialLink.vue'
+import CompanyTeam from '@/components/CompanyTeam.vue'
+
+const tabs = [
+  { name: 'Overview', key: 'overview' },
+  { name: 'Social Links', key: 'social_link' },
+  { name: 'Team', key: 'team' },
 ]
+
+
 </script>
-<style scoped>
-#setting-sidebar {
-  color: rgb(82, 82, 82);
-  border-right: 1px solid var(--color-border);
-  overflow-y: auto;
-}
+<style>
+  button[data-headlessui-state=selected] {
+    color: #25324B;
+    border-bottom: 4px solid #4640DE;
+  }
 </style>
