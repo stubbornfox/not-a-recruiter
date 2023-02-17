@@ -7,7 +7,7 @@
       <div v-show="current_tab == 'overview'">
         <CompanyBasicInformation :company="company" @save="updateProfile" />
       </div>
-      <div v-show="current_tab == 'social_link'">
+      <div v-show="current_tab == 'social'">
         <CompanySocialLink :company="company" @save="updateProfile" />
       </div>
       <div v-show="current_tab == 'team'">
@@ -17,7 +17,7 @@
   </div>
 </template>
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView, useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import { storeToRefs } from 'pinia'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
@@ -26,6 +26,7 @@ import CompanySocialLink from '@/components/CompanySocialLink.vue'
 import CompanyTeam from '@/components/CompanyTeam.vue'
 import { useCompanyStore } from '@/stores/company';
 
+const route = useRoute()
 const companyStore = useCompanyStore()
 const { company } = storeToRefs(companyStore)
 const { fetchProfile, updateProfile } = companyStore
@@ -34,11 +35,11 @@ const { fetchProfile, updateProfile } = companyStore
 onMounted(() => {
   fetchProfile()
 })
-const current_tab = ref('overview')
 
+const current_tab = ref(route.params.tab || 'overview')
 const tabs = [
   { name: 'Overview', key: 'overview' },
-  { name: 'Social Links', key: 'social_link' },
+  { name: 'Social Links', key: 'social' },
   { name: 'Team', key: 'team' },
 ]
 </script>

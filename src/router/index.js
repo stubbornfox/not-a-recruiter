@@ -182,7 +182,7 @@ const router = createRouter({
           component: () => import("../views/JobEditView.vue")
         },
         {
-          path: "/settings",
+          path: "/settings/:tab?",
           name: "Settings",
           component: () => import("../views/SettingView.vue"),
 
