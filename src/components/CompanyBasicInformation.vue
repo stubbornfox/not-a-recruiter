@@ -7,7 +7,7 @@
     <div class="space-y-8 divide-y divide-gray-200">
       <div class="overflow-y-auto">
         <div class="mt-6 grid grid-cols-1 gap-y-6">
-          <FormKit type="file" accept=".png,.jpg,.svg,.jpeg, .gif" @change="onFileChange" name="logo_image" wrapper-class="lg:flex lg:w-full lg:gap-x-28 lg:content-start" inner-class="lg:basis-96 lg:mt-0 gap-6" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" input-class="h-full" file-list-class="p-0 w-auto">
+          <FormKit type="file" accept=".png,.jpg,.svg,.jpeg, .gif" @change="onFileChange" name="logo_image" wrapper-class="lg:flex lg:w-full lg:gap-x-28 lg:content-start" inner-class="lg:basis-96 lg:mt-0 gap-8 grow max-w-xl" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" input-class="h-full" file-list-class="p-0 w-auto">
             <div class="w-20 h-20">
               <img :src="url" class="w-full h-full" />
             </div>
@@ -25,7 +25,7 @@
             <template #fileList="context">
             </template>
             <template #noFiles="context">
-              <div class="flex-1 border border-primary border-dashed border-2 lg:py-6 lg:px-12 p-4 flex flex-col items-center">
+              <div class="flex-1 border border-primary border-dashed border-2 lg:py-6 lg:px-12 p-4 flex flex-col items-center bg-light-gray rounded-lg">
                 <IconImage />
                 <p class="text-neutrals-100 mt-3"><a class="font-semibold text-primary">Click to replace</a> or drag and drop </p>
                 <p class="text-neutrals-60">SVG, PNG, JPG or GIF (max. 400 x 400px)</p>
