@@ -4,7 +4,6 @@ import { useToast } from 'vue-toastification'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    // initialize state from local storage to enable user to stay logged in
     me: null,
     organization: null,
     loading: false,

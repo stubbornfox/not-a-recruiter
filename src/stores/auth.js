@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
             this.user = user
             localStorage.setItem('user', JSON.stringify(user));
             if (user.organization === undefined) {
-              router.push({name: "NewOrganization"})
+              router.push({ name: "NewOrganization" })
             } else {
               router.push(this.returnUrl);
             }
@@ -54,11 +54,29 @@ export const useAuthStore = defineStore('auth', {
         console.log(error)
       }
     },
+
+    async setPassword(data, node) {
+      try {
+        node.clearErrors()
+        await axios.post('/auth/reset_password/', data)
+          .then((response) => {
+            if (response.data.token) {
+              const user = response.data
+              this.user = user
+              localStorage.setItem('user', JSON.stringify(user));
+              router.push(this.returnUrl);
+            }
+          })
+      } catch (error) {
+        node.setErrors([error.response.data], {})
+      }
+    },
+
     logout() {
       this.user = null;
       this.returnUrl = '/';
       localStorage.removeItem('user');
-      router.push({name: 'Login'})
+      router.push({ name: 'Login' })
     }
   }
 })

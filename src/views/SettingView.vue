@@ -1,7 +1,7 @@
 <template>
   <div class="lg:mx-auto lg:max-w-7xl w-full p-4 lg:p-8" v-if="company">
     <div class="flex gap-10 border-b border-neutrals-20">
-      <a v-for="tab in tabs" :key="tab.name" @click="current_tab = tab.key" href="#" class='hover:text-neutrals-80 hover:border-neutrals-80 py-3 border-b-4  font-semibold outline-none' :class="current_tab == tab.key ? 'border-purple' : 'border-transparent' ">{{ tab.name }}</a>
+      <RouterLink v-for="tab in tabs" :key="tab.name" :to="{name: 'Settings', params: {tab: tab.key}}" @click="current_tab = tab.key" href="#" class='hover:text-neutrals-80 hover:border-neutrals-80 py-3 border-b-4  font-semibold outline-none' :class="current_tab == tab.key ? 'border-purple' : 'border-transparent' ">{{ tab.name }}</RouterLink>
     </div>
     <div>
       <div v-show="current_tab == 'overview'">

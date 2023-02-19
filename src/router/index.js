@@ -52,6 +52,11 @@ const router = createRouter({
           name: "GoogleAuth",
           props: true,
           component: () => import("../views/GoogleView.vue"),
+        },
+        {
+          path: "/set_password/:token",
+          name: "SetPassword",
+          component: () => import("../views/SetPasswordView.vue"),
         }
       ]
     },
@@ -185,45 +190,6 @@ const router = createRouter({
           path: "/settings/:tab?",
           name: "Settings",
           component: () => import("../views/SettingView.vue"),
-
-          // children: [{
-          //     path: 'jobboard',
-          //     name: 'SettingJobBoard',
-          //     component: () => import("../views/SettingJobBoardView.vue"),
-          //     children: [{
-          //         path: 'branding',
-          //         name: 'SettingJobBoardBranding',
-          //         component: () => import("../views/SettingJobBoardBrandingView.vue"),
-          //       },
-          //       {
-          //         path: 'content',
-          //         name: 'SettingJobBoardContent',
-          //         component: () => import("../views/SettingJobBoardContentView.vue"),
-          //       },
-          //       {
-          //         path: 'seo',
-          //         name: 'SettingJobBoardSeo',
-          //         component: () => import("../views/SettingJobBoardSeoView.vue"),
-          //       },
-          //       {
-          //         path: 'navigation',
-          //         name: 'SettingJobBoardNavigation',
-          //         component: () => import("../views/SettingJobBoardNagigationView.vue"),
-          //       },
-          //       {
-          //         path: 'custom-domain',
-          //         name: 'SettingJobBoardCustomDomain',
-          //         component: () => import("../views/SettingJobBoardCustomDomainView.vue"),
-          //       },
-
-          //     ]
-          //   },
-          //   {
-          //     path: 'organization',
-          //     name: 'SettingOrganization',
-          //     component: () => import("../views/SettingOrganizationView.vue")
-          //   }
-          // ],
         },
         {
           path: "/jobs/new",
@@ -244,8 +210,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/google'];
-  const authRequired = !publicPages.includes(to.path) && !['JobPreview', 'JobBoardPreview'].includes(to.name)
+  const publicPages = ['/login', '/register', '/google', ''];
+  const authRequired = !publicPages.includes(to.path) && !['JobPreview', 'JobBoardPreview', 'SetPassword'].includes(to.name)
 
   const loggedIn = localStorage.getItem('user');
   const authStore = useAuthStore();
