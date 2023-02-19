@@ -202,7 +202,7 @@ const brief = (company) => {
     {
       icon: IconSize,
       term: 'Employees',
-      value: businessSizes.find((s) => s.code == company.size).label,
+      value: businessSizes.find((s) => s.code == company.size)?.label,
     },
     {
       icon: IconLocation,
