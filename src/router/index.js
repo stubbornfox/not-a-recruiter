@@ -215,8 +215,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/google', 'forget-password'];
-  const authRequired = !publicPages.includes(to.path) && !['JobPreview', 'JobBoardPreview', 'SetPassword'].includes(to.name)
+  const publicPages = ['Login', 'ForgetPassword', 'Register','GoogleAuth', 'SetPassword', 'JobPreview', 'JobBoardPreview']
+  const authRequired = !publicPages.includes(to.name)
 
   const loggedIn = localStorage.getItem('user');
   const authStore = useAuthStore();
