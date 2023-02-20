@@ -13,6 +13,9 @@
       <div v-show="current_tab == 'team'">
         <CompanyTeam />
       </div>
+       <div v-show="current_tab == 'domain'">
+        <CompanyCustomDomain :company="company" />
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +27,7 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import CompanyBasicInformation from '@/components/CompanyBasicInformation.vue'
 import CompanySocialLink from '@/components/CompanySocialLink.vue'
 import CompanyTeam from '@/components/CompanyTeam.vue'
+import CompanyCustomDomain from '@/components/CompanyCustomDomain.vue'
 import { useCompanyStore } from '@/stores/company';
 
 const route = useRoute()
@@ -41,6 +45,7 @@ const tabs = [
   { name: 'Overview', key: 'overview' },
   { name: 'Social Links', key: 'social' },
   { name: 'Team', key: 'team' },
+  { name: 'Custom Domain', key: 'domain' },
 ]
 </script>
 <style>
