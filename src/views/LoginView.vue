@@ -13,10 +13,10 @@
         </div>
         <div class="mt-6 grid grid-cols-1 gap-y-6">
           <FormKit type="email" name="email" label="Email Address" validation="required|email" />
-          <FormKit type="password" name="password" label="Password" validation="required">
+          <FormKit type="password" name="password" id="password" label="Password" validation="required">
             <template #label="context">
               <div class="flex items-center justify-between">
-                <label :class="context.classes.label">Password</label>
+                <label :class="context.classes.label" for="password">Password</label>
                 <RouterLink :to="{ name: 'ForgetPassword'}" class="text-primary text-sm hover:underline">Forget Password?</RouterLink>
               </div>
             </template>
