@@ -40,46 +40,46 @@ app.use(plugin, defaultConfig({
       global: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       text: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       number: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       tel: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       file: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: 'border block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs',
+        message: 'text-red my-1 text-sm',
         fileName: 'text-sm leading-4 ',
         fileItem: 'text-sm leading-4 ',
         fileList: 'text-sm leading-4 text-color-text',
@@ -89,38 +89,38 @@ app.use(plugin, defaultConfig({
       email: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       url: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1-r border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs',
+        message: 'text-red my-1 text-sm',
       },
       password: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       select: {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       checkbox: {
         wrapper:'',
@@ -132,27 +132,27 @@ app.use(plugin, defaultConfig({
         input: 'border-2 rounded-sm',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs',
+        message: 'text-red my-1 text-sm',
         decorator: '$reset formkit-decorator relative block content-box w-6 h-6 shadow-none bg-white border-2 border-neutrals-20',
       },
       'datetime-local': {
         outer: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
       textarea: {
         outer: '$reset',
         wrapper: '$reset',
         label: '$reset block font-semibold text-neutrals-100',
-        inner: '$reset mt-4 flex',
+        inner: '$reset mt-1 flex',
         input: '$reset block w-full min-w-0 flex-1 border-neutrals-20 focus:border-primary focus:ring-0 bg-transparent',
         help: '$reset mt-2 text-sm text-neutrals-60',
         messages: 'list-none p-0 mt-1 mb-0',
-        message: 'text-red-500 mb-1 text-xs'
+        message: 'text-red my-1 text-sm'
       },
     }),
   }

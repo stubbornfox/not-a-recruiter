@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import router from "../router";
-import { useOrganizationStore } from '../stores/organization'
+import { useToast } from 'vue-toastification'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -66,6 +66,19 @@ export const useAuthStore = defineStore('auth', {
               localStorage.setItem('user', JSON.stringify(user));
               router.push(this.returnUrl);
             }
+          })
+      } catch (error) {
+        node.setErrors([error.response.data], {})
+      }
+    },
+
+    async forgetPassword(data, node) {
+      try {
+        node.clearErrors()
+        const toast = useToast()
+        await axios.post('/auth/forget_password/', data)
+          .then((response) => {
+            toast.success("We sent you a password reset link!")
           })
       } catch (error) {
         node.setErrors([error.response.data], {})

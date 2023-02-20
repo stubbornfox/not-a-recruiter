@@ -1,5 +1,5 @@
 <template>
-  <div class="form-wrapper px-6">
+  <div class="form-wrapper lg:w-full px-4">
     <FormKit type="form" id="loginForm" @submit="handleSubmit" form-class="flex-grow-1 py-14 rounded-md" :actions=false :incomplete-message=false novalidate>
       <div class="space-y-8">
         <h3 class="text-heading mb-6  text-center">Choose a Password

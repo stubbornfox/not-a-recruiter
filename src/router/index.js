@@ -18,6 +18,11 @@ const router = createRouter({
           component: () => import("../views/LoginView.vue"),
         },
         {
+          path: "/forget-password",
+          name: "ForgetPassword",
+          component: () => import("../views/ForgetPasswordView.vue"),
+        },
+        {
           path: "/register",
           name: "Register",
           component: () => import("../views/RegisterView.vue"),
@@ -54,7 +59,7 @@ const router = createRouter({
           component: () => import("../views/GoogleView.vue"),
         },
         {
-          path: "/set_password/:token",
+          path: "/set-password/:token",
           name: "SetPassword",
           component: () => import("../views/SetPasswordView.vue"),
         }
@@ -210,7 +215,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/google', ''];
+  const publicPages = ['/login', '/register', '/google', 'forget-password'];
   const authRequired = !publicPages.includes(to.path) && !['JobPreview', 'JobBoardPreview', 'SetPassword'].includes(to.name)
 
   const loggedIn = localStorage.getItem('user');
