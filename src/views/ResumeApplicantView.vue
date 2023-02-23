@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-2 h-full overflow-y-auto" v-if="applicant">
+  <div class="w-full p-2 overflow-y-auto" v-if="applicant.resume">
     <div class="overflow-y-auto flex flex-col h-full">
       <div class="flex justify-end  mb-3">
         <a class="flex rounded items-center p-2 border border-primary" :href="applicant.resume" target="_blank">
@@ -7,7 +7,7 @@
           <span class="text-primary font-bold">Download</span>
         </a>
       </div>
-      <div class="overflow-y-auto h-full  border border-neutrals-20">
+      <div class="overflow-y-auto h-full border border-neutrals-20">
         <vue-pdf-embed :source="applicant.resume" class="overflow-hidden"/>
       </div>
     </div>
