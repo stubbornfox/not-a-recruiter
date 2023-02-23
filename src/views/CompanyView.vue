@@ -71,9 +71,10 @@
             <EditCompanyButton @edit="$router.push({name: 'Settings', params: {tab: 'social'}})" />
           </div>
           <div class="flex flex-col lg:flex-row lg:flex-wrap gap-4 mt-4">
-            <a v-for="social in Object.keys(socials)" :href="company[social]" class="text-primary font-medium border border-primary p-2 flex items-center gap-2">
+            <a v-for="social in Object.keys(socials).filter(s => company[s])" :href="company[social]" class="text-primary font-medium border border-primary p-2 flex items-center gap-2">
               <i class="">
-                <component :is="socials[social]" /></i>
+                <component :is="socials[social]" />
+              </i>
               {{company[social]}}
             </a>
           </div>

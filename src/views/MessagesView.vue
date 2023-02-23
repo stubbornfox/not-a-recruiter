@@ -54,7 +54,7 @@
         </div>
       </div>
     </div> -->
-    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="JSON.stringify(rooms)" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" show-add-room="true" :show-audio="false">
+    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="JSON.stringify(rooms)" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" @send-message-reaction="sendMessageReaction($event.detail[0])" show-add-room="true" :show-audio="false">
       <div slot="search-icon">
         <IconSearch />
       </div>
@@ -94,7 +94,7 @@ const messageStore = useMessageStore()
 const roomStore = useRoomStore()
 const { messages, newMessageId, messagesLoaded } = storeToRefs(messageStore)
 const { error, loading, rooms, chatMates, newRoom } = storeToRefs(roomStore)
-const { fetchMessages, createMessage, receiveMessage, uploadFile } = messageStore
+const { fetchMessages, createMessage, receiveMessage, uploadFile, updateMessage } = messageStore
 const { fetchRooms, fetchChatMates, createRoom } = roomStore
 let selectedRoomId = null
 
@@ -157,6 +157,17 @@ function fetchMessagesPerRoom({ room, options = {} }) {
   selectedRoomId = room.roomId
 }
 
+async function sendMessageReaction({ reaction, remove, messageId, roomId }) {
+  const arrayUser = remove ? [] : [currentUserId]
+  const data = {
+    reactions: {
+      [`${reaction.unicode}`]: arrayUser
+    }
+  }
+  await updateMessage(roomId, messageId, { message: data })
+}
+
+
 async function sendMessage({ content, roomId, files, replyMessage }) {
   const message = {
     user_id: currentUserId,
@@ -181,138 +192,139 @@ async function sendMessage({ content, roomId, files, replyMessage }) {
 }
 
 async function uploadFile1({ file, messageId, roomId }) {
-    return new Promise(resolve => {
-      let type = file.extension || file.type
-      if (type === 'svg' || type === 'pdf') {
-        type = file.type
+  return new Promise(resolve => {
+    let type = file.extension || file.type
+    if (type === 'svg' || type === 'pdf') {
+      type = file.type
+    }
+    storageService.listenUploadImageProgress(
+      currentUserId,
+      messageId,
+      file,
+      type,
+      progress => {
+        updateFileProgress(messageId, file.localUrl, progress)
+      },
+      _error => {
+        resolve(false)
+      },
+      async url => {
+        const message = await firestoreService.getMessage(roomId, messageId)
+        message.files.forEach(f => {
+          if (f.url === file.localUrl) {
+            f.url = url
+          }
+        })
+        await firestoreService.updateMessage(roomId, messageId, {
+          files: message.files
+        })
+        resolve(true)
       }
-      storageService.listenUploadImageProgress(
-        currentUserId,
-        messageId,
-        file,
-        type,
-        progress => {
-          updateFileProgress(messageId, file.localUrl, progress)
-        },
-        _error => {
-          resolve(false)
-        },
-        async url => {
-          const message = await firestoreService.getMessage(roomId, messageId)
-          message.files.forEach(f => {
-            if (f.url === file.localUrl) {
-              f.url = url
-            }
-          })
-          await firestoreService.updateMessage(roomId, messageId, {
-            files: message.files
-          })
-          resolve(true)
-        }
-      )
-    })
-  }
-  function updateFileProgress(messageId, fileUrl, progress) {
-    const message = messages.find(message => message._id === messageId)
-    if (!message || !message.files) return
-    message.files.find(file => file.url === fileUrl).progress = progress
-    // messages = [...messages]
-  }
+    )
+  })
+}
 
-  function formattedFiles(files) {
-    const formattedFiles = []
-    files.forEach(file => {
-      const messageFile = {
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        extension: file.extension || file.type,
-        url: file.url || file.localUrl
-      }
-      if (file.audio) {
-        messageFile.audio = true
-        messageFile.duration = file.duration
-      }
-      formattedFiles.push(messageFile)
-    })
-    return formattedFiles
-  }
+function updateFileProgress(messageId, fileUrl, progress) {
+  const message = messages.find(message => message._id === messageId)
+  if (!message || !message.files) return
+  message.files.find(file => file.url === fileUrl).progress = progress
+  // messages = [...messages]
+}
 
-  const styles = {
-    general: {
-      color: '#0a0a0a',
-      colorSpinner: '#333',
-      borderStyle: '1px solid #e1e4e8',
-      colorCaret: '#25324B',
-    },
+function formattedFiles(files) {
+  const formattedFiles = []
+  files.forEach(file => {
+    const messageFile = {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      extension: file.extension || file.type,
+      url: file.url || file.localUrl
+    }
+    if (file.audio) {
+      messageFile.audio = true
+      messageFile.duration = file.duration
+    }
+    formattedFiles.push(messageFile)
+  })
+  return formattedFiles
+}
 
-    container: {
-      border: 'none',
-      borderRadius: '0',
-      boxShadow: 'none'
-    },
+const styles = {
+  general: {
+    color: '#0a0a0a',
+    colorSpinner: '#333',
+    borderStyle: '1px solid #e1e4e8',
+    colorCaret: '#25324B',
+  },
 
-    content: {
-      background: '#FFFFFF'
-    },
+  container: {
+    border: 'none',
+    borderRadius: '0',
+    boxShadow: 'none'
+  },
 
-    footer: {
-      background: '#f8f9fa',
-      backgroundReply: 'rgba(0, 0, 0, 0.08)'
-    },
+  content: {
+    background: '#FFFFFF'
+  },
 
-    icons: {
-      microphone: '#7330DF',
-    },
+  footer: {
+    background: '#f8f9fa',
+    backgroundReply: 'rgba(0, 0, 0, 0.08)'
+  },
 
-    message: {
-      background: '#FFFFFF',
-      backgroundMe: '#E8E8E8',
-      color: '#0a0a0a',
-      colorStarted: '#9ca6af',
-      backgroundDeleted: '#dadfe2',
-      backgroundSelected: '#c2dcf2',
-      colorDeleted: '#757e85',
-      colorUsername: '#9ca6af',
-      colorTimestamp: '#828c94',
-      backgroundDate: '#e5effa',
-      colorDate: '#505a62',
-      backgroundSystem: '#e5effa',
-      colorSystem: '#505a62',
-      backgroundMedia: 'rgba(0, 0, 0, 0.15)',
-      backgroundReply: 'rgba(0, 0, 0, 0.08)',
-      colorReplyUsername: '#0a0a0a',
-      colorReply: '#6e6e6e',
-      colorTag: '#0d579c',
-      backgroundImage: '#ddd',
-      colorNewMessages: '#7330DF',
-      backgroundScrollCounter: '#7330DF',
-      colorScrollCounter: '#fff',
-      backgroundReaction: '#eee',
-      borderStyleReaction: '1px solid #eee',
-      backgroundReactionHover: '#fff',
-      borderStyleReactionHover: '1px solid #ddd',
-      colorReactionCounter: '#0a0a0a',
-      backgroundReactionMe: '#cfecf5',
-      borderStyleReactionMe: '1px solid #3b98b8',
-      backgroundReactionHoverMe: '#cfecf5',
-      borderStyleReactionHoverMe: '1px solid #3b98b8',
-      colorReactionCounterMe: '#0b59b3',
-      backgroundAudioRecord: '#eb4034',
-      backgroundAudioLine: 'rgba(0, 0, 0, 0.15)',
-      backgroundAudioProgress: '#455247',
-      backgroundAudioProgressSelector: '#455247',
-      colorFileExtension: '#757e85'
-    },
+  icons: {
+    microphone: '#7330DF',
+  },
 
-    sidemenu: {
-      background: '#fff',
-      backgroundHover: '#f6f6f6',
-      backgroundActive: '#F1EAFC',
-      colorActive: '#1976d2',
-      borderColorSearch: '#e1e5e8'
-    },
-  }
+  message: {
+    background: '#FFFFFF',
+    backgroundMe: '#E8E8E8',
+    color: '#0a0a0a',
+    colorStarted: '#9ca6af',
+    backgroundDeleted: '#dadfe2',
+    backgroundSelected: '#c2dcf2',
+    colorDeleted: '#757e85',
+    colorUsername: '#9ca6af',
+    colorTimestamp: '#828c94',
+    backgroundDate: '#e5effa',
+    colorDate: '#505a62',
+    backgroundSystem: '#e5effa',
+    colorSystem: '#505a62',
+    backgroundMedia: 'rgba(0, 0, 0, 0.15)',
+    backgroundReply: 'rgba(0, 0, 0, 0.08)',
+    colorReplyUsername: '#0a0a0a',
+    colorReply: '#6e6e6e',
+    colorTag: '#0d579c',
+    backgroundImage: '#ddd',
+    colorNewMessages: '#7330DF',
+    backgroundScrollCounter: '#7330DF',
+    colorScrollCounter: '#fff',
+    backgroundReaction: '#eee',
+    borderStyleReaction: '1px solid #eee',
+    backgroundReactionHover: '#fff',
+    borderStyleReactionHover: '1px solid #ddd',
+    colorReactionCounter: '#0a0a0a',
+    backgroundReactionMe: '#cfecf5',
+    borderStyleReactionMe: '1px solid #3b98b8',
+    backgroundReactionHoverMe: '#cfecf5',
+    borderStyleReactionHoverMe: '1px solid #3b98b8',
+    colorReactionCounterMe: '#0b59b3',
+    backgroundAudioRecord: '#eb4034',
+    backgroundAudioLine: 'rgba(0, 0, 0, 0.15)',
+    backgroundAudioProgress: '#455247',
+    backgroundAudioProgressSelector: '#455247',
+    colorFileExtension: '#757e85'
+  },
+
+  sidemenu: {
+    background: '#fff',
+    backgroundHover: '#f6f6f6',
+    backgroundActive: '#F1EAFC',
+    colorActive: '#1976d2',
+    borderColorSearch: '#e1e5e8'
+  },
+}
 onMounted(() => {
   const style = document.createElement('style')
   style.innerHTML = `
@@ -433,6 +445,22 @@ onMounted(() => {
   .vac-info-wrapper .vac-avatar {
     min-height: 56px;
     min-width: 56px;
+  }
+
+  .vac-message-actions-wrapper .vac-options-container {
+    top: -4px;
+    right: -16px;
+    border-radius: 0;
+  }
+  .vac-message-actions-wrapper .vac-blur-container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 8px;
+    bottom: 10px;
+    background: #F8F8FD;
+    filter: none;
+    border-radius: 0;
   }
   `
   chatWindow.value.shadowRoot.appendChild(style)

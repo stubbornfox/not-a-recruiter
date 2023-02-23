@@ -34,6 +34,26 @@ export const useMessageStore = defineStore({
       }
     },
 
+    async updateMessage(roomId, messageId, data) {
+      this.messagesLoaded = false
+      try {
+        const message = await api.put(`/rooms/${roomId}/messages/${messageId}`, data).then((response) => response.data)
+        const messageIndex = this.messages.findIndex(
+          m => m._id === messageId
+        )
+        if (messageIndex === -1) {
+          this.messages = this.messages.concat([message])
+        } else {
+          this.messages[messageIndex] = message
+          this.messages = [...this.messages]
+        }
+      } catch (error) {
+        this.error = error
+      } finally {
+        this.messagesLoaded = true
+      }
+    },
+
     async createMessage(roomId, data) {
       this.loading = true
       const body = new FormData()

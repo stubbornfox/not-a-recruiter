@@ -9,7 +9,7 @@
         <div class="mt-6 grid grid-cols-1 gap-y-6">
           <FormKit type="file" accept=".png,.jpg,.svg,.jpeg, .gif" @change="onFileChange" name="logo_image" wrapper-class="lg:flex lg:w-full lg:gap-x-28 lg:content-start" inner-class="lg:basis-96 lg:mt-0 gap-8 grow max-w-xl" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" input-class="h-full" file-list-class="p-0 w-auto">
             <div class="w-20 h-20">
-              <img :src="url" class="w-full h-full" />
+              <img v-if="url" :src="url" class="w-full h-full" />
             </div>
             <template #label="context">
               <div class="lg:basis-64">
@@ -19,7 +19,7 @@
             </template>
             <template #prefix="context">
               <div class="w-20 h-20">
-                <img :src="url" class="w-full h-full" />
+                <img :src="url" v-if="url"  class="w-full h-full" />
               </div>
             </template>
             <template #fileList="context">
