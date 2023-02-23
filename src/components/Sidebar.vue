@@ -40,17 +40,35 @@
                     </div>
                   </RouterLink>
                 </div>
-                <div v-if="user" id="profile" class="pl-12 pt-3">
-                  <div class="avatar">
-                    <img v-if="user.profile_picture" :src="user.profile_picture">
-                    <div v-else>
-                      <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="name">{{user.first_name}}</div>
-                    <div class="email">{{user.email}}</div>
-                  </div>
+                <div class="navigation-link-content">
+                <Menu as="div" class="relative ml-3">
+                  <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+                    <MenuItems class="absolute -top-full bg-white left-16 z-10 mt-2 w-40 origin-top-left ring-black ring-opacity-5 focus:outline-none">
+                      <MenuItem v-slot="{ active }">
+                      <RouterLink :to="{ name: 'AccountSettingProfile' }" :class="[active ? 'bg-gray-100' : '', 'block p-3']">Settings</RouterLink>
+                      </MenuItem>
+                      <MenuItem v-slot="{ active }">
+                      <a href="#" @click="logout" :class="[active ? 'bg-gray-100' : '', 'block p-3']">Logout</a>
+                      </MenuItem>
+                    </MenuItems>
+                  </transition>
+                  <MenuButton class="flex p-0 items-center rounded-full  text-sm focus:outline-none" id="profile" v-if="user">
+                    <div class="avatar">
+                      <img v-if="user.profile_picture" :src="user.profile_picture">
+                      <div v-else>
+                        <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="name">{{user.first_name}}</div>
+                        <div class="email">{{user.email}}</div>
+                      </div>
+                      <span class="ml-3 hidden text-sm font-medium text-color-text lg:block">
+                        <span class="sr-only">Open user menu for {{user.first_name}}</span>
+                      </span>
+                      <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
+                    </MenuButton>
+                  </Menu>
                 </div>
                 <div id="mobilePostJob" class="p-4 absolute left-0 right-0 bottom-20">
                   <RouterLink type="button" to="/jobs/new" class="btn btn-primary flex" @click="$emit('closeSidebar')">
@@ -97,18 +115,34 @@
         </div>
       </nav>
     </div>
-    <div id="profile" v-if="user">
-      <div class="avatar">
-        <img v-if="user.profile_picture" :src="user.profile_picture">
-        <div v-else>
-          <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
+    <Menu as="div" class="relative ml-3">
+      <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+        <MenuItems class="absolute -top-full bg-white left-16 z-10 mt-2 w-40 origin-top-left ring-black ring-opacity-5 focus:outline-none">
+          <MenuItem v-slot="{ active }">
+          <RouterLink :to="{ name: 'AccountSettingProfile' }" :class="[active ? 'bg-gray-100' : '', 'block p-3']">Settings</RouterLink>
+          </MenuItem>
+          <MenuItem v-slot="{ active }">
+          <a href="#" @click="logout" :class="[active ? 'bg-gray-100' : '', 'block p-3']">Logout</a>
+          </MenuItem>
+        </MenuItems>
+      </transition>
+      <MenuButton class="flex p-0 items-center rounded-full  text-sm focus:outline-none" id="profile" v-if="user">
+        <div class="avatar">
+          <img v-if="user.profile_picture" :src="user.profile_picture">
+          <div v-else>
+            <span class="rounded-full h-10 w-10 bg-mute text-color-text flex items-center justify-center font-bold">{{me?.first_name && me?.first_name[0]}}</span>
+          </div>
         </div>
-      </div>
-      <div>
-        <div class="name">{{user.first_name}}</div>
-        <div class="email">{{user.email}}</div>
-      </div>
-    </div>
+        <div>
+          <div class="name">{{user.first_name}}</div>
+          <div class="email">{{user.email}}</div>
+        </div>
+        <span class="ml-3 hidden text-sm font-medium text-color-text lg:block">
+          <span class="sr-only">Open user menu for {{user.first_name}}</span>
+        </span>
+        <ChevronDownIcon class="ml-1 hidden h-5 w-5 flex-shrink-0 text-gray-400 lg:block" aria-hidden="true" />
+      </MenuButton>
+    </Menu>
   </div>
 </template>
 <script setup>
@@ -126,6 +160,7 @@ import IconSetings from '@/components/icons/IconSettings.vue'
 import IconHelp from '@/components/icons/IconHelp.vue'
 import IconXMark from '@/components/icons/IconXMark.vue'
 import IconPlus from '@/components/icons/IconPlus.vue'
+import { useAuthStore } from '../stores/auth'
 
 import {
   Dialog,
@@ -143,6 +178,7 @@ defineProps({
   sidebarOpen: Boolean,
 })
 
+const { logout } = useAuthStore()
 const applicantNavigation = [
   { name: 'Dashboard', href: '/', icon: IconDashboard },
   { name: 'Messages', href: '/messages', icon: IconDashboard },
