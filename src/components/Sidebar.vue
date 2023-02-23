@@ -41,7 +41,7 @@
                   </RouterLink>
                 </div>
                 <div class="navigation-link-content">
-                <Menu as="div" class="relative ml-3">
+                <Menu as="div" class="relative">
                   <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
                     <MenuItems class="absolute -top-full bg-white left-16 z-10 mt-2 w-40 origin-top-left ring-black ring-opacity-5 focus:outline-none">
                       <MenuItem v-slot="{ active }">
@@ -115,7 +115,8 @@
         </div>
       </nav>
     </div>
-    <Menu as="div" class="relative ml-3">
+    <div class="navigation-link-content">
+    <Menu as="div" class="relative">
       <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
         <MenuItems class="absolute -top-full bg-white left-16 z-10 mt-2 w-40 origin-top-left ring-black ring-opacity-5 focus:outline-none">
           <MenuItem v-slot="{ active }">
@@ -144,6 +145,7 @@
       </MenuButton>
     </Menu>
   </div>
+</div>
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -246,7 +248,7 @@ function isActive(href) {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 12px 16px 12px 32px;
+  padding: 12px 16px;
   gap: 16px;
   width: 100%;
   height: 48px;
