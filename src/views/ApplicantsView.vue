@@ -1,6 +1,6 @@
 <template>
   <div class="lg:mx-auto lg:max-w-7xl lg:px-8 w-full">
-    <Applicants :applicants="applicants"/>
+    <Applicants :applicants="applicants" @search="searchApplicant"/>
   </div>
 </template>
 <script setup>
@@ -14,4 +14,8 @@ const { applicants } = storeToRefs(applicantStore)
 const { fetchApplicants } = applicantStore
 
 fetchApplicants()
+
+async function searchApplicant(searchQuery) {
+  fetchApplicants(searchQuery)
+}
 </script>

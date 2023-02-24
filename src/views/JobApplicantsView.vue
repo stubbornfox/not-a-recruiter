@@ -1,6 +1,6 @@
 <template>
   <div class="w-full p-2" v-if="job">
-    <Applicants :applicants="applicants" class="w-full"/>
+    <Applicants :applicants="applicants" class="w-full" @search="searchApplicant"/>
   </div>
 </template>
 <script setup>
@@ -18,4 +18,8 @@ const props = defineProps({
 })
 
 fetchApplicants(props.job.id)
+
+async function searchApplicant(searchQuery) {
+  fetchApplicants(props.job.id, searchQuery)
+}
 </script>

@@ -3,16 +3,63 @@
     <div class="flex justify-between py-6">
       <h5 class="text-neutrals-100">Total Applicants: {{applicants.length}}</h5>
       <div class="flex items-center gap-x-8">
-        <form class="flex items-center gap-2">
-          <div class="flex items-center">
-            <i class="-mr-8  z-10"><IconSearch/></i>
-            <input type="text" placeholder="Search Applicants" class="pl-12 border-neutrals-20 lg:w-80" />
+        <FormKit type="form" class="flex items-center gap-2" :actions="false" @submit="(data) => $emit('search', data)">
+          <div class="flex items-center gap-2">
+            <FormKit type="text" placeholder="Search command" name="query" class="pl-12 border-neutrals-20 lg:w-80" inner-class="flex items-center mt-0" input-class="pl-10">
+              <template #prefixIcon="context">
+                <i class="-mr-8  z-10">
+                  <IconSearch /></i>
+              </template>
+            </FormKit>
+            <Popover class="relative">
+              <PopoverButton class="border border-neutrals-20 flex items-center px-4 py-3 gap-2 outline-none">
+                <IconFilter aria-hidden="true" />
+                <span class="text-neutrals-100 font-mediumn leading-none">Filter</span>
+              </PopoverButton>
+              <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
+                <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
+                  <div class="w-screen max-w-sm flex-auto overflow-hidden bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5 lg:max-w-2xl">
+                    <div class="flex flex-col lg:flex-row gap-6 p-6">
+                      <FormKit type="checkbox" name="stages" label="Employment Type" :options="hiringStage" fieldset-class="lg:w-full" inner-class="lg:mt-0 lg:mr-0" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" options-class="lg:basis-96 lg:mt-0 grid grid-cols-2 lg:grid-cols-1">
+                        <template #legend="context">
+                          <div class="lg:basis-64">
+                            <label class="block font-semibold text-neutrals-100 mb-4">Hiring Stage</label>
+                          </div>
+                        </template>
+                      </FormKit>
+                      <FormKit type="checkbox" name="scores" label="Employment Type" :options="scores" fieldset-class="lg:w-full" inner-class="lg:mt-0 lg:mr-0" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" options-class="lg:basis-96 lg:mt-0 grid grid-cols-2 lg:grid-cols-1">
+                        <template #legend="context">
+                          <div class="lg:basis-64">
+                            <label class="block font-semibold text-neutrals-100 mb-4">Ranking Score</label>
+                          </div>
+                        </template>
+                      </FormKit>
+                      <FormKit type="checkbox" name="experiences" label="Employment Type" :options="experiences" fieldset-class="lg:w-full" inner-class="lg:mt-0 lg:mr-0" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" options-class="lg:basis-96 lg:mt-0 grid grid-cols-2 lg:grid-cols-1">
+                        <template #legend="context">
+                          <div class="lg:basis-64">
+                            <label class="block font-semibold text-neutrals-100 mb-4">Years Experience</label>
+                          </div>
+                        </template>
+                      </FormKit>
+                      <FormKit type="checkbox" name="degrees" label="Employment Type" :options="degrees" fieldset-class="lg:w-full" inner-class="lg:mt-0 lg:mr-0" help-class="lg:pl-64 lg:ml-28 lg:-mt-4" options-class="lg:basis-96 lg:mt-0 grid grid-cols-2 lg:grid-cols-1">
+                        <template #legend="context">
+                          <div class="lg:basis-64">
+                            <label class="block font-semibold text-neutrals-100 mb-4">Degree</label>
+                          </div>
+                        </template>
+                      </FormKit>
+                    </div>
+                    <div class="bg-gray-50 p-6">
+                      <div class="flex items-center gap-x-3">
+                        <button type="submit" class="bg-indigo-600/10 py-1.5 px-2.5 font-semibold text-primary">Search</button>
+                      </div>
+                    </div>
+                  </div>
+                </PopoverPanel>
+              </transition>
+            </Popover>
           </div>
-          <button class="border border-neutrals-20 flex items-center px-4 py-3 gap-2">
-            <i><IconFilter/></i>
-            <span class="text-neutrals-100 font-medium">Filter</span>
-          </button>
-        </form>
+        </FormKit>
         <div class="bg-light-blue p-1">
           <button class="font-semibold text-primary py-2 px-3" :class="{'bg-white': view == 'pipeline'}" @click="view='pipeline'">Pipeline View</button>
           <button class="font-semibold text-primary py-2 px-3" :class="{'bg-white': view == 'table'}" @click="view='table'">Table View</button>
@@ -58,12 +105,12 @@
             <td class="py-7 px-6 text-center font-medium">{{ applicant.job_role }}</td>
             <td class="py-7 px-6">
               <div class="flex items-center gap-4">
-              <RouterLink :to="{name: 'Applicant', params: { id: applicant.id}}" class="text-primary bg-light-blue border border-primary py-3 px-6 flex items-center justify-center">
-                <span class="text-sm font-bold">
-                  See Applicantion
-                </span>
-              </RouterLink>
-              <ApplicantActionComponent :applicant="applicant" />
+                <RouterLink :to="{name: 'Applicant', params: { id: applicant.id}}" class="text-primary bg-light-blue border border-primary py-3 px-6 flex items-center justify-center">
+                  <span class="text-sm font-bold">
+                    See Applicantion
+                  </span>
+                </RouterLink>
+                <ApplicantActionComponent :applicant="applicant" />
               </div>
             </td>
           </tr>
@@ -91,16 +138,47 @@
 <script setup>
 import { ref } from 'vue';
 import { RouterLink } from 'vue-router'
-import Pipeline from "@/components/Pipeline.vue";
-import ApplicantActionComponent from "@/components/ApplicantActionComponent.vue";
-import IconRate from "@/components/icons/IconRate.vue";
+import Pipeline from "@/components/Pipeline.vue"
+import ApplicantActionComponent from "@/components/ApplicantActionComponent.vue"
+import IconRate from "@/components/icons/IconRate.vue"
 import IconSearch from '@/components/icons/IconSearch.vue'
 import IconFilter from '@/components/icons/IconFilter.vue'
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue'
 
 import { stages } from "@/const"
 const props = defineProps({
   applicants: { type: Array, default: () => [] },
 })
+
+const hiringStage = {
+  "review": "Review",
+  "shortlisted": "Shortlisted",
+  "interview": "Interview",
+  "hired": "Hired",
+  "declined": "Declined",
+}
+
+const scores = {
+  "< 3": " < 3",
+  ">=3": ">=3",
+  "5": "5",
+}
+
+const degrees = {
+  "Associate": "Associate degree",
+  "bachelor": "Bachelor’s degree",
+  "master": "Master’s degree",
+  "doctoral": "Doctoral degree",
+}
+
+const experiences = {
+  "0-1": "0-1 year",
+  "1-2": "1-2 years",
+  " > 3": " > 3 years",
+  " > 5": "> 5 years",
+}
+
+
 
 const view = ref('table')
 

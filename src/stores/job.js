@@ -69,9 +69,9 @@ export const useJobStore = defineStore({
       }
     },
 
-    async fetchApplicants(jobId) {
+    async fetchApplicants(jobId, query) {
     try {
-        this.applicants = await api.get(`/jobs/${jobId}/candidates`)
+        this.applicants = await api.get(`/applicants`, { params: {...query, job_id: jobId} })
           .then((response) => response.data)
       } catch (error) {
         this.error = error

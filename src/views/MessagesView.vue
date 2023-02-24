@@ -184,7 +184,6 @@ async function sendMessageReaction({ reaction, remove, messageId, roomId }) {
 
 
 async function sendMessage({ content, roomId, files, replyMessage }) {
-  debugger
   const message = {
     user_id: currentUserId,
     content,
