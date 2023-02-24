@@ -54,7 +54,22 @@
         </div>
       </div>
     </div> -->
-    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="JSON.stringify(rooms)" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" @send-message-reaction="sendMessageReaction($event.detail[0])" show-add-room="true" :show-audio="false">
+    <vue-advanced-chat ref="chatWindow" height="calc(100vh - 160px)" :current-user-id="currentUserId" :styles="JSON.stringify(styles)" :rooms="JSON.stringify(rooms)" :rooms-loaded="true" :messages="JSON.stringify(messages)" :messages-loaded="messagesLoaded" show-add-room="true" :show-audio="false" :message-actions="JSON.stringify([
+  {
+    name: 'replyMessage',
+    title: 'Reply'
+  },
+  {
+    name: 'editMessage',
+    title: 'Edit Message',
+    onlyMe: true
+  },
+  {
+    name: 'deleteMessage',
+    title: 'Delete Message',
+    onlyMe: true
+  },
+])" @send-message="sendMessage($event.detail[0])" @fetch-messages="fetchMessagesPerRoom($event.detail[0])" @add-room="addRoom($event.detail[0])" @send-message-reaction="sendMessageReaction($event.detail[0])" @edit-message="editMessage($event.detail[0])" @delete-message="deleteMessage($event.detail[0])">
       <div slot="search-icon">
         <IconSearch />
       </div>
@@ -169,6 +184,7 @@ async function sendMessageReaction({ reaction, remove, messageId, roomId }) {
 
 
 async function sendMessage({ content, roomId, files, replyMessage }) {
+  debugger
   const message = {
     user_id: currentUserId,
     content,
@@ -178,17 +194,54 @@ async function sendMessage({ content, roomId, files, replyMessage }) {
     message.files = formattedFiles(files)
   }
   if (replyMessage) {
-    message.replyMessage = {
+    message.reply_message = {
       _id: replyMessage._id,
       content: replyMessage.content,
       sender_id: replyMessage.senderId
     }
-    if (replyMessage.files) {
-      message.replyMessage.files = replyMessage.files
-    }
+    // if (replyMessage.files) {
+    //   message.replyMessage.files = replyMessage.files
+    // }
   }
 
   await createMessage(roomId, message)
+}
+
+
+async function editMessage({ messageId, newContent, roomId, files }) {
+  const newMessage = { edited: new Date() }
+  newMessage.content = newContent
+  // if (files) {
+  //   newMessage.files = this.formattedFiles(files)
+  // } else {
+  //   newMessage.files = firestoreService.deleteDbField
+  // }
+  await updateMessage(roomId, messageId, { message: newMessage })
+  // if (files) {
+  //   for (let index = 0; index < files.length; index++) {
+  //     if (files[index] ? .blob) {
+  //       await this.uploadFile({ file: files[index], messageId, roomId })
+  //     }
+  //   }
+  // }
+}
+
+async function deleteMessage({ message, roomId }) {
+  // await firestoreService.updateMessage(roomId, message._id, {
+  //   deleted: new Date()
+  // })
+
+  await updateMessage(roomId, message._id, {
+    message: {
+      deleted: new Date()
+    }
+  })
+  // const { files } = message
+  // if (files) {
+  //   files.forEach(file => {
+  //     storageService.deleteFile(this.currentUserId, message._id, file)
+  //   })
+  // }
 }
 
 async function uploadFile1({ file, messageId, roomId }) {
@@ -341,12 +394,18 @@ onMounted(() => {
     font-size: 16px;
     line-height: 160%;
     color: #454545;
+    border-radius: 0;
+  }
+
+  .vac-reply-message {
+    background: white;
   }
 
   .vac-message-wrapper .vac-message-current {
     border-radius: 8px 0px 8px 8px;
     border: 0px;
   }
+
   .vac-box-search {
     padding: 0;
     padding-bottom: 28px;

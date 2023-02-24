@@ -105,17 +105,54 @@
     </div>
     <div class="lg:flex">
       <div class="lg:basis-2/3  lg:mt-0 mt-6">
-        <div class="flex items-center justify-between">
-          <h4 class="text-neutrals-100">Perks & Benefits</h4>
-          <EditCompanyButton @edit="$router.push({name: 'Settings'})" />
-        </div>
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8 mt-6">
-          <div class="" v-for="benefit in defaultBenefits">
-            <div class="flex items-center justify-between pb-6">
-              <component :is="benefit.icon" />
+        <div>
+          <div class="flex items-center justify-between">
+            <h4 class="text-neutrals-100">Team</h4>
+            <EditCompanyButton @edit="$router.push({name: 'Settings', params: {tab:'team'}})" />
+          </div>
+          <div class="mt-6">
+            <div class="grid grid-cols-3 gap-6">
+              <div v-for="member in members" class="flex items-center justify-center border border-neutrals-20 rounded p-6 flex-col">
+                <img :src="member.profile_picture" class="w-20 h-20 rounded-full" v-if="member.profile_picture"/>
+                <div v-else class="w-20 h-20 rounded-full bg-light-gray flex items-center justify-center text-4xl font-bold text-primary">
+                  {{member.full_name[0]}}
+                </div>
+                <p class="text-neutrals-100 mt-4 font-semibold">{{member.full_name}}</p>
+                <p class="text-neutrals-60 mt-1">{{member.position || 'Human Resouce'}}</p>
+                <div class="mt-4 flex gap-1">
+                  <a class="" :href="member.instagram">
+                    <IconTeamInstagram />
+                  </a>
+                  <a class="" :href="member.linkedin">
+                    <IconTeamLinkedin />
+                  </a>
+                </div>
+              </div>
             </div>
-            <h5 class="text-neutrals-100">{{benefit.header}}</h5>
-            <div class="mt-3 text-neutrals-60">{{benefit.description}}</div>
+          </div>
+          <RouterLink :to="{name: 'Settings', params: {tab: 'team'}}" class="mt-3 flex items-center gap-2 self-center">
+            <span class="text-primary font-semibold">View all core team</span>
+            <i><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19.75 11.7256L4.75 11.7256" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M13.7002 5.70124L19.7502 11.7252L13.7002 17.7502" stroke="#7330DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </i>
+          </RouterLink>
+        </div>
+        <hr class="my-6" />
+        <div>
+          <div class="flex items-center justify-between">
+            <h4 class="text-neutrals-100">Perks & Benefits</h4>
+            <EditCompanyButton @edit="$router.push({name: 'Settings'})" />
+          </div>
+          <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8 mt-6">
+            <div class="" v-for="benefit in defaultBenefits">
+              <div class="flex items-center justify-between pb-6">
+                <component :is="benefit.icon" />
+              </div>
+              <h5 class="text-neutrals-100">{{benefit.header}}</h5>
+              <div class="mt-3 text-neutrals-60">{{benefit.description}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -180,10 +217,12 @@ import IconCog from '@/components/icons/IconCog.vue'
 import IconEye from '@/components/icons/IconEye.vue'
 import IconEyeMobile from '@/components/icons/IconEyeMobile.vue'
 import IconCogMobile from '@/components/icons/IconCogMobile.vue'
+import IconTeamLinkedin from '@/components/icons/IconTeamLinkedin.vue'
+import IconTeamInstagram from '@/components/icons/IconTeamInstagram.vue'
 import { businessSizes } from '@/const'
 const companyStore = useCompanyStore()
-const { company } = storeToRefs(companyStore)
-const { fetchProfile } = companyStore
+const { company, members } = storeToRefs(companyStore)
+const { fetchProfile, fetchTeam } = companyStore
 const socials = {
   instagram: IconInstagramLink,
   twitter: IconTwitterLink,
@@ -193,6 +232,7 @@ const socials = {
 }
 
 fetchProfile()
+fetchTeam()
 
 const brief = (company) => {
   return [{

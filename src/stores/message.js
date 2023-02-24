@@ -56,23 +56,24 @@ export const useMessageStore = defineStore({
 
     async createMessage(roomId, data) {
       this.loading = true
-      const body = new FormData()
-      body.append('message[user_id]', data.user_id)
-      body.append('message[content]', data.content)
+      // const body = new FormData()
+      // body.append('message[user_id]', data.user_id)
+      // body.append('message[content]', data.content)
+      // body.append('message[content]', data.content)
 
-      if (data.files) {
-        data.files.forEach((fileItem, index) => {
-          body.append('message[files][index]', fileItem.file)
-        })
-      }
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        }
-      }
+      // if (data.files) {
+      //   data.files.forEach((fileItem, index) => {
+      //     body.append('message[files][index]', fileItem.file)
+      //   })
+      // }
+      // const config = {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   }
+      // }
 
       try {
-        await api.post(`/rooms/${roomId}/messages`, body, config)
+        await api.post(`/rooms/${roomId}/messages`, {message: data})
           .then((response) => {
             const message = response.data
             this.newMessageId = message._id

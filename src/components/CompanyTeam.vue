@@ -62,9 +62,6 @@
       </div>
     </div>
   </div>
-  <div class="flex items-center my-6 justify-end">
-    <!-- <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-pink-700 py-2 px-4 font-medium text-white bg-primary font-bold">Save Changes</button> -->
-  </div>
   <NewMember :open="showAddMemberModal" @add="addMemberHandler" @close="showAddMemberModal = false" />
 </template>
 <script setup>

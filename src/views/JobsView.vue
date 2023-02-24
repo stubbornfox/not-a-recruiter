@@ -83,8 +83,8 @@ let startDate = new Date()
 let endDate = new Date()
 const rangeDate = ref(null)
 
-endDate.setDate(endDate.getDate() + 7)
-startDate.setDate(startDate.getDate() - 7)
+endDate.setDate(endDate.getDate())
+startDate.setDate(startDate.getDate() - 365)
 let range = {
   start: startDate,
   end: endDate,
