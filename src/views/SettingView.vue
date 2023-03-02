@@ -13,7 +13,7 @@
       <div v-show="current_tab == 'team'">
         <CompanyTeam />
       </div>
-       <div v-show="current_tab == 'domain'">
+      <div v-show="current_tab == 'domain'">
         <CompanyCustomDomain :company="company" />
       </div>
     </div>
@@ -32,6 +32,7 @@ import { useCompanyStore } from '@/stores/company';
 
 const route = useRoute()
 const companyStore = useCompanyStore()
+companyStore.$reset()
 const { company } = storeToRefs(companyStore)
 const { fetchProfile, updateProfile } = companyStore
 

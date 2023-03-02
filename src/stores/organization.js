@@ -14,8 +14,10 @@ export const useOrganizationStore = defineStore({
   actions: {
     async activeOrganization(organization_id) {
       try {
-        useUserStore().organization = await api.put(`/organizations/${organization_id}/organizations_users/active`)
+        const og =  await api.put(`/organizations/${organization_id}/organizations_users/active`)
           .then((response) => response.data)
+        useUserStore().organization = og
+        this.organization = og
       } catch (error) {
         this.error = error
       } finally {
@@ -43,7 +45,7 @@ export const useOrganizationStore = defineStore({
     async createOrganization(organization) {
       this.loading = true
       try {
-        this.organization = await api.post('/organizations', { organization })
+        this.organization = await api.post('/organizations', organization)
           .then((response) => response.data)
       } catch (error) {
         this.error = error
