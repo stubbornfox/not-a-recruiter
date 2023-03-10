@@ -62,7 +62,7 @@ export const useJobBoardStore = defineStore({
         toast.success('Refresh successfully')
       } catch (error) {
         this.error = error
-        toast.error(error)
+        toast.error("Generate SSL certificate failed. Please check if a DNS record exists for this domain")
       } finally {
         this.loading = false
       }
