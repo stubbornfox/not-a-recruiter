@@ -19,13 +19,13 @@
               children: 'https://',
             },
           }" @input="removeProtocol" />
-              <div v-if="company.hostname">
+              <div v-if="cname">
                 <label class="block text-sm font-medium text-heading">CName</label>
                 <p class="text-xs text-color-text mb-3">
                   Supply this to your DNS provider for the destination of CNAME or ALIAS records.
                 </p>
                 <div class="mt-2 coppy-field p-2 text-color-text border border-color bg-transparent sm:text-sm rounded-md flex justify-between">
-                  <span>{{company.hostname}}</span>
+                  <span>{{cname}}</span>
                   <i @click="copyCname" class="cursor-pointer">
                     <ClipboardDocumentIcon class="w-5 h-5 text-heading" />
                   </i>
@@ -33,7 +33,7 @@
                 <div class="border-l-4 pl-4 border-soft mt-3">
                   <label class="block text-sm font-medium text-heading">SSL Certificate</label>
                   <p class="my-2">
-                    <span v-if="company.custom_domain_valid" class="flex items-center text-green-600">
+                    <span v-if="custom_domain_valid" class="flex items-center text-green-600">
                       <span>Valid</span>
                       <i>
                         <CheckCircleIcon class="w-5 h-5 ml-1" />
@@ -46,7 +46,7 @@
                       </i>
                     </span>
                   </p>
-                  <button type="button" @click="refresh" class="inline-flex justify-center rounded-md border border-transparent bg-soft py-2 px-4 text-sm font-medium text-heading shadow-sm hover:bg-mute focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Refresh</button>
+                  <button v-if="!custom_domain_valid" type="button" @click="refresh" class="inline-flex justify-center rounded-md border border-transparent bg-soft py-2 px-4 text-sm font-medium text-heading shadow-sm hover:bg-mute focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Refresh</button>
                 </div>
               </div>
             </div>
@@ -74,13 +74,18 @@ import { ClipboardDocumentIcon, CheckCircleIcon, XCircleIcon } from '@heroicons/
 const props = defineProps({
   company: { type: Object, default: () => {} },
 })
-let company = props.company;
 
+let company = props.company
 let custom_domain_url = ref(props.company.custom_domain_url)
-const { customDomain, refreshSSL } = useJobBoardStore()
+let custom_domain_valid = ref(props.company.custom_domain_valid)
+let cname = ref(props.company.hostname)
+
+const jobBoardStore = useJobBoardStore()
+const { customDomain, refreshSSL } = jobBoardStore
+const { job_board } = storeToRefs(jobBoardStore)
 
 const submitHandler = async (data) => {
-  customDomain(props.company.job_board_id, { custom_domain_url: custom_domain_url.value })
+  customDomain(props.company.job_board_id, { custom_domain_url: custom_domain_url.value }).then(()=> cname.value = job_board.hostname)
 }
 
 function removeProtocol(url) {
@@ -88,12 +93,14 @@ function removeProtocol(url) {
 }
 
 function copyCname() {
-  navigator.clipboard.writeText(props.company.hostname).then((clipText) =>
+  navigator.clipboard.writeText(cname.value).then((clipText) =>
     useToast().info('Copied')
   )
 }
 
 function refresh() {
-  refreshSSL(props.company.job_board_id)
+  refreshSSL(props.company.job_board_id).then(
+    ()=>
+    custom_domain_valid.value = job_board.custom_domain_valid)
 }
 </script>

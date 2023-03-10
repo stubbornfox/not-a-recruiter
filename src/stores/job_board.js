@@ -10,17 +10,12 @@ export const useJobBoardStore = defineStore({
     loading: false,
     error: null
   }),
-  getters: {
-    // getPostsPerAuthor: (state) => {
-    //   return (authorId) => state.posts.filter((post) => post.userId === authorId)
-    // }
-  },
   actions: {
     async fetchJobBoard(id) {
       this.job_board = null
       this.loading = true
       try {
-        this.post = await api.get(`/job_boards/${id}`)
+        this.job_board = await api.get(`/job_boards/${id}`)
           .then((response) => response.data.json())
       } catch (error) {
         this.error = error
