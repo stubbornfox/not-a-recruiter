@@ -46,12 +46,12 @@
                       </i>
                     </span>
                   </p>
-                  <button v-if="!custom_domain_valid" type="button" @click="refresh" class="inline-flex justify-center rounded-md border border-transparent bg-soft py-2 px-4 text-sm font-medium text-heading shadow-sm hover:bg-mute focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Refresh</button>
+                  <button v-show="!custom_domain_valid" type="button" @click="refresh" class="inline-flex justify-center rounded-md border border-transparent bg-soft py-2 px-4 text-sm font-medium text-heading shadow-sm hover:bg-mute focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Refresh</button>
                 </div>
               </div>
             </div>
           </div>
-           <hr class="" />
+          <hr class="" />
           <div class="mt-6 grid grid-cols-1 gap-y-6">
           </div>
         </div>
@@ -85,7 +85,8 @@ const { customDomain, refreshSSL } = jobBoardStore
 const { job_board } = storeToRefs(jobBoardStore)
 
 const submitHandler = async (data) => {
-  customDomain(props.company.job_board_id, { custom_domain_url: custom_domain_url.value }).then(()=> cname.value = job_board.hostname)
+  customDomain(props.company.job_board_id, { custom_domain_url: custom_domain_url.value }).then(() =>
+    cname.value = job_board.value.hostname)
 }
 
 function removeProtocol(url) {
@@ -100,7 +101,7 @@ function copyCname() {
 
 function refresh() {
   refreshSSL(props.company.job_board_id).then(
-    ()=>
-    custom_domain_valid.value = job_board.custom_domain_valid)
+    () =>
+    custom_domain_valid.value = job_board.value.custom_domain_valid)
 }
 </script>
