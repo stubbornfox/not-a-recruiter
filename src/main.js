@@ -11,7 +11,8 @@ import "vue-toastification/dist/index.css";
 import 'v-calendar/dist/style.css';
 import VCalendar from 'v-calendar';
 import 'vue-select/dist/vue-select.css'
-
+import {LoadingPlugin} from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 axios.defaults.headers.common['Content-Type'] = 'application/json';
@@ -34,6 +35,7 @@ const pinia = createPinia();
 const app = createApp(App).component('fa', FontAwesomeIcon).component('v-select', vSelect);
 app.use(router);
 app.use(pinia);
+app.use(LoadingPlugin);
 app.use(plugin, defaultConfig({
   config: {
     classes: generateClasses({

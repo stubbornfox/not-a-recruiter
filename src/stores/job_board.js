@@ -2,6 +2,10 @@ import { defineStore } from 'pinia'
 import api from '../services/api';
 import { useUserStore } from './user'
 import { useToast } from 'vue-toastification'
+import { useLoading } from 'vue-loading-overlay'
+const $loading = useLoading({
+  // options
+});
 
 export const useJobBoardStore = defineStore({
   id: 'job_board',
@@ -42,12 +46,19 @@ export const useJobBoardStore = defineStore({
     async customDomain(id, job_board_params) {
       this.loading = true
       const toast = useToast()
+      const loader = $loading.show({
+        color: '#7330DF',
+        loader: 'dots',
+      });
       try {
         this.job_board = await api.post(`/job_boards/${id}/custom_domain`, job_board_params)
           .then((response) => response.data)
+        loader.hide()
         toast.success('Updated custom domain')
       } catch (error) {
         this.error = error
+        loader.hide()
+        toast.error("Opps! Something went wrong")
       } finally {
         this.loading = false
       }
@@ -56,12 +67,18 @@ export const useJobBoardStore = defineStore({
     async refreshSSL(id) {
       this.loading = true
       const toast = useToast()
+      const loader = $loading.show({
+        color: '#7330DF',
+        loader: 'dots',
+      });
       try {
         this.job_board = await api.post(`/job_boards/${id}/refresh_ssl`)
           .then((response) => response.data)
+        loader.hide()
         toast.success('Refresh successfully')
       } catch (error) {
         this.error = error
+        loader.hide()
         toast.error("Generate SSL certificate failed. Please check if a DNS record exists for this domain")
       } finally {
         this.loading = false
